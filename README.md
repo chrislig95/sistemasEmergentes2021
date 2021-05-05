@@ -1,4 +1,5 @@
 # sistemasEmergentes2021
+
 Pasos para ejecutar
 1) Instalar Python versión 3.9 localmente
 2) Instalar la dependencia de mqtt con el comando
