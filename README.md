@@ -1,4 +1,4 @@
-# sistemasEmergentes2021
+# Sistemas Emergentes 2021
 
 Pasos para ejecutar
 1) Instalar Python versión 3.9 localmente
