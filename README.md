@@ -7,4 +7,7 @@ Pasos para ejecutar
 3) Para ejecutar cada archivo .py correr el comando 
     py {nombreArchivo}.py
 	
-Test
+Infra:
+IP pública: 192.241.178.194
+Puerto de Mosquitto: 2437
+Puerto de Mongo: 27017
