@@ -11,5 +11,3 @@ Infra:
 * IP pública: 192.241.178.194
 * Puerto de Mosquitto: 2437
 * Puerto de Mongo: 27017
-
-Soy Juan Pablo y estoy probando a ver si sube el archivo modificado
