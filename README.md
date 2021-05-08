@@ -8,6 +8,6 @@ Pasos para ejecutar
     py {nombreArchivo}.py
 	
 Infra:
-IP pública: 192.241.178.194
-Puerto de Mosquitto: 2437
-Puerto de Mongo: 27017
+* IP pública: 192.241.178.194
+* Puerto de Mosquitto: 2437
+* Puerto de Mongo: 27017
