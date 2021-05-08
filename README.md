@@ -1,4 +1,4 @@
-# sistemasEmergentes2021
+# Sistemas Emergentes 2021
 
 Pasos para ejecutar
 1) Instalar Python versión 3.9 localmente
@@ -6,3 +6,8 @@ Pasos para ejecutar
     pip3 install paho-mqtt
 3) Para ejecutar cada archivo .py correr el comando 
     py {nombreArchivo}.py
+	
+Infra:
+* IP pública: 192.241.178.194
+* Puerto de Mosquitto: 2437
+* Puerto de Mongo: 27017
