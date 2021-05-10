@@ -12,5 +12,5 @@ Tildar la opcion de agregar el Path
 	
 Infra:
 * IP pública: 192.241.178.194
-* Puerto de Mosquitto: 2437
+* Puerto de Mosquitto: 2096
 * Puerto de Mongo: 27017
