@@ -6,10 +6,10 @@
         "user": "root"
     },
     "mqtt": {
-        "broker":"broker.emqx.io",
-        "tcpPort": 1883,
+        "broker":"192.241.178.194",
+        "tcpPort": 2096,
         "webSocketPort": 8083,
-        "username":"emqx",
+        "username":"",
         "password":"public"
     }
 }

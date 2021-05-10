@@ -33,19 +33,10 @@ def connect_mqtt():
     return client
 
 def publish(client):
-    msg_count = 0
-    while msg_count < 30:
-        time.sleep(1)
-        msg = f"messages: {msg_count}"
+    while True:
+        time.sleep(60)
+        msg = "0"
         result = client.publish(topic, msg)
-        
-        status = result[0]
-        if status == 0:
-            print(f"Send `{msg}` to topic `{topic}`")
-        else:
-            print(f"Failed to send message to topic {topic}")
-        msg_count += 1
-
 
 def run():
     client = connect_mqtt()
