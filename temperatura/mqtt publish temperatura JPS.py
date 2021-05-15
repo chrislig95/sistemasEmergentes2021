@@ -13,7 +13,7 @@ mqtt_config = config["mqtt"]
 broker_address = mqtt_config["broker"]
 broker_tcp_port = mqtt_config["tcpPort"]
 broker_websocket_port = mqtt_config["webSocketPort"]
-topic="/python/mqtt"
+topic="/casa/exterior/sensores/temperatura"
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
 username = mqtt_config["username"]
 password = mqtt_config["password"]
@@ -34,14 +34,32 @@ def connect_mqtt():
 
 def publish(client):
     msg_count = 0
-    while msg_count < 30:
-        time.sleep(1)
-        msg = f"messages: {msg_count}"
-        result = client.publish(topic, msg)
+    while msg_count < 10:
+        time.sleep(1) #esperar un segundo para publicar el mensaje
+        #msg = f"messages: {msg_count}"
+        value = random.randint(-15,40)
+        #messages num
+        #la idea del mensaje es publicar el valor de porej. el valor de la temperatura
+        msg = f"temperatura: {value}"
+        
+        #definicion de status segun lo que devuelva value o el timestamp
+        #0 apagado - 1 encendido OK - 2 encendido Error
+        status=1
+        #definir funcion para que devuelva status segun lo que se procesa
+        #getStatus():0/1/2
+        #getStatus-->0 si el último posteo de fue hecho hace mas de X tiempo
+        #getStatus-->1 si el último posteo de fue hecho hace mas de X tiempo y el valor obtenido está dentro de rango
+        #getStatus-->2 si el último posteo de fue hecho hace mas de X tiempo y el valor obtenido está fuera de rango
+        
+        #getRangoTemp-->obtener el valor establecido como max y min aceptables
+
+
+        result = client.publish(topic, msg, status)
         
         status = result[0]
         if status == 0:
-           print(f"Send `{msg}` to topic `{topic}`")
+           #print(f"Send `{msg}` to topic `{topic}`")
+           print(f"`{topic}`,`{msg}`,`{status}`")
         else:
            print(f"Failed to send message to topic {topic}")
         msg_count += 1

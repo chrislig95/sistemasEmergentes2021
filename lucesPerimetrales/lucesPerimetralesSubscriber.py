@@ -1,7 +1,7 @@
 from mqttPublisherTest import connect_mqtt
 from paho.mqtt import client as mqtt_client
 
-topic="/casa/exterior/luces/perimetrales"
+topic="/casa/exterior/actuadores/luces/perimetrales"
 
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
