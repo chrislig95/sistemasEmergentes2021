@@ -1,9 +1,9 @@
 {
     "mongo": {
-        "db": "write-math",
-        "host": "localhost",
-        "passwd": "my secret password",
-        "user": "root"
+        "db": "SistemasEmergentes",
+        "host": "sistemergentes.slhwd.mongodb.net",
+        "passwd": "O3ByoOtAKMH01ZrM",
+        "user": "admin"
     },
     "mqtt": {
         "broker":"broker.emqx.io",
