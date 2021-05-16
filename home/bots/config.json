@@ -1,0 +1,15 @@
+{
+    "mongo": {
+        "db": "write-math",
+        "host": "localhost",
+        "passwd": "my secret password",
+        "user": "root"
+    },
+    "mqtt": {
+        "broker":"192.241.178.194",
+        "tcpPort": 2096,
+        "webSocketPort": 8083,
+        "username":"",
+        "password":"public"
+    }
+}
