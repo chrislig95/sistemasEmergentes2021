@@ -13,7 +13,7 @@ mqtt_config = config["mqtt"]
 broker_address = mqtt_config["broker"]
 broker_tcp_port = mqtt_config["tcpPort"]
 broker_websocket_port = mqtt_config["webSocketPort"]
-topic="/python/mqtt"
+topic="/casa/interior/cocina/luces/techo"
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
 username = mqtt_config["username"]
 password = mqtt_config["password"]
@@ -41,9 +41,9 @@ def publish(client):
         
         status = result[0]
         if status == 0:
-           print(f"Send `{msg}` to topic `{topic}`")
+            print(f"Send `{msg}` to topic `{topic}`")
         else:
-           print(f"Failed to send message to topic {topic}")
+            print(f"Failed to send message to topic {topic}")
         msg_count += 1
 
 

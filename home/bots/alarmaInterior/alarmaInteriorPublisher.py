@@ -5,7 +5,7 @@ import json
 
 from paho.mqtt import client as mqtt_client
 
-with open("config.json") as config_file:
+with open("../home/bots/config.json") as config_file:
     config = json.load(config_file)
 
 mqtt_config = config["mqtt"]
@@ -13,7 +13,7 @@ mqtt_config = config["mqtt"]
 broker_address = mqtt_config["broker"]
 broker_tcp_port = mqtt_config["tcpPort"]
 broker_websocket_port = mqtt_config["webSocketPort"]
-topic="/python/mqtt"
+topic="/casa/interior/actuadores/alarma"
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
 username = mqtt_config["username"]
 password = mqtt_config["password"]
@@ -33,19 +33,10 @@ def connect_mqtt():
     return client
 
 def publish(client):
-    msg_count = 0
-    while msg_count < 30:
-        time.sleep(1)
-        msg = f"messages: {msg_count}"
+    while True:
+        time.sleep(60)
+        msg = "0"
         result = client.publish(topic, msg)
-        
-        status = result[0]
-        if status == 0:
-           print(f"Send `{msg}` to topic `{topic}`")
-        else:
-           print(f"Failed to send message to topic {topic}")
-        msg_count += 1
-
 
 def run():
     client = connect_mqtt()

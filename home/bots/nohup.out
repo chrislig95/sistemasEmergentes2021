@@ -1,0 +1,37 @@
+Traceback (most recent call last):
+  File "alarmaInterior/alarmaInteriorPublisher.py", line 8, in <module>
+    with open("../config.json") as config_file:
+FileNotFoundError: [Errno 2] No such file or directory: '../config.json'
+Traceback (most recent call last):
+  File "alarmaInterior/alarmaInteriorPublisher.py", line 8, in <module>
+    with open("../config.json") as config_file:
+FileNotFoundError: [Errno 2] No such file or directory: '../config.json'
+Traceback (most recent call last):
+  File "alarmaInterior/alarmaInteriorPublisher.py", line 8, in <module>
+    with open("../config.json") as config_file:
+FileNotFoundError: [Errno 2] No such file or directory: '../config.json'
+Traceback (most recent call last):
+  File "alarmaInterior/alarmaInteriorPublisher.py", line 8, in <module>
+    with open("../config.json") as config_file:
+FileNotFoundError: [Errno 2] No such file or directory: '../config.json'
+Traceback (most recent call last):
+  File "humo/humoPublisher.py", line 8, in <module>
+    with open("../config.json") as config_file:
+FileNotFoundError: [Errno 2] No such file or directory: '../config.json'
+Traceback (most recent call last):
+  File "alarmaInterior/alarmaInteriorPublisher.py", line 8, in <module>
+    with open("../config.json") as config_file:
+FileNotFoundError: [Errno 2] No such file or directory: '../config.json'
+Traceback (most recent call last):
+  File "alarmaInterior/alarmaInteriorPublisher.py", line 8, in <module>
+    with open("../config.json") as config_file:
+FileNotFoundError: [Errno 2] No such file or directory: '../config.json'
+Connected to MQQT Broker!
+Traceback (most recent call last):
+  File "alarmaInterior/alarmaInteriorPublisher.py", line 47, in <module>
+    run()
+  File "alarmaInterior/alarmaInteriorPublisher.py", line 44, in run
+    publish(client)
+  File "alarmaInterior/alarmaInteriorPublisher.py", line 37, in publish
+    time.sleep(60)
+KeyboardInterrupt
