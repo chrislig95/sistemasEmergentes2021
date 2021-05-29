@@ -97,13 +97,19 @@ class Mongo(object):
             #print(MONGO_COLLECTION)
             print("Humo Detectado")
             self.collection = self.database.get_collection("interiorHumo")
-            if msg.payload.decode()== 1:
+            '''if msg.payload.decode()== 1:
                 message = "Humo Detectado"
                 mail.attach(MIMEText(message, 'plain'))
                 # send the message via the server.
                 server.sendmail(mail['From'], mail['To'], mail.as_string())
                 server.quit()
-                print ("successfully sent email to %s:" % (mail['To']))
+                print ("successfully sent email to %s:" % (mail['To']))'''
+            message = "Humo Detectado"
+            mail.attach(MIMEText(message, 'plain'))
+            # send the message via the server.
+            server.sendmail(mail['From'], mail['To'], mail.as_string())
+            server.quit()
+            print ("successfully sent email to %s:" % (mail['To']))
         if search(interiorMonoxido, msg.topic):
             print("Monoxido Detectado")
             self.collection = self.database.get_collection("interiorMonoxido")
