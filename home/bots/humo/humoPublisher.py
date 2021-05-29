@@ -37,12 +37,11 @@ def connect_mqtt():
 def publish(client):
     while True:
         time.sleep(60)
-        #msg = "0"
+        #msg = 0
         msg = random.randint(0, 1)
-        result = client.publish(topic, msg)
-        if msg == "1":
-          client.publish(topicAlarm, msg)
-          client.publish(topicLuz, msg) 
+        client.publish(topic, msg)
+        client.publish(topicAlarm, msg)
+        client.publish(topicLuz, msg) 
 
 
 def run():
