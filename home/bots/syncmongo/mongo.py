@@ -8,7 +8,10 @@ import pymongo.errors
 import threading
 import os
 from re import search
-
+#libreria mails
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
 
 MONGO_URI = "mongodb+srv://admin:O3ByoOtAKMH01ZrM@sistemergentes.slhwd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"  # mongodb://user:pass@ip:port || mongodb://ip:port
 #MONGO_URI = "mongodb://127.0.0.1:27017"
@@ -23,6 +26,24 @@ MONGO_DB = os.getenv("MONGO_DB", MONGO_DB)
 MONGO_TIMEOUT = float(os.getenv("MONGO_TIMEOUT", MONGO_TIMEOUT))
 MONGO_DATETIME_FORMAT = os.getenv("MONGO_DATETIME_FORMAT", MONGO_DATETIME_FORMAT)
 STATUS = 1 # 0 apagado/1 encendido/2 error
+
+# create message object instance
+mail = MIMEMultipart() 
+message = "Thank you"
+# setup the parameters of the message
+password = "3mer63ntes"
+mail['From'] = "sistemas.emergentes2021@gmail.com"
+mail['To'] = "sistemas.emergentes2021@gmail.com"
+mail['Subject'] = "SUPER SISTEMA ROBOT"
+# add in the message body
+mail.attach(MIMEText(message, 'plain'))
+#create server
+server = smtplib.SMTP('smtp.gmail.com: 587')
+server.starttls()
+# Login Credentials for sending the mail
+server.login(mail['From'], password)
+ 
+
 
 
 class Mongo(object):
@@ -76,6 +97,13 @@ class Mongo(object):
             #print(MONGO_COLLECTION)
             print("Humo Detectado")
             self.collection = self.database.get_collection("interiorHumo")
+            if msg.payload.decode()== 1:
+                message = "Humo Detectado"
+                mail.attach(MIMEText(message, 'plain'))
+                # send the message via the server.
+                server.sendmail(mail['From'], mail['To'], mail.as_string())
+                server.quit()
+                print ("successfully sent email to %s:" % (mail['To']))
         if search(interiorMonoxido, msg.topic):
             print("Monoxido Detectado")
             self.collection = self.database.get_collection("interiorMonoxido")
