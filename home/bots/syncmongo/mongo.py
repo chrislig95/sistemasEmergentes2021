@@ -28,8 +28,7 @@ MONGO_DATETIME_FORMAT = os.getenv("MONGO_DATETIME_FORMAT", MONGO_DATETIME_FORMAT
 STATUS = 1 # 0 apagado/1 encendido/2 error
 
 # create message object instance
-mail = MIMEMultipart() 
-message = "Thank you"
+mail = MIMEMultipart()
 # setup the parameters of the message
 password = "3mer63ntes"
 mail['From'] = "sistemas.emergentes2021@gmail.com"
@@ -103,8 +102,9 @@ class Mongo(object):
                 # send the message via the server.
                 server.sendmail(mail['From'], mail['To'], mail.as_string())
                 server.quit()
-                print ("successfully sent email to %s:" % (mail['To']))'''
+                print ("successfully sent email to %s:" % (mail['To']))'''    
             message = "Humo Detectado"
+            print(msg.payload.decode())
             mail.attach(MIMEText(message, 'plain'))
             # send the message via the server.
             server.sendmail(mail['From'], mail['To'], mail.as_string())
