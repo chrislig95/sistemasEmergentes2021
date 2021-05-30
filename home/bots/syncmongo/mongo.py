@@ -29,6 +29,7 @@ STATUS = 1 # 0 apagado/1 encendido/2 error
 
 # create message object instance
 mail = MIMEMultipart()
+message = "Sistema Robot le informa"
 # setup the parameters of the message
 password = "3mer63ntes"
 mail['From'] = "sistemas.emergentes2021@gmail.com"
