@@ -1,0 +1,43 @@
+body {
+	font-family: 'Signika Negative', sans-serif;
+	margin: 0;
+}
+
+.sidebar {
+	position: absolute;
+	width: 250px;
+	height: 100%;
+	background: #333;
+	color: #fff;
+	outline: 1px solid #2a2a2a;
+}
+
+.sidebar h2 {
+	text-align: center;
+	margin: 0;
+	padding: 10px;
+	background: #2a2a2a;
+}
+
+.sidebar ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.sidebar li {
+	outline: 1px solid #2a2a2a;
+	transition: all 0.3s;
+}
+
+.sidebar li:hover {
+	background: #444;
+	border-left: 5px solid #eee;
+}
+
+.sidebar a {
+	display: block;
+	color: #fff;
+	text-decoration: none;
+	padding: 10px;
+}
