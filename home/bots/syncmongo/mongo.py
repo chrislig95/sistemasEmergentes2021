@@ -98,7 +98,7 @@ class Mongo(object):
             print("Humo Detectado")
             self.collection = self.database.get_collection("interiorHumo")
             alerta=msg.payload.decode()
-            if alerta == 1:
+            if alerta == "1":
                 message = "Humo Detectado"
                 mail.attach(MIMEText(message, 'plain'))
                 # send the message via the server.
