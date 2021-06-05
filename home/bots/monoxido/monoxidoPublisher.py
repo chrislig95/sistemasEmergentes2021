@@ -14,6 +14,8 @@ broker_address = mqtt_config["broker"]
 broker_tcp_port = mqtt_config["tcpPort"]
 broker_websocket_port = mqtt_config["webSocketPort"]
 topic="/casa/interior/sensores/monoxido"
+topicLuz="/casa/interior/actuadores/luces"
+topicAlarm="/casa/interior/actuadores/alarma"
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
 username = mqtt_config["username"]
 password = mqtt_config["password"]
@@ -35,8 +37,11 @@ def connect_mqtt():
 def publish(client):
     while True:
         time.sleep(60)
-        msg = "0"
-        result = client.publish(topic, msg)
+        #msg = "0"
+        msg = random.randint(50,90)
+        client.publish(topic, msg)
+        client.publish(topicAlarm, msg)
+        client.publish(topicLuz, msg)
 
 def run():
     client = connect_mqtt()

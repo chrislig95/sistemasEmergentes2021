@@ -1,20 +1,27 @@
 from mqttPublisherTest import connect_mqtt
 from paho.mqtt import client as mqtt_client
-topic="/casa/interior/actuadores/alarma"
 
-#topic="/casa/interior/alarma"
+topic="/casa/exterior/actuadores/lucesExterior"
+
+#topic="/casa/exterior/actuadores/lucesExterior"
 
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
         print("MensajeReceived `{msg.payload.decode()}` from `{msg.topic}` topic")
         alerta=msg.payload.decode()
         if alerta == "1":
-            #Envio señal alarma
-            print("Encender alarma")
+            #Envio señal luces
+            print("Encender luces")
         else:
-            #Envio señal alarma
-            print("Apagar alarma")
+            #Envio señal luces
+            print("Apagar luces")
          
+    client.subscribe(topic)
+    client.on_message = on_message
+def subscribe(client: mqtt_client):
+    def on_message(client, userdata, msg):
+        print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+
     client.subscribe(topic)
     client.on_message = on_message
 

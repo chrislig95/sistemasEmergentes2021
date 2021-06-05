@@ -35,8 +35,8 @@ def connect_mqtt():
 def publish(client):
     while True:
         time.sleep(60)
-        msg = "0"
-        result = client.publish(topic, msg)
+        msg = random.uniform(-55.00,150.00)
+        client.publish(topic, msg)
 
 def run():
     client = connect_mqtt()
