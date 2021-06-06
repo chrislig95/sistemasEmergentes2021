@@ -1,6 +1,7 @@
 import os
 import ssl
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 import pymongo
 import pymongo.database
@@ -43,6 +44,8 @@ class Mongo(object):
 def create_app():
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app)
+
     db = Mongo()
 
     db.connect()
