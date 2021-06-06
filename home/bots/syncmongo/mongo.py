@@ -107,7 +107,17 @@ class Mongo(object):
                 print ("successfully sent email to %s:" % (mail['To']))
         if search(interiorMonoxido, msg.topic):
             print("Monoxido Detectado")
+            #print(MONGO_COLLECTION)
             self.collection = self.database.get_collection("interiorMonoxido")
+            alerta=msg.payload.decode()
+            if alerta >= "70":
+                message = "Niveles de monoxido detectados"
+                mail.attach(MIMEText(message, 'plain'))
+                # send the message via the server.
+                server.sendmail(mail['From'], mail['To'], mail.as_string())
+                server.quit()
+                print ("successfully sent email to %s:" % (mail['To']))
+            
         if search(interiorAlarma, msg.topic):
             print("Interior Alarma Detectado")
             self.collection = self.database.get_collection("interiorAlarma")
@@ -128,6 +138,7 @@ class Mongo(object):
             self.collection = self.database.get_collection("exteriorRiego")
         if search(exteriorTemperatura, msg.topic):
             print("Exterior Temperatura")
+            #Chequear si requiere mail
             self.collection = self.database.get_collection("exteriorTemperatura")
         
         try:
