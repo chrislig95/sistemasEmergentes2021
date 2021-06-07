@@ -85,6 +85,9 @@ let TestService = class TestService {
     exteriorLuces() {
         return this.http.get('http://localhost:1000/?collectionName=exteriorLuces');
     }
+    exteriorTemperatura() {
+        return this.http.get('http://192.241.178.194:10000/?collectionName=exteriorTemperatura');
+    }
 };
 TestService.ctorParameters = () => [
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }
