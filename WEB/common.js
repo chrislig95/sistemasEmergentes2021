@@ -76,11 +76,14 @@ let TestService = class TestService {
     constructor(http) {
         this.http = http;
     }
-    test() {
-        return this.http.get('http://localhost/backendEmergentes/public/api/test');
-    }
+    // test(){
+    //  return this.http.get('http://localhost/backendEmergentes/public/api/test');
+    // }
     interiorLuces() {
         return this.http.get('http://192.241.178.194:10000/?collectionName=interiorLuces');
+    }
+    exteriorLuces() {
+        return this.http.get('http://localhost:1000/?collectionName=exteriorLuces');
     }
 };
 TestService.ctorParameters = () => [
