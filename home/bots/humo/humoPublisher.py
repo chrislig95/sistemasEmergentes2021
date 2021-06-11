@@ -38,10 +38,16 @@ def publish(client):
     while True:
         time.sleep(60)
         #msg = 0
-        msg = random.randint(0, 1)
-        client.publish(topic, msg)
-        client.publish(topicAlarm, msg)
-        client.publish(topicLuz, msg) 
+        value = random.randint(0, 100)
+        if value>50:
+            status=1
+        elif value<50:
+            status=0
+        else:
+            status=2
+        client.publish(topic,value,status)
+        client.publish(topicAlarm,value,status)
+        client.publish(topicLuz,value,status) 
 
 
 def run():

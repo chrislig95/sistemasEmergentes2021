@@ -25,7 +25,7 @@ MONGO_DB = os.getenv("MONGO_DB", MONGO_DB)
 #MONGO_COLLECTION = os.getenv("MONGO_COLLECTION", MONGO_COLLECTION)
 MONGO_TIMEOUT = float(os.getenv("MONGO_TIMEOUT", MONGO_TIMEOUT))
 MONGO_DATETIME_FORMAT = os.getenv("MONGO_DATETIME_FORMAT", MONGO_DATETIME_FORMAT)
-STATUS = 1 # 0 apagado/1 encendido/2 error
+#STATUS = 1 # 0 apagado/1 encendido/2 error
 
 # create message object instance
 mail = MIMEMultipart()
@@ -97,7 +97,8 @@ class Mongo(object):
             #print(MONGO_COLLECTION)
             print("Humo Detectado")
             self.collection = self.database.get_collection("interiorHumo")
-            alerta=msg.payload.decode()
+            #alerta=msg.payload.decode()
+            alerta=msg.status.payload.decode()
             if alerta == "1":
                 message = "Humo Detectado"
                 mail.attach(MIMEText(message, 'plain'))
@@ -109,8 +110,10 @@ class Mongo(object):
             print("Monoxido Detectado")
             #print(MONGO_COLLECTION)
             self.collection = self.database.get_collection("interiorMonoxido")
-            alerta=msg.payload.decode()
-            if alerta >= "70":
+            #alerta=msg.payload.decode()
+            alerta=msg.status.payload.decode()
+            if alerta == "1":
+            #if alerta >= "70":
                 message = "Niveles de monoxido detectados"
                 mail.attach(MIMEText(message, 'plain'))
                 # send the message via the server.
@@ -147,7 +150,7 @@ class Mongo(object):
                 "value": msg.payload.decode(),
                 # "retained": msg.retain,
                 "qos": msg.qos,
-                "status": STATUS,
+                "status": msg.status,
                 "timestamp": int(now.timestamp()),
                 "datetime": now.strftime(MONGO_DATETIME_FORMAT),
                 # TODO datetime must be fetched right when the message is received
