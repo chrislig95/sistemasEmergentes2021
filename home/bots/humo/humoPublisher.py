@@ -40,14 +40,13 @@ def publish(client):
         #msg = 0
         value = random.randint(0, 100)
         if value>50:
-            status=1
+            client.publish(topicAlarm,1)
+            client.publish(topicLuz,1) 
         elif value<50:
-            status=0
-        else:
-            status=2
-        client.publish(topic,value,status)
-        client.publish(topicAlarm,value,status)
-        client.publish(topicLuz,value,status) 
+            client.publish(topicAlarm,0)
+            client.publish(topicLuz,0) 
+        client.publish(topic,value)
+        
 
 
 def run():

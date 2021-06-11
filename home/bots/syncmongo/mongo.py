@@ -25,7 +25,7 @@ MONGO_DB = os.getenv("MONGO_DB", MONGO_DB)
 #MONGO_COLLECTION = os.getenv("MONGO_COLLECTION", MONGO_COLLECTION)
 MONGO_TIMEOUT = float(os.getenv("MONGO_TIMEOUT", MONGO_TIMEOUT))
 MONGO_DATETIME_FORMAT = os.getenv("MONGO_DATETIME_FORMAT", MONGO_DATETIME_FORMAT)
-#STATUS = 1 # 0 apagado/1 encendido/2 error
+STATUS = 1 # 0 apagado/1 encendido/2 error
 
 # create message object instance
 mail = MIMEMultipart()
@@ -97,15 +97,20 @@ class Mongo(object):
             #print(MONGO_COLLECTION)
             print("Humo Detectado")
             self.collection = self.database.get_collection("interiorHumo")
-            #alerta=msg.payload.decode()
-            alerta=msg.status.payload.decode()
-            if alerta == "1":
+            alerta=int(msg.payload.decode())
+            #alerta=msg.status.payload.decode()
+            if alerta>50:
+                status=1
                 message = "Humo Detectado"
-                mail.attach(MIMEText(message, 'plain'))
-                # send the message via the server.
-                server.sendmail(mail['From'], mail['To'], mail.as_string())
-                server.quit()
-                print ("successfully sent email to %s:" % (mail['To']))
+                
+            elif alerta<50:
+                status=0
+            else:
+                status=2
+                message = "Sensor de Humo Falla"
+
+
+
         if search(interiorMonoxido, msg.topic):
             print("Monoxido Detectado")
             #print(MONGO_COLLECTION)
@@ -150,7 +155,7 @@ class Mongo(object):
                 "value": msg.payload.decode(),
                 # "retained": msg.retain,
                 "qos": msg.qos,
-                "status": msg.status,
+                "status": STATUS,
                 "timestamp": int(now.timestamp()),
                 "datetime": now.strftime(MONGO_DATETIME_FORMAT),
                 # TODO datetime must be fetched right when the message is received
@@ -179,3 +184,10 @@ class Mongo(object):
             self._store(msg)
         else:
             self._enqueue(msg)
+    
+    def mandarmail(mail):
+        mail.attach(MIMEText(message, 'plain'))
+        # send the message via the server.
+        server.sendmail(mail['From'], mail['To'], mail.as_string())
+        server.quit()
+        print ("successfully sent email to %s:" % (mail['To']))
