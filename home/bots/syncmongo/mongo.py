@@ -59,6 +59,13 @@ class Mongo(object):
         self.database = self.client.get_database(MONGO_DB)
         #self.collection = self.database.get_collection(MONGO_COLLECTION)
 
+    def mandarMail(self):
+        mail.attach(MIMEText(message, 'plain'))
+        # send the message via the server.
+        server.sendmail(mail['From'], mail['To'], mail.as_string())
+        server.quit()
+        print ("successfully sent email to %s:" % (mail['To']))
+
     def disconnect(self):
         print("Disconnecting Mongo")
         if self.client:
@@ -102,7 +109,12 @@ class Mongo(object):
             if alerta>50:
                 status=1
                 message = "Humo Detectado"
-                
+
+                #rutina envio mail
+                mail.attach(MIMEText(message, 'plain'))
+                server.sendmail(mail['From'], mail['To'], mail.as_string())
+                server.quit()
+                print ("successfully sent email to %s:" % (mail['To']))
             elif alerta<50:
                 status=0
             else:
@@ -184,10 +196,3 @@ class Mongo(object):
             self._store(msg)
         else:
             self._enqueue(msg)
-    
-    def mandarmail(mail):
-        mail.attach(MIMEText(message, 'plain'))
-        # send the message via the server.
-        server.sendmail(mail['From'], mail['To'], mail.as_string())
-        server.quit()
-        print ("successfully sent email to %s:" % (mail['To']))
