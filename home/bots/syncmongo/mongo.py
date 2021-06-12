@@ -25,7 +25,7 @@ MONGO_DB = os.getenv("MONGO_DB", MONGO_DB)
 #MONGO_COLLECTION = os.getenv("MONGO_COLLECTION", MONGO_COLLECTION)
 MONGO_TIMEOUT = float(os.getenv("MONGO_TIMEOUT", MONGO_TIMEOUT))
 MONGO_DATETIME_FORMAT = os.getenv("MONGO_DATETIME_FORMAT", MONGO_DATETIME_FORMAT)
-STATUS = 1 # 0 apagado/1 encendido/2 error
+#STATUS = 1 # 0 apagado/1 encendido/2 error
 
 # create message object instance
 mail = MIMEMultipart()
@@ -101,14 +101,14 @@ class Mongo(object):
             if alerta>50:
                 status=1
                 print("trigger: ",alerta)
-                '''
+                
                 #envio mail
                 message = "Humo Detectado"
                 mail.attach(MIMEText(message, 'plain'))
                 server.sendmail(mail['From'], mail['To'], mail.as_string())
                 server.quit()
                 print ("successfully sent email to %s:" % (mail['To']))
-                '''
+                
             elif alerta<50:
                 status=0
             else:
@@ -163,7 +163,7 @@ class Mongo(object):
                 "value": msg.payload.decode(),
                 # "retained": msg.retain,
                 "qos": msg.qos,
-                "status": STATUS,
+                "status": status,
                 "timestamp": int(now.timestamp()),
                 "datetime": now.strftime(MONGO_DATETIME_FORMAT),
                 # TODO datetime must be fetched right when the message is received
