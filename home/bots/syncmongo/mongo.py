@@ -26,7 +26,7 @@ MONGO_DB = os.getenv("MONGO_DB", MONGO_DB)
 MONGO_TIMEOUT = float(os.getenv("MONGO_TIMEOUT", MONGO_TIMEOUT))
 MONGO_DATETIME_FORMAT = os.getenv("MONGO_DATETIME_FORMAT", MONGO_DATETIME_FORMAT)
 STATUS = 1 # 0 apagado/1 encendido/2 error
-
+'''
 # create message object instance
 mail = MIMEMultipart()
 message = "Sistema Robot le informa "
@@ -39,7 +39,6 @@ mail['Subject'] = "SUPER SISTEMA ROBOT"
 mail.attach(MIMEText(message, 'plain'))
 #create server
 server = smtplib.SMTP('smtp.gmail.com: 587')
-'''
 server.starttls()
 # Login Credentials for sending the mail
 server.login(mail['From'], password)
@@ -100,6 +99,18 @@ class Mongo(object):
             self.collection = self.database.get_collection("interiorHumo")
             alerta=msg.payload.decode()
             if alerta == "1":
+                # create message object instance
+                mail = MIMEMultipart()
+                message = "Sistema Robot le informa "
+                # setup the parameters of the message
+                password = "3mer63ntes"
+                mail['From'] = "sistemas.emergentes2021@gmail.com"
+                mail['To'] = "sistemas.emergentes2021@gmail.com"
+                mail['Subject'] = "SUPER SISTEMA ROBOT"
+                # add in the message body
+                mail.attach(MIMEText(message, 'plain'))
+                #create server
+                server = smtplib.SMTP('smtp.gmail.com: 587')
                 server.starttls()
                 # Login Credentials for sending the mail
                 server.login(mail['From'], password)
@@ -109,6 +120,9 @@ class Mongo(object):
                 server.sendmail(mail['From'], mail['To'], mail.as_string())
                 server.quit()
                 print ("successfully sent email to %s:" % (mail['To']))
+                del message
+                del mail
+                del server
         if search(interiorMonoxido, msg.topic):
             print("Monoxido Detectado")
             self.collection = self.database.get_collection("interiorMonoxido")
