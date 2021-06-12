@@ -94,11 +94,10 @@ class Mongo(object):
         exteriorTemperatura = "temperatura"
 
         if search(interiorHumo, msg.topic):
-            #print(MONGO_COLLECTION)
             print("Humo Detectado")
             self.collection = self.database.get_collection("interiorHumo")
-            alerta=msg.payload.decode()
-            if alerta == "1":
+            alerta=int(msg.payload.decode())
+            if alerta >= 50:
                 # create message object instance
                 mail = MIMEMultipart()
                 message = "Sistema Robot le informa "
@@ -123,6 +122,11 @@ class Mongo(object):
                 del message
                 del mail
                 del server
+                status=1
+            elif alerta<50:
+                status=0
+            else:
+                status=2
         if search(interiorMonoxido, msg.topic):
             print("Monoxido Detectado")
             self.collection = self.database.get_collection("interiorMonoxido")
@@ -154,7 +158,7 @@ class Mongo(object):
                 "value": msg.payload.decode(),
                 # "retained": msg.retain,
                 "qos": msg.qos,
-                "status": STATUS,
+                "status": status,
                 "timestamp": int(now.timestamp()),
                 "datetime": now.strftime(MONGO_DATETIME_FORMAT),
                 # TODO datetime must be fetched right when the message is received
