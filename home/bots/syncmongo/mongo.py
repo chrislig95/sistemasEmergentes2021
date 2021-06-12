@@ -187,7 +187,7 @@ class Mongo(object):
             print("Exterior Temperatura")
             self.collection = self.database.get_collection("exteriorTemperatura")
             alerta=int(msg.payload.decode())
-            if ((alerta >= 20) or (alerta<=35)):
+            if ((alerta >= 20) and (alerta<=35)):
                 # create message object instance
                 mail = MIMEMultipart()
                 message = "Sistema Robot le informa "
