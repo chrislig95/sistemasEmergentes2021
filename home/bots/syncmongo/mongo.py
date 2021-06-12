@@ -186,7 +186,7 @@ class Mongo(object):
         if search(exteriorTemperatura, msg.topic):
             print("Exterior Temperatura")
             self.collection = self.database.get_collection("exteriorTemperatura")
-            alerta=int(msg.payload.decode())
+            alerta=float(msg.payload.decode())
             if ((alerta >= 20) and (alerta<=35)):
                 # create message object instance
                 mail = MIMEMultipart()
