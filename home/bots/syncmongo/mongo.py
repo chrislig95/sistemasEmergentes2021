@@ -127,6 +127,7 @@ class Mongo(object):
                 status=0
             else:
                 status=2
+            
         if search(interiorMonoxido, msg.topic):
             print("Monoxido Detectado")
             self.collection = self.database.get_collection("interiorMonoxido")
