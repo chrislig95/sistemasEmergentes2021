@@ -113,7 +113,7 @@ class Mongo(object):
                 server.starttls()
                 # Login Credentials for sending the mail
                 server.login(mail['From'], password)
-                message = ("Humo Detectado "+ alerta)
+                message = ("Humo Detectado " + str(alerta))
                 mail.attach(MIMEText(message, 'plain'))
                 # send the message via the server.
                 server.sendmail(mail['From'], mail['To'], mail.as_string())
