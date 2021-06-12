@@ -39,10 +39,11 @@ mail['Subject'] = "SUPER SISTEMA ROBOT"
 mail.attach(MIMEText(message, 'plain'))
 #create server
 server = smtplib.SMTP('smtp.gmail.com: 587')
+'''
 server.starttls()
 # Login Credentials for sending the mail
 server.login(mail['From'], password)
- 
+'''
 
 
 
