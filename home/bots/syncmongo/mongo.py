@@ -99,6 +99,9 @@ class Mongo(object):
             self.collection = self.database.get_collection("interiorHumo")
             alerta=msg.payload.decode()
             if alerta == "1":
+                server.starttls()
+                # Login Credentials for sending the mail
+                server.login(mail['From'], password)
                 message = "Humo Detectado"
                 mail.attach(MIMEText(message, 'plain'))
                 # send the message via the server.
