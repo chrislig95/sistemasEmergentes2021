@@ -98,16 +98,17 @@ class Mongo(object):
             print("Humo Detectado")
             self.collection = self.database.get_collection("interiorHumo")
             alerta=int(msg.payload.decode())
-            #alerta=msg.status.payload.decode()
             if alerta>50:
                 status=1
                 print("trigger: ",alerta)
+                '''
+                #envio mail
                 message = "Humo Detectado"
-                #rutina envio mail
                 mail.attach(MIMEText(message, 'plain'))
                 server.sendmail(mail['From'], mail['To'], mail.as_string())
                 server.quit()
                 print ("successfully sent email to %s:" % (mail['To']))
+                '''
             elif alerta<50:
                 status=0
             else:
@@ -122,6 +123,7 @@ class Mongo(object):
             self.collection = self.database.get_collection("interiorMonoxido")
             #alerta=msg.payload.decode()
             alerta=msg.status.payload.decode()
+            '''
             if alerta == "1":
             #if alerta >= "70":
                 message = "Niveles de monoxido detectados"
@@ -130,6 +132,7 @@ class Mongo(object):
                 server.sendmail(mail['From'], mail['To'], mail.as_string())
                 server.quit()
                 print ("successfully sent email to %s:" % (mail['To']))
+            '''
             
         if search(interiorAlarma, msg.topic):
             print("Interior Alarma Detectado")
