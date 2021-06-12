@@ -38,10 +38,17 @@ def publish(client):
     while True:
         time.sleep(60)
         #msg = "0"
-        msg = random.randint(50,90)
-        client.publish(topic, msg)
-        client.publish(topicAlarm, msg)
-        client.publish(topicLuz, msg)
+        msg = random.randint(900,1500)
+        #value = random.randint(0, 100)
+        if msg>1200:
+            client.publish(topicAlarm,1)
+            client.publish(topicLuz,1) 
+        else:
+            client.publish(topicAlarm,0)
+            client.publish(topicLuz,0) 
+        client.publish(topic,msg)
+
+
 
 def run():
     client = connect_mqtt()
