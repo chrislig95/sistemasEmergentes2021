@@ -25,10 +25,8 @@ MONGO_DB = os.getenv("MONGO_DB", MONGO_DB)
 #MONGO_COLLECTION = os.getenv("MONGO_COLLECTION", MONGO_COLLECTION)
 MONGO_TIMEOUT = float(os.getenv("MONGO_TIMEOUT", MONGO_TIMEOUT))
 MONGO_DATETIME_FORMAT = os.getenv("MONGO_DATETIME_FORMAT", MONGO_DATETIME_FORMAT)
-#STATUS = 1 # 0 apagado/1 encendido/2 error
+STATUS = 1 # 0 apagado/1 encendido/2 error
 
-
-'''
 # create message object instance
 mail = MIMEMultipart()
 message = "Sistema Robot le informa "
@@ -44,7 +42,7 @@ server = smtplib.SMTP('smtp.gmail.com: 587')
 server.starttls()
 # Login Credentials for sending the mail
 server.login(mail['From'], password)
-'''
+ 
 
 
 
@@ -99,58 +97,17 @@ class Mongo(object):
             #print(MONGO_COLLECTION)
             print("Humo Detectado")
             self.collection = self.database.get_collection("interiorHumo")
-            alerta=int(msg.payload.decode())
-            if alerta>50:
-                status=1
-                print("trigger: ",alerta)
-                
-                # create message object instance
-                mail = MIMEMultipart()
-                message = "Sistema Robot le informa "
-                # setup the parameters of the message
-                password = "3mer63ntes"
-                mail['From'] = "sistemas.emergentes2021@gmail.com"
-                mail['To'] = "sistemas.emergentes2021@gmail.com"
-                mail['Subject'] = "SUPER SISTEMA ROBOT"
-                # add in the message body
-                mail.attach(MIMEText(message, 'plain'))
-                #create server
-                server = smtplib.SMTP('smtp.gmail.com: 587')
-                server.starttls()
-                # Login Credentials for sending the mail
-                server.login(mail['From'], password)
-                #envio mail
-                message = "Humo Detectado con valor ",alerta
-                mail.attach(MIMEText(message, 'plain'))
-                server.sendmail(mail['From'], mail['To'], mail.as_string())
-                server.quit()
-                print ("successfully sent email to %s:" % (mail['To']))
-                
-            elif alerta<50:
-                status=0
-            else:
-                status=2
-                message = "Sensor de Humo Falla"
-
-
-
-        if search(interiorMonoxido, msg.topic):
-            print("Monoxido Detectado")
-            #print(MONGO_COLLECTION)
-            self.collection = self.database.get_collection("interiorMonoxido")
-            #alerta=msg.payload.decode()
-            alerta=msg.status.payload.decode()
-            '''
+            alerta=msg.payload.decode()
             if alerta == "1":
-            #if alerta >= "70":
-                message = "Niveles de monoxido detectados"
+                message = "Humo Detectado"
                 mail.attach(MIMEText(message, 'plain'))
                 # send the message via the server.
                 server.sendmail(mail['From'], mail['To'], mail.as_string())
                 server.quit()
                 print ("successfully sent email to %s:" % (mail['To']))
-            '''
-            
+        if search(interiorMonoxido, msg.topic):
+            print("Monoxido Detectado")
+            self.collection = self.database.get_collection("interiorMonoxido")
         if search(interiorAlarma, msg.topic):
             print("Interior Alarma Detectado")
             self.collection = self.database.get_collection("interiorAlarma")
@@ -171,7 +128,6 @@ class Mongo(object):
             self.collection = self.database.get_collection("exteriorRiego")
         if search(exteriorTemperatura, msg.topic):
             print("Exterior Temperatura")
-            #Chequear si requiere mail
             self.collection = self.database.get_collection("exteriorTemperatura")
         
         try:
@@ -180,7 +136,7 @@ class Mongo(object):
                 "value": msg.payload.decode(),
                 # "retained": msg.retain,
                 "qos": msg.qos,
-                #"status": status,
+                "status": STATUS,
                 "timestamp": int(now.timestamp()),
                 "datetime": now.strftime(MONGO_DATETIME_FORMAT),
                 # TODO datetime must be fetched right when the message is received
