@@ -14,14 +14,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _raw_loader_tab3_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./tab3.page.html */ "h1hx");
 /* harmony import */ var _tab3_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tab3.page.scss */ "nRCe");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _test_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../test.service */ "9UZm");
+
 
 
 
 
 let Tab3Page = class Tab3Page {
-    constructor() { }
+    constructor(testService) {
+        this.testService = testService;
+    }
+    ngOnInit() {
+        // this.ultimasdiez = JSON.parse(this.getData2())
+        // console.log(this.ultimasdiez)
+        this.getData();
+    }
+    getData() {
+        this.testService.interiorHumo().subscribe(res => {
+            console.log(res);
+            this.ultimasdiez = res;
+        }, error => {
+            console.log(error);
+        });
+    }
 };
-Tab3Page.ctorParameters = () => [];
+Tab3Page.ctorParameters = () => [
+    { type: _test_service__WEBPACK_IMPORTED_MODULE_4__["TestService"] }
+];
 Tab3Page = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
         selector: 'app-tab3',
@@ -80,7 +99,7 @@ Tab3PageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Riego\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <ion-card>\n    <ion-card-header>\n      Riegos\n    </ion-card-header>\n    <ion-item>\n      <ion-label>1</ion-label>\n      <ion-toggle color=\"primary\">Cuarto Principal</ion-toggle>\n    </ion-item>\n    <ion-item>\n      <ion-label>2</ion-label>\n      <ion-toggle color=\"primary\">Cocina</ion-toggle>\n\n    </ion-item>\n    <ion-item>\n      <ion-label>3</ion-label>\n      <ion-toggle color=\"primary\">Patio</ion-toggle>\n\n    </ion-item>\n    <ion-item>\n      <ion-label>4</ion-label>\n  <ion-toggle color=\"primary\">Living</ion-toggle>\n\n    </ion-item>\n  </ion-card>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Humo\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <div class=\"container-fluid\">\n    <ion-row>\n      <ion-col>\n        <button class=\"btn btn-primary\" (click)=\"getData()\">Actualizar  </button>\n      </ion-col>\n    </ion-row>\n\n    <div class=\"row my-5 justify-content-center \">\n        <div class=\"col-12  my-5 d-flex justify-content-center\">\n            <div class=\"card\" color=\"primary\" style=\"border:none;\">\n                <i _ngcontent-hjf-c2=\"\" class=\"fas fa-temperature-high\" style=\"font-size: 30vh;\"></i>\n              \n            </div>\n            <ion-card *ngFor=\"let humo of ultimasdiez\"> \n              <ion-card-header>\n                <span style=\"font-size: 4vh;\"  [ngClass]=\"humo.value > 50 ? 'carddanger' : 'cardok'\"> {{humo.value | number }}\n                  <ion-icon name=\"alert-outline\" style=\"font-size: 30px;\" *ngIf=\"humo.value > 50\"></ion-icon>\n\n                 </span>\n              </ion-card-header>\n                <ion-badge color=\"secondary\" >{{humo.datetime}}</ion-badge> \n\n              <!-- <ion-input type=\"number\"  [(ngModel)]=\"temperatura.value\" ></ion-input> -->\n              <!-- <ion-badge color=\"secondary\">\n\n                <ion-icon name=\"snow-outline\" style=\"font-size: 30px;\" *ngIf=\"humo.value < 0\"></ion-icon>\n              </ion-badge>\n              <ion-badge color=\"warning\">\n\n                <ion-icon name=\"sunny-outline\" style=\"font-size: 30px;\" *ngIf=\"humo.value > 0\"></ion-icon>\n              </ion-badge> -->\n            \n            </ion-card>\n          \n        \n        </div>\n    </div>\n\n</div>\n</ion-content>\n");
 
 /***/ }),
 
@@ -141,7 +160,7 @@ Tab3PageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ0YWIzLnBhZ2Uuc2NzcyJ9 */");
+/* harmony default export */ __webpack_exports__["default"] = (".carddanger {\n  color: red;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXHRhYjMucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUdBO0VBQ0ksVUFBQTtBQUZKIiwiZmlsZSI6InRhYjMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNhcmRva3tcclxuICAgIC8vIGJhY2tncm91bmQtY29sb3I6IGdyZWVuO1xyXG59XHJcbi5jYXJkZGFuZ2Vye1xyXG4gICAgY29sb3I6IHJlZDtcclxuXHJcbn0iXX0= */");
 
 /***/ })
 

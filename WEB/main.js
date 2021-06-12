@@ -392,6 +392,14 @@ const routes = [
     {
         path: '',
         loadChildren: () => __webpack_require__.e(/*! import() | tabs-tabs-module */ "tabs-tabs-module").then(__webpack_require__.bind(null, /*! ./tabs/tabs.module */ "hO9l")).then(m => m.TabsPageModule)
+    },
+    {
+        path: 'tab4',
+        loadChildren: () => Promise.all(/*! import() | tab4-tab4-module */[__webpack_require__.e("common"), __webpack_require__.e("tab4-tab4-module")]).then(__webpack_require__.bind(null, /*! ./tab4/tab4.module */ "1GDv")).then(m => m.Tab4PageModule)
+    },
+    {
+        path: 'tab5',
+        loadChildren: () => Promise.all(/*! import() | tab5-tab5-module */[__webpack_require__.e("common"), __webpack_require__.e("tab5-tab5-module")]).then(__webpack_require__.bind(null, /*! ./tab5/tab5.module */ "Sa0/")).then(m => m.Tab5PageModule)
     }
 ];
 let AppRoutingModule = class AppRoutingModule {

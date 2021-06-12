@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-tabs>\n\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"tab1\">\n      <ion-icon name=\"contrast\"></ion-icon>\n      <ion-label>Luces</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"tab2\">\n      <ion-icon name=\"thermometer\"></ion-icon>\n      <ion-label>Temperatura</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"tab3\">\n      <ion-icon name=\"leaf\"></ion-icon>\n      <ion-label>Riego</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"tab3\">\n      <ion-icon name=\"alert-outline\"></ion-icon>\n      <ion-label>Seguridad</ion-label>\n    </ion-tab-button>\n  </ion-tab-bar>\n \n</ion-tabs>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-tabs>\n\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"tab1\">\n      <ion-icon name=\"contrast\"></ion-icon>\n      <ion-label>Luces</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"tab2\">\n      <ion-icon name=\"thermometer\"></ion-icon>\n      <ion-label>Temperatura</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"tab3\">\n      <ion-icon name=\"leaf\"></ion-icon>\n      <ion-label>Humo</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"tab4\">\n      <ion-icon name=\"alert-outline\"></ion-icon>\n      <ion-label>Monoxido</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"tab5\">\n      <ion-icon name=\"alarm-outline\"></ion-icon>\n      <ion-label>Alarma</ion-label>\n    </ion-tab-button>\n  </ion-tab-bar>\n \n</ion-tabs>\n");
 
 /***/ }),
 
@@ -136,6 +136,14 @@ const routes = [
             {
                 path: 'tab3',
                 loadChildren: () => Promise.all(/*! import() | tab3-tab3-module */[__webpack_require__.e("common"), __webpack_require__.e("tab3-tab3-module")]).then(__webpack_require__.bind(null, /*! ../tab3/tab3.module */ "k+ul")).then(m => m.Tab3PageModule)
+            },
+            {
+                path: 'tab4',
+                loadChildren: () => Promise.all(/*! import() | tab4-tab4-module */[__webpack_require__.e("common"), __webpack_require__.e("tab4-tab4-module")]).then(__webpack_require__.bind(null, /*! ../tab4/tab4.module */ "1GDv")).then(m => m.Tab4PageModule)
+            },
+            {
+                path: 'tab5',
+                loadChildren: () => Promise.all(/*! import() | tab5-tab5-module */[__webpack_require__.e("common"), __webpack_require__.e("tab5-tab5-module")]).then(__webpack_require__.bind(null, /*! ../tab5/tab5.module */ "Sa0/")).then(m => m.Tab5PageModule)
             },
             {
                 path: '',
