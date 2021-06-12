@@ -92,6 +92,8 @@ class Mongo(object):
         exteriorLuzSolar = "luzsolar"
         exteriorRiego = "riego"
         exteriorTemperatura = "temperatura"
+        
+        status=0
 
         if search(interiorHumo, msg.topic):
             print("Humo Detectado")
@@ -129,6 +131,7 @@ class Mongo(object):
                 status=2
             
         if search(interiorMonoxido, msg.topic):
+            status=0
             print("Monoxido Detectado")
             self.collection = self.database.get_collection("interiorMonoxido")
         if search(interiorAlarma, msg.topic):
