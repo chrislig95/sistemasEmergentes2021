@@ -26,33 +26,18 @@ MONGO_DB = os.getenv("MONGO_DB", MONGO_DB)
 MONGO_TIMEOUT = float(os.getenv("MONGO_TIMEOUT", MONGO_TIMEOUT))
 MONGO_DATETIME_FORMAT = os.getenv("MONGO_DATETIME_FORMAT", MONGO_DATETIME_FORMAT)
 STATUS = 1 # 0 apagado/1 encendido/2 error
-'''
-# create message object instance
-mail = MIMEMultipart()
-message = "Sistema Robot le informa "
-# setup the parameters of the message
-password = "3mer63ntes"
-mail['From'] = "sistemas.emergentes2021@gmail.com"
-mail['To'] = "sistemas.emergentes2021@gmail.com"
-mail['Subject'] = "SUPER SISTEMA ROBOT"
-# add in the message body
-mail.attach(MIMEText(message, 'plain'))
-#create server
-server = smtplib.SMTP('smtp.gmail.com: 587')
-server.starttls()
-# Login Credentials for sending the mail
-server.login(mail['From'], password)
-'''
+
 def mandarMail(mensaje):
     # create message object instance
     mail = MIMEMultipart()
     message = "Sistema Robot le informa "
     # setup the parameters of the message
+    #password = "3mer63ntes"
+    #mail['From'] = "sistemas.emergentes2021@gmail.com"
+    #mail['To'] = "sistemas.emergentes2021@gmail.com"
     password = "Usal2021"
     mail['From'] = "sistemasemergentes2@gmail.com"
     mail['To'] = "sistemasemergentes2@gmail.com"
-    #mail['From'] = "sistemas.emergentes2021@gmail.com"
-    #mail['To'] = "sistemas.emergentes2021@gmail.com"
     mail['Subject'] = "SUPER SISTEMA ROBOT"
     # add in the message body
     mail.attach(MIMEText(message, 'plain'))
@@ -127,36 +112,8 @@ class Mongo(object):
             self.collection = self.database.get_collection("interiorHumo")
             alerta=int(msg.payload.decode())
             if alerta >= 50:
-                
                 message = ("Humo Detectado " + str(alerta))
                 mandarMail(message)
-
-                '''
-                # create message object instance
-                mail = MIMEMultipart()
-                message = "Sistema Robot le informa "
-                # setup the parameters of the message
-                password = "3mer63ntes"
-                mail['From'] = "sistemas.emergentes2021@gmail.com"
-                mail['To'] = "sistemas.emergentes2021@gmail.com"
-                mail['Subject'] = "SUPER SISTEMA ROBOT"
-                # add in the message body
-                mail.attach(MIMEText(message, 'plain'))
-                #create server
-                server = smtplib.SMTP('smtp.gmail.com: 587')
-                server.starttls()
-                # Login Credentials for sending the mail
-                server.login(mail['From'], password)
-                message = ("Humo Detectado " + str(alerta))
-                mail.attach(MIMEText(message, 'plain'))
-                # send the message via the server.
-                server.sendmail(mail['From'], mail['To'], mail.as_string())
-                server.quit()
-                print ("successfully sent email to %s:" % (mail['To']))
-                del message
-                del mail
-                del server
-                '''
                 status=1
             elif alerta<50:
                 status=0
@@ -169,36 +126,8 @@ class Mongo(object):
             self.collection = self.database.get_collection("interiorMonoxido")
             alerta=int(msg.payload.decode())
             if alerta >= 1200:
-
                 message = ("Monoxido Detectado "+ str(alerta))
                 mandarMail(message)
-
-                '''
-                # create message object instance
-                mail = MIMEMultipart()
-                message = "Sistema Robot le informa "
-                # setup the parameters of the message
-                password = "3mer63ntes"
-                mail['From'] = "sistemas.emergentes2021@gmail.com"
-                mail['To'] = "sistemas.emergentes2021@gmail.com"
-                mail['Subject'] = "SUPER SISTEMA ROBOT"
-                # add in the message body
-                mail.attach(MIMEText(message, 'plain'))
-                #create server
-                server = smtplib.SMTP('smtp.gmail.com: 587')
-                server.starttls()
-                # Login Credentials for sending the mail
-                server.login(mail['From'], password)
-                message = ("Monoxido Detectado " + str(alerta))
-                mail.attach(MIMEText(message, 'plain'))
-                # send the message via the server.
-                server.sendmail(mail['From'], mail['To'], mail.as_string())
-                server.quit()
-                print ("successfully sent email to %s:" % (mail['To']))
-                del message
-                del mail
-                del server
-                '''
                 status=1
             elif alerta<1200:
                 status=0
@@ -226,105 +155,17 @@ class Mongo(object):
             print("Exterior Temperatura")
             self.collection = self.database.get_collection("exteriorTemperatura")
             alerta=float(msg.payload.decode())
-            #alerta=int(msg.payload.decode())
             if ((alerta >= 20) and (alerta<=35)):
-
                 message = ("Temperatura Agradable "+ str(alerta))
                 mandarMail(message)
-
-                '''                
-                # create message object instance
-                mail = MIMEMultipart()
-                message = "Sistema Robot le informa "
-                # setup the parameters of the message
-                password = "3mer63ntes"
-                mail['From'] = "sistemas.emergentes2021@gmail.com"
-                mail['To'] = "sistemas.emergentes2021@gmail.com"
-                mail['Subject'] = "SUPER SISTEMA ROBOT"
-                # add in the message body
-                mail.attach(MIMEText(message, 'plain'))
-                #create server
-                server = smtplib.SMTP('smtp.gmail.com: 587')
-                server.starttls()
-                # Login Credentials for sending the mail
-                server.login(mail['From'], password)
-                message = ("Temperatura Agradable " + str(alerta))
-                mail.attach(MIMEText(message, 'plain'))
-                # send the message via the server.
-                server.sendmail(mail['From'], mail['To'], mail.as_string())
-                server.quit()
-                print ("successfully sent email to %s:" % (mail['To']))
-                del message
-                del mail
-                del server
-                '''
                 status=1
             elif alerta<20:
-
                 message = ("Hace frio y estoy lejos de casa " + str(alerta))
                 mandarMail(message)
-
-                '''
-                # create message object instance
-                mail = MIMEMultipart()
-                message = "Sistema Robot le informa "
-                # setup the parameters of the message
-                password = "3mer63ntes"
-                mail['From'] = "sistemas.emergentes2021@gmail.com"
-                mail['To'] = "sistemas.emergentes2021@gmail.com"
-                mail['Subject'] = "SUPER SISTEMA ROBOT"
-                # add in the message body
-                mail.attach(MIMEText(message, 'plain'))
-                #create server
-                server = smtplib.SMTP('smtp.gmail.com: 587')
-                server.starttls()
-                # Login Credentials for sending the mail
-                server.login(mail['From'], password)
-                message = ("Hace frio y estoy lejos de casa " + str(alerta))
-                mail.attach(MIMEText(message, 'plain'))
-                # send the message via the server.
-                server.sendmail(mail['From'], mail['To'], mail.as_string())
-                server.quit()
-                print ("successfully sent email to %s:" % (mail['To']))
-                del message
-                del mail
-                del server
-                '''
-
                 status=1
             else:
-
                 message = ("Alto calor " + str(alerta))
                 mandarMail(message)
-
-
-                '''                
-                # create message object instance
-                mail = MIMEMultipart()
-                message = "Sistema Robot le informa "
-                # setup the parameters of the message
-                password = "3mer63ntes"
-                mail['From'] = "sistemas.emergentes2021@gmail.com"
-                mail['To'] = "sistemas.emergentes2021@gmail.com"
-                mail['Subject'] = "SUPER SISTEMA ROBOT"
-                # add in the message body
-                mail.attach(MIMEText(message, 'plain'))
-                #create server
-                server = smtplib.SMTP('smtp.gmail.com: 587')
-                server.starttls()
-                # Login Credentials for sending the mail
-                server.login(mail['From'], password)
-                message = ("Alto calor " + str(alerta))
-                mail.attach(MIMEText(message, 'plain'))
-                # send the message via the server.
-                server.sendmail(mail['From'], mail['To'], mail.as_string())
-                server.quit()
-                print ("successfully sent email to %s:" % (mail['To']))
-                del message
-                del mail
-                del server
-                '''
-
                 status=1
         
         try:
