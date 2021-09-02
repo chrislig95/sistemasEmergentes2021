@@ -5,25 +5,24 @@ import time
 import json
 from paho.mqtt import client as mqtt_client
 
-# with open("../home/bots/config.json") as config_file:
-#     config = json.load(config_file)
+with open("../home/bots/config.json") as config_file:
+    config = json.load(config_file)
 
-# mqtt_config = config["mqtt"]
+mqtt_config = config["mqtt"]
 
-# broker_address = mqtt_config["broker"]
-# broker_tcp_port = mqtt_config["tcpPort"]
-# broker_websocket_port = mqtt_config["webSocketPort"]
-# topic="/casa/interior/actuadores/luces"
+broker_address = mqtt_config["broker"]
+broker_tcp_port = mqtt_config["tcpPort"]
+broker_websocket_port = mqtt_config["webSocketPort"]
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
-# username = mqtt_config["username"]
-# password = mqtt_config["password"]
+username = mqtt_config["username"]
+password = mqtt_config["password"]
 
-MQTT_BROKER = "192.241.178.194"
-#MQTT_BROKER = "test.mosquitto.org"
-MQTT_PORT = 2096
-#MQTT_PORT = 1883
-MQTT_KEEPALIVE = 60
-MQTT_QOS = 2
+# MQTT_BROKER = "192.241.178.194"
+# #MQTT_BROKER = "test.mosquitto.org"
+# MQTT_PORT = 2096
+# #MQTT_PORT = 1883
+# MQTT_KEEPALIVE = 60
+# MQTT_QOS = 2
 topicLuz = ("casa/interior/ambiente1/luz")
 topicTemperatura = ("casa/interior/ambiente1/temperatura")
 
@@ -38,7 +37,7 @@ def connect_mqtt():
     client = mqtt_client.Client(client_id)
     #client.username_pw_set(username, password)
     client.on_connect = on_connect
-    client.connect(MQTT_BROKER, MQTT_PORT)
+    client.connect(broker_address, broker_tcp_port)
     return client
 
 def publish(client):
