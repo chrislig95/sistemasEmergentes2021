@@ -5,7 +5,7 @@ import time
 import json
 from paho.mqtt import client as mqtt_client
 
-with open("../home/bots/config.json") as config_file:
+with open("./home/bots/config.json") as config_file:
     config = json.load(config_file)
 
 mqtt_config = config["mqtt"]
@@ -35,14 +35,13 @@ def connect_mqtt():
 
     # Set Connecting Client ID
     client = mqtt_client.Client(client_id)
-    #client.username_pw_set(username, password)
+    client.username_pw_set(username, password)
     client.on_connect = on_connect
     client.connect(broker_address, broker_tcp_port)
     return client
 
 def publish(client):
     print('publishing')
-    print(client)
     while True:
         time.sleep(5)
         msgLuz=getJsonLuz()
@@ -63,7 +62,7 @@ def getJsonTemperatura():
     msg = {}
     msg["ambiente"] = 1
     msg["tipo"] = 'TEMPERATURA'
-    msg["value"] = random.random() * 100
+    msg["value"] = random.uniform(0,35)
     return json.dumps(msg)
 
 def run():
