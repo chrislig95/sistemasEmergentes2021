@@ -18,13 +18,11 @@ import smtplib
 MONGO_URI = "mongodb+srv://admin:O3ByoOtAKMH01ZrM@sistemergentes.slhwd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"  # mongodb://user:pass@ip:port || mongodb://ip:port
 #MONGO_URI = "mongodb://127.0.0.1:27017"
 MONGO_DB = "domotica"
-#MONGO_COLLECTION = "mqtt"
 MONGO_TIMEOUT = 1  # Time in seconds
 MONGO_DATETIME_FORMAT = "%d/%m/%Y %H:%M:%S"
 
 MONGO_URI = os.getenv("MONGO_URI", MONGO_URI)
 MONGO_DB = os.getenv("MONGO_DB", MONGO_DB)
-#MONGO_COLLECTION = os.getenv("MONGO_COLLECTION", MONGO_COLLECTION)
 MONGO_TIMEOUT = float(os.getenv("MONGO_TIMEOUT", MONGO_TIMEOUT))
 MONGO_DATETIME_FORMAT = os.getenv("MONGO_DATETIME_FORMAT", MONGO_DATETIME_FORMAT)
 STATUS = 1 # 0 apagado/1 encendido/2 error
@@ -68,6 +66,8 @@ MQTT_PORT = 2096
 #MQTT_PORT = 1883
 MQTT_KEEPALIVE = 60
 MQTT_QOS = 2
+MQTT_USERNAME = ''
+MQTT_PASSWORD = 'public'
 
 LIMITE_TEMPERATURA = 25
 
@@ -86,7 +86,7 @@ def connect_mqtt():
 
     # Set Connecting Client ID
     client = mqtt.Client(client_id)
-    #client.username_pw_set(username, password)
+    client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
     client.on_connect = on_connect
     client.connect(MQTT_BROKER, MQTT_PORT)
     return client
@@ -103,7 +103,6 @@ class Mongo(object):
         print("Connecting Mongo")
         self.client = pymongo.MongoClient(MONGO_URI, serverSelectionTimeoutMS=MONGO_TIMEOUT*1000.0)
         self.database = self.client.get_database(MONGO_DB)
-        #self.collection = self.database.get_collection(MONGO_COLLECTION)
 
     def disconnect(self):
         print("Disconnecting Mongo")
@@ -120,6 +119,11 @@ class Mongo(object):
             return False
         else:
             return True
+
+    def _enqueue(self, msg: mqtt.MQTTMessage):
+        print("Enqueuing")
+        self.queue.append(msg)
+        # TODO process queue
 
     def __store_thread_f(self, msg: mqtt.MQTTMessage):
         print("Storing")
