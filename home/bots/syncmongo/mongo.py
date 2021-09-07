@@ -70,10 +70,16 @@ MQTT_USERNAME = ''
 MQTT_PASSWORD = 'public'
 
 LIMITE_TEMPERATURA = 25
+LIMITE_HUMEDAD = 300
+LIMITE_HUMO = 50
+LIMITE_MONOXIDO = 1200
 
 TIPO_TEMPERATURA = 'TEMPERATURA'
 TIPO_LUZ = 'LUZ'
 TIPO_VENTILADOR = 'VENTILADOR'
+TIPO_HUMEDAD = 'HUMEDAD'
+TIPO_MONOXIDO = 'MONOXIDO'
+TIPO_HUMO = 'HUMO'
 
 def connect_mqtt():
     def on_connect(client, userdata, flags, returnCode):
@@ -135,10 +141,19 @@ class Mongo(object):
 
         tipoMensaje = payloadJson["tipo"]
         valueMensaje = payloadJson["value"]
-        if(tipoMensaje == 'TEMPERATURA'):
-            temperatura = payloadJson["value"]
-            if(temperatura >= LIMITE_TEMPERATURA):
-                self.publishVentilador(payloadJson["ambiente"])
+
+        if(tipoMensaje == TIPO_TEMPERATURA):
+            if(valueMensaje >= LIMITE_TEMPERATURA):
+                self.publishVentilador(valueMensaje)
+        
+        if(tipoMensaje == TIPO_HUMEDAD):
+            self.procesarHumedad(valueMensaje)
+        
+        if(tipoMensaje == TIPO_HUMO):
+            self.procesarHumo(valueMensaje)
+            
+        if(tipoMensaje == TIPO_MONOXIDO):
+            self.procesarMonoxido(valueMensaje)
 
         status = determineStatus(tipoMensaje, valueMensaje)
 
@@ -164,6 +179,25 @@ class Mongo(object):
 
     def determineCollection(self, msg: mqtt.MQTTMessage):
         return self.database.get_collection(msg.topic)
+
+    def procesarHumedad(self, humedad: float):
+        topic = f'casa/exterior/regador'
+        if(humedad <= LIMITE_HUMEDAD):
+            self.mqttClient.publish(topic, buildJsonMessage(0,'REGADOR', 1))
+        else:
+            self.mqttClient.publish(topic, buildJsonMessage(0,'REGADOR', 0))
+
+    def procesarHumo(self, value: float):
+        topic = f'casa/interior/cocina/luz'
+        if(value >= LIMITE_HUMO):
+            self.mqttClient.publish(topic, buildJsonMessage(0,'LUZ', 1))
+            mandarMail("Humo Detectado "+ str(value))
+
+    def procesarMonoxido(self, value: float):
+        topic = f'casa/interior/cocina/luz'
+        if(value >= LIMITE_MONOXIDO):
+            self.mqttClient.publish(topic, buildJsonMessage(0,'LUZ', 1))
+            mandarMail("Monóxido Detectado "+ str(value))
 
     def publishVentilador(self, numAmbiente: int):
         topic = f'casa/interior/ambiente{numAmbiente}/ventilador'
