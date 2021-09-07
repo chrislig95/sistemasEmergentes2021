@@ -1,3 +1,6 @@
+import json
+import random
+import string
 from typing import List
 from datetime import datetime
 import paho.mqtt.client as mqtt
@@ -7,7 +10,6 @@ import pymongo.collection
 import pymongo.errors
 import threading
 import os
-from re import search
 #libreria mails
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -16,13 +18,11 @@ import smtplib
 MONGO_URI = "mongodb+srv://admin:O3ByoOtAKMH01ZrM@sistemergentes.slhwd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"  # mongodb://user:pass@ip:port || mongodb://ip:port
 #MONGO_URI = "mongodb://127.0.0.1:27017"
 MONGO_DB = "domotica"
-#MONGO_COLLECTION = "mqtt"
 MONGO_TIMEOUT = 1  # Time in seconds
 MONGO_DATETIME_FORMAT = "%d/%m/%Y %H:%M:%S"
 
 MONGO_URI = os.getenv("MONGO_URI", MONGO_URI)
 MONGO_DB = os.getenv("MONGO_DB", MONGO_DB)
-#MONGO_COLLECTION = os.getenv("MONGO_COLLECTION", MONGO_COLLECTION)
 MONGO_TIMEOUT = float(os.getenv("MONGO_TIMEOUT", MONGO_TIMEOUT))
 MONGO_DATETIME_FORMAT = os.getenv("MONGO_DATETIME_FORMAT", MONGO_DATETIME_FORMAT)
 STATUS = 1 # 0 apagado/1 encendido/2 error
@@ -57,6 +57,39 @@ def mandarMail(mensaje):
     del server
 
 
+# username = mqtt_config["username"]
+# password = mqtt_config["password"]
+
+MQTT_BROKER = "192.241.178.194"
+#MQTT_BROKER = "test.mosquitto.org"
+MQTT_PORT = 2096
+#MQTT_PORT = 1883
+MQTT_KEEPALIVE = 60
+MQTT_QOS = 2
+MQTT_USERNAME = ''
+MQTT_PASSWORD = 'public'
+
+LIMITE_TEMPERATURA = 25
+
+TIPO_TEMPERATURA = 'TEMPERATURA'
+TIPO_LUZ = 'LUZ'
+TIPO_VENTILADOR = 'VENTILADOR'
+
+def connect_mqtt():
+    def on_connect(client, userdata, flags, returnCode):
+        if returnCode == 0:
+            print("Connected to MQQT Broker!")
+        else:
+            print("Failed to connect %d\n", returnCode)
+
+    client_id = f'python-mqtt-{random.randint(0, 1000)}'
+
+    # Set Connecting Client ID
+    client = mqtt.Client(client_id)
+    client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
+    client.on_connect = on_connect
+    client.connect(MQTT_BROKER, MQTT_PORT)
+    return client
 
 class Mongo(object):
     def __init__(self):
@@ -64,12 +97,12 @@ class Mongo(object):
         self.database: pymongo.database.Database = None
         self.collection: pymongo.collection.Collection = None
         self.queue: List[mqtt.MQTTMessage] = list()
+        self.mqttClient = connect_mqtt()
 
     def connect(self):
         print("Connecting Mongo")
         self.client = pymongo.MongoClient(MONGO_URI, serverSelectionTimeoutMS=MONGO_TIMEOUT*1000.0)
         self.database = self.client.get_database(MONGO_DB)
-        #self.collection = self.database.get_collection(MONGO_COLLECTION)
 
     def disconnect(self):
         print("Disconnecting Mongo")
@@ -95,97 +128,32 @@ class Mongo(object):
     def __store_thread_f(self, msg: mqtt.MQTTMessage):
         print("Storing")
         now = datetime.now()
-        interiorHumo = "humo"
-        interiorMonoxido = "monoxido"
-        interiorAlarma = "interior/actuadores/alarma"
-        interiorLuces = "interior/actuadores/luces"
-        exteriorAlarma = "exterior/actuadores/alarma"
-        exteriorLuces = "exterior/actuadores/luces"
-        exteriorLuzSolar = "luzsolar"
-        exteriorRiego = "riego"
-        exteriorTemperatura = "temperatura"
-        
-        status=0
 
-        if search(interiorHumo, msg.topic):
-            print("Humo Detectado")
-            self.collection = self.database.get_collection("interiorHumo")
-            alerta=int(msg.payload.decode())
-            if alerta >= 50:
-                message = ("Humo Detectado " + str(alerta))
-                mandarMail(message)
-                status=1
-            elif alerta<50:
-                status=0
-            else:
-                status=2
-            
-        if search(interiorMonoxido, msg.topic):
-            status=1
-            print("Monoxido Detectado")
-            self.collection = self.database.get_collection("interiorMonoxido")
-            alerta=int(msg.payload.decode())
-            if alerta >= 1200:
-                message = ("Monoxido Detectado "+ str(alerta))
-                mandarMail(message)
-                status=1
-            elif alerta<1200:
-                status=0
-            else:
-                status=2
-        if search(interiorAlarma, msg.topic):
-            print("Interior Alarma Detectado")
-            self.collection = self.database.get_collection("interiorAlarma")
-        if search(interiorLuces, msg.topic):
-            print("Interior Luces Detectado")
-            self.collection = self.database.get_collection("interiorLuces")
-        if search(exteriorAlarma, msg.topic):
-            print("Exterior Alarma Detectado")
-            self.collection = self.database.get_collection("exteriorAlarma")
-        if search(exteriorLuces, msg.topic):
-            print("Exterior Luces Detectado")
-            self.collection = self.database.get_collection("exteriorLuces")
-        if search(exteriorLuzSolar, msg.topic):
-            print("Exterior Luz Solar Detectado")
-            self.collection = self.database.get_collection("exteriorLuzSolar")
-        if search(exteriorRiego, msg.topic):
-            print("Exterior Riego")
-            self.collection = self.database.get_collection("exteriorRiego")
-        if search(exteriorTemperatura, msg.topic):
-            print("Exterior Temperatura")
-            self.collection = self.database.get_collection("exteriorTemperatura")
-            alerta=float(msg.payload.decode())
-            if ((alerta >= 20) and (alerta<=35)):
-                message = ("Temperatura Agradable "+ str(alerta))
-                mandarMail(message)
-                status=1
-            elif alerta<20:
-                message = ("Hace frio y estoy lejos de casa " + str(alerta))
-                mandarMail(message)
-                status=1
-            else:
-                message = ("Alto calor " + str(alerta))
-                mandarMail(message)
-                status=1
-        
+        payloadJson = json.loads(msg.payload)
+
+        self.collection = self.determineCollection(msg)
+
+        tipoMensaje = payloadJson["tipo"]
+        valueMensaje = payloadJson["value"]
+        if(tipoMensaje == 'TEMPERATURA'):
+            temperatura = payloadJson["value"]
+            if(temperatura >= LIMITE_TEMPERATURA):
+                self.publishVentilador(payloadJson["ambiente"])
+
+        status = determineStatus(tipoMensaje, valueMensaje)
+
         try:
             document = {
                 "topic": msg.topic,
-                "value": msg.payload.decode(),
-                # "retained": msg.retain,
+                "value": payloadJson["value"],
                 "qos": msg.qos,
                 "status": status,
                 "timestamp": int(now.timestamp()),
-                "datetime": now.strftime(MONGO_DATETIME_FORMAT),
-                # TODO datetime must be fetched right when the message is received
-                # It will be wrong when a queued message is stored
+                "datetime": now.strftime(MONGO_DATETIME_FORMAT)
             }
-            
+
             result = self.collection.insert_one(document)
             print("Saved in Mongo document ID", result.inserted_id)
-            if not result.acknowledged:
-                # Enqueue message if it was not saved properly
-                self._enqueue(msg)
         except Exception as ex:
             print(ex)
 
@@ -193,6 +161,13 @@ class Mongo(object):
         th = threading.Thread(target=self.__store_thread_f, args=(msg,))
         th.daemon = True
         th.start()
+
+    def determineCollection(self, msg: mqtt.MQTTMessage):
+        return self.database.get_collection(msg.topic)
+
+    def publishVentilador(self, numAmbiente: int):
+        topic = f'casa/interior/ambiente{numAmbiente}/ventilador'
+        self.mqttClient.publish(topic, buildJsonMessage(numAmbiente, 'VENTILADOR', 1))
 
     def save(self, msg: mqtt.MQTTMessage):
         print("Saving")
@@ -204,4 +179,19 @@ class Mongo(object):
         else:
             self._enqueue(msg)
 
+def determineStatus(tipoMensaje: string, value: float):
+    if(tipoMensaje == TIPO_LUZ or tipoMensaje == TIPO_VENTILADOR):
+        return value
+    elif(tipoMensaje == TIPO_TEMPERATURA):
+        if(value > LIMITE_TEMPERATURA):
+            return 1
+        else:
+            return 0
+
+def buildJsonMessage(numAmbiente: int, tipo: string, value: None):
+    msg = {}
+    msg["ambiente"] = numAmbiente
+    msg["tipo"] = tipo
+    msg["value"] = value if value else random.randint(0, 1)
     
+    return json.dumps(msg)
