@@ -14,6 +14,7 @@ import os
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
+from weatherApiClient import willRainInNextHours
 
 MONGO_URI = "mongodb+srv://admin:O3ByoOtAKMH01ZrM@sistemergentes.slhwd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"  # mongodb://user:pass@ip:port || mongodb://ip:port
 #MONGO_URI = "mongodb://127.0.0.1:27017"
@@ -73,6 +74,7 @@ LIMITE_TEMPERATURA = 25
 LIMITE_HUMEDAD = 300
 LIMITE_HUMO = 50
 LIMITE_MONOXIDO = 1200
+LIMITE_HORAS_LLUVIA = 4
 
 TIPO_TEMPERATURA = 'TEMPERATURA'
 TIPO_LUZ = 'LUZ'
@@ -183,9 +185,12 @@ class Mongo(object):
     def procesarHumedad(self, humedad: float):
         topic = f'casa/exterior/regador'
         if(humedad <= LIMITE_HUMEDAD):
-            self.mqttClient.publish(topic, buildJsonMessage(0,'REGADOR', 1))
-        else:
-            self.mqttClient.publish(topic, buildJsonMessage(0,'REGADOR', 0))
+            vaALlover = willRainInNextHours(LIMITE_HORAS_LLUVIA)
+            if(not vaALlover):
+                self.mqttClient.publish(topic, buildJsonMessage(0,'REGADOR', 1))
+                return
+
+        self.mqttClient.publish(topic, buildJsonMessage(0,'REGADOR', 0))
 
     def procesarHumo(self, value: float):
         topic = f'casa/interior/cocina/luz'
