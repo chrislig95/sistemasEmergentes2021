@@ -80,31 +80,34 @@ let TestService = class TestService {
     //  return this.http.get('http://localhost/backendEmergentes/public/api/test');
     // }
     interiorLuces() {
-        return this.http.get('http://192.241.178.194:10000/?collectionName=interiorLuces');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/ambiente1/luz');
     }
     exteriorLuces() {
         return this.http.get('http://localhost:1000/?collectionName=exteriorLuces');
     }
     interiorMonoxido() {
-        return this.http.get('http://192.241.178.194:10000/?collectionName=interiorMonoxido');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=interiorMonoxido');
     }
     exteriorTemperatura() {
-        return this.http.get('http://192.241.178.194:10000/?collectionName=exteriorTemperatura');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/ambiente1/temperatura');
+    }
+    exteriorTemperatura2() {
+        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/ambiente2/temperatura');
     }
     interiorAlarma() {
-        return this.http.get('http://192.241.178.194:10000/?collectionName=interiorAlarma');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=interiorAlarma');
     }
     exteriorAlarma() {
-        return this.http.get('http://192.241.178.194:10000/?collectionName=exteriorAlarma');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=exteriorAlarma');
     }
     exteriorLuzSolar() {
-        return this.http.get('http://192.241.178.194:10000/?collectionName=exteriorLuzSolar');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=exteriorLuzSolar');
     }
     exteriorRiego() {
-        return this.http.get('http://192.241.178.194:10000/?collectionName=exteriorRiego');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=exteriorRiego');
     }
     interiorHumo() {
-        return this.http.get('http://192.241.178.194:10000/?collectionName=interiorHumo');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=interiorHumo');
     }
 };
 TestService.ctorParameters = () => [

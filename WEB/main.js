@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\avidal\Desktop\front-emergentes-master\src\main.ts */"zUnb");
+module.exports = __webpack_require__(/*! C:\Users\__aug\OneDrive\Escritorio\front-emergentes-master\src\main.ts */"zUnb");
 
 
 /***/ }),
