@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Humo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container-fluid">
+    <ion-row>
+      <ion-col>
+        <button class="btn btn-primary" (click)="getData()">Actualizar  </button>
+      </ion-col>
+    </ion-row>
+
+    <div class="row my-5 justify-content-center ">
+        <div class="col-12  my-5 d-flex justify-content-center">
+            <div class="card" color="primary" style="border:none;">
+                <i _ngcontent-hjf-c2="" class="fas fa-temperature-high" style="font-size: 30vh;"></i>
+              
+            </div>
+            <ion-card *ngFor="let humo of ultimasdiez"> 
+              <ion-card-header>
+                <span style="font-size: 4vh;"  [ngClass]="humo.value > 50 ? 'carddanger' : 'cardok'"> {{humo.value | number }}
+                  <ion-icon name="alert-outline" style="font-size: 30px;" *ngIf="humo.value > 50"></ion-icon>
+
+                 </span>
+              </ion-card-header>
+                <ion-badge color="secondary" >{{humo.datetime}}</ion-badge> 
+
+              <!-- <ion-input type="number"  [(ngModel)]="temperatura.value" ></ion-input> -->
+              <!-- <ion-badge color="secondary">
+
+                <ion-icon name="snow-outline" style="font-size: 30px;" *ngIf="humo.value < 0"></ion-icon>
+              </ion-badge>
+              <ion-badge color="warning">
+
+                <ion-icon name="sunny-outline" style="font-size: 30px;" *ngIf="humo.value > 0"></ion-icon>
+              </ion-badge> -->
+            
+            </ion-card>
+          
+        
+        </div>
+    </div>
+
+</div>
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "front-te",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

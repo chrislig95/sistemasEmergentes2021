@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Temperatura
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container-fluid">
+    <ion-row>
+      <ion-col>
+        <button class="btn btn-primary" (click)="getData(); getDataambiente2();">Actualizar  </button>
+      </ion-col>
+    </ion-row>
+
+    <div class="row my-5 justify-content-center ">
+        <div class="col-12  my-5 d-flex justify-content-center">
+            <div class="card" color="primary" style="border:none;">
+                <i _ngcontent-hjf-c2="" class="fas fa-temperature-high" style="font-size: 30vh;"></i>
+              
+                <span *ngIf="temperature== null" class="badge badge-pill badge-warning mt-3" style="font-size: 4vh;"> cargando...</span>
+            </div>
+            <h2>Ambiente 1</h2>
+            <ion-card *ngFor="let temperatura of ultimasdiez"> 
+              <ion-card-header>
+                <span style="font-size: 4vh;"> {{temperatura.value | number }}
+
+                 °C</span>
+              </ion-card-header>
+                <ion-badge color="secondary" >{{temperatura.datetime}}</ion-badge> 
+
+              <!-- <ion-input type="number"  [(ngModel)]="temperatura.value" ></ion-input> -->
+              <ion-badge color="secondary">
+
+                <ion-icon name="snow-outline" style="font-size: 30px;" *ngIf="temperatura.value < 0"></ion-icon>
+              </ion-badge>
+              <ion-badge color="warning">
+
+                <ion-icon name="sunny-outline" style="font-size: 30px;" *ngIf="temperatura.value > 0"></ion-icon>
+              </ion-badge>
+            
+            </ion-card>
+            <h2>Ambiente 2</h2>
+            <ion-card *ngFor="let temperatura of ultimasdiez2"> 
+              <ion-card-header>
+                <span style="font-size: 4vh;"> {{temperatura.value | number }}
+
+                 °C</span>
+              </ion-card-header>
+                <ion-badge color="secondary" >{{temperatura.datetime}}</ion-badge> 
+
+              <!-- <ion-input type="number"  [(ngModel)]="temperatura.value" ></ion-input> -->
+              <ion-badge color="secondary">
+
+                <ion-icon name="snow-outline" style="font-size: 30px;" *ngIf="temperatura.value < 0"></ion-icon>
+              </ion-badge>
+              <ion-badge color="warning">
+
+                <ion-icon name="sunny-outline" style="font-size: 30px;" *ngIf="temperatura.value > 0"></ion-icon>
+              </ion-badge>
+            
+            </ion-card>
+          
+        
+        </div>
+    </div>
+
+</div>
+</ion-content>

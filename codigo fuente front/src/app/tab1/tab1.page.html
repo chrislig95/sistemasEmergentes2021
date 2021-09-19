@@ -1,0 +1,61 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Luces
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-row>
+    <ion-col>
+      <button class="btn btn-primary" (click)="getData()">Actualizar  </button>
+    </ion-col>
+  </ion-row>
+  <ion-card>
+    <ion-card-header>
+      Status luces interiores 
+       <!-- <ion-badge color="success">Prueba</ion-badge> -->
+      
+    </ion-card-header>
+
+ 
+    <ion-item *ngFor="let luz of ultimasdiez">
+      <ion-label>Censado luz interior</ion-label>
+  
+         <ng-container  *ngIf="luz.value == '1' "> 
+          <ion-badge color="success" >Luces encendida</ion-badge> 
+         </ng-container>
+         <ng-container  *ngIf="luz.value == '0' "> 
+          <ion-badge color="danger" >Luces apagada</ion-badge> 
+         </ng-container>
+         <ion-badge color="secondary" >{{luz.datetime}}</ion-badge> 
+
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Status luces exteriores
+       <!-- <ion-badge color="success">Prueba</ion-badge> -->
+      
+    </ion-card-header>
+
+    <ion-list>
+
+      <ion-item *ngFor="let luz of ultimasdiez">
+        <ion-label>Censado luz exterior</ion-label>
+    
+           <ng-container  *ngIf="luz.value == '1' "> 
+            <ion-badge color="success" >Luz encendida</ion-badge> 
+           </ng-container>
+           <ng-container  *ngIf="luz.value == '0' "> 
+            <ion-badge color="danger" >Luz apagada</ion-badge> 
+           </ng-container>
+           <ion-badge color="secondary" >{{luz.datetime}}</ion-badge> 
+  
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+</ion-content>

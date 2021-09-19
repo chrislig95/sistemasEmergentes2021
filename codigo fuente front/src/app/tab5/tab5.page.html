@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Alarma
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container-fluid">
+    <ion-row>
+      <ion-col>
+        <button class="btn btn-primary" (click)="getData()">Actualizar  </button>
+      </ion-col>
+    </ion-row>
+
+    <div class="row my-5 justify-content-center ">
+        <div class="col-12  my-5 d-flex justify-content-center">
+          
+            <ion-card *ngFor="let alarma of ultimasdiez"> 
+              <ion-card-header style="text-align: center;"> 
+                <span style="font-size: 30px; color: red;" *ngIf="alarma.value == 1">
+                  Alarma encendida!!!
+                </span>
+                <span style="font-size: 30px;" *ngIf="alarma.value == 0">
+                  Ok!
+                </span>
+          
+              </ion-card-header>
+              <ion-badge color="secondary" >{{alarma.datetime}}</ion-badge> 
+
+              <!-- <ion-input type="number"  [(ngModel)]="temperatura.value" ></ion-input> -->
+              <!-- <ion-badge color="secondary">
+
+                <ion-icon name="snow-outline" style="font-size: 30px;" *ngIf="alarma.value < 0"></ion-icon>
+              </ion-badge>
+              <ion-badge color="warning">
+
+                <ion-icon name="sunny-outline" style="font-size: 30px;" *ngIf="alarma.value > 0"></ion-icon>
+              </ion-badge> -->
+            
+            </ion-card>
+          
+        
+        </div>
+    </div>
+
+</div>
+</ion-content>
