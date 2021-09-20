@@ -1,4 +1,7 @@
+
 #include <PubSubClient.h>
+
+#include <WiFiClientSecure.h>
 
 #include <DHT.h>
 #include <DHT_U.h>
@@ -8,21 +11,27 @@ const char* ssid = "Yabiru738";
 const char* password = "02320352738";
 
 const char* mqtt_server = "192.241.178.194";
-const char* mqtt_user = NULL;
-const char* mqtt_pass= NULL;
+const char* mqtt_user = "emergentes";
+const char* mqtt_pass= "USAL2021";
 const int mqtt_port = 2096;
 
-DHT dht(D1,DHT22); 
+DHT dht(D1,DHT22);
+DHT dht2(D2,DHT22); 
+
 float temp, hume;
+float temp2, hume2;
+
+bool conectadoluz;
 
 float ip;
 
-  char temperature[8];
+char temperature[8];
 
 // Callback function header
 void callback(char* topic, byte* payload, unsigned int length);
 
-WiFiClient espClient;
+//WiFiClient espClient;
+WiFiClientSecure espClient;
 PubSubClient client(espClient);
 
 
@@ -53,9 +62,12 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
    
-    if (client.connect("Arduino_001")) {
+    if (client.connect("Arduino_Thomas","emergentes","USAL2021")) {
       Serial.println("connected");
-      client.subscribe("actuador_1");
+      conectadoluz = client.subscribe("casa/interior/ambiente1/luz",0);
+      Serial.println("se conecto al topico: ");
+      Serial.println(conectadoluz);
+      //client.subscribe("actuador_1");
        
     }
     else {
@@ -73,10 +85,15 @@ void setup() {
    // Configuración WiFi
   configWifi();
 
+  espClient.setInsecure();
+
   client.setServer(mqtt_server,mqtt_port);
   client.setCallback(callback);
   
   dht.begin();
+  dht2.begin();
+
+  
 }
 
 void loop() {
@@ -84,12 +101,21 @@ void loop() {
   if (!client.connected()) {
     reconnect();
   }
+
+  client.loop();
   
   temp = dht.readTemperature();
   hume = dht.readHumidity();
+
+  temp2 = dht2.readTemperature();
+  hume2 = dht2.readHumidity();
   
   Serial.println("");
   Serial.println("La temperatura es " + String(temp) + "° y la humedad es " + String(hume)+ "%");
+
+  Serial.println("");
+  Serial.println("La temperatura del sensor secundario es " + String(temp2) + "° y la humedad es " + String(hume2)+ "%");
+
 
   String json = "{\"ambiente\":1, \"tipo\":\"TEMPERATURA\", \"value\":"+String(temp)+"}";
   char Buf[60];
@@ -99,8 +125,13 @@ void loop() {
   
   client.publish("casa/interior/ambiente1/temperatura", Buf);
 
+  String json2 = "{\"ambiente\":2, \"tipo\":\"TEMPERATURA\", \"value\":"+String(temp2)+"}";
+  char Buf2[60];
+  json2.toCharArray(Buf2, 60);
   
-  delay(600000);
+  client.publish("casa/interior/ambiente2/temperatura", Buf2);
+  
+  delay(30000);
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
