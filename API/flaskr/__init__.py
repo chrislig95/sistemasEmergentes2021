@@ -1,7 +1,11 @@
 import os
+import random
 import ssl
+import string
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import paho.mqtt.client as mqtt
+import json
 
 import pymongo
 import pymongo.database
@@ -41,13 +45,48 @@ class Mongo(object):
         else:
             return True
 
+MQTT_BROKER = "192.241.178.194"
+MQTT_PORT = 2096
+MQTT_KEEPALIVE = 60
+MQTT_QOS = 2
+MQTT_TOPICS = ('#')  # Array of topics to subscribe; '#' subscribe to ALL available topics
+
+MQTT_USERNAME = ''
+MQTT_PASSWORD = 'public'
+
+MQTT_BROKER = os.getenv("MQTT_BROKER", MQTT_BROKER)
+MQTT_PORT = os.getenv("MQTT_PORT", MQTT_PORT)
+MQTT_KEEPALIVE = os.getenv("MQTT_KEEPALIVE", MQTT_KEEPALIVE)
+MQTT_QOS = os.getenv("MQTT_QOS", MQTT_QOS)
+MQTT_TOPICS = os.getenv("MQTT_TOPICS", MQTT_TOPICS)  # As ENV, comma separated
+if isinstance(MQTT_TOPICS, str):
+    MQTT_TOPICS = [e.strip() for e in MQTT_TOPICS.split(",")]
+
+
+class Mqtt(object):
+    
+    def __init__(self):
+        def on_connect(client, userdata, flags, returnCode):
+            if returnCode == 0:
+                print("Connected to MQQT Broker!")
+            else:
+                print("Failed to connect %d\n", returnCode)
+        
+        print('Connecting MQTT')
+        self.mqtt_client = mqtt.Client()        
+        self.mqtt_client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
+        self.mqtt_client.on_connect = on_connect
+        self.mqtt_client.connect(MQTT_BROKER, MQTT_PORT)
+        print('Connected MQTT')
+
+
 def create_app():
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     CORS(app)
 
     db = Mongo()
-
+    mqtt = Mqtt()
     db.connect()
 
     # ensure the instance folder exists
@@ -84,4 +123,27 @@ def create_app():
         else:
             return jsonify(result)
 
+    @app.route('/luz', methods=['post'])
+    def postTopicLuz():
+        ambiente = request.json['ambiente']
+        value = request.json['value']
+
+        if(ambiente >= 1 and ambiente <= 4 and (value == 0 or value == 1)):
+            topic = f'casa/interior/ambiente{ambiente}/luz'
+            message = buildJsonMessage(ambiente, 'LUZ', value)
+            mqtt.mqtt_client.publish(topic, message)
+            return jsonify(request.json)
+        else:
+            return jsonify({'error': 'invalid request'})
+
     return app
+
+def buildJsonMessage(numAmbiente: int, tipo: string, value: None):
+    msg = {}
+    msg["ambiente"] = numAmbiente
+    msg["tipo"] = tipo
+    msg["value"] = value if value else random.randint(0, 1)
+    
+    return json.dumps(msg)
+
+   
