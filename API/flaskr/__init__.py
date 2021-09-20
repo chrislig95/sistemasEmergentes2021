@@ -51,8 +51,8 @@ MQTT_KEEPALIVE = 60
 MQTT_QOS = 2
 MQTT_TOPICS = ('#')  # Array of topics to subscribe; '#' subscribe to ALL available topics
 
-MQTT_USERNAME = ''
-MQTT_PASSWORD = 'public'
+MQTT_USERNAME = 'emergentes'
+MQTT_PASSWORD = 'USAL2021'
 
 MQTT_BROKER = os.getenv("MQTT_BROKER", MQTT_BROKER)
 MQTT_PORT = os.getenv("MQTT_PORT", MQTT_PORT)
@@ -75,6 +75,7 @@ class Mqtt(object):
         print('Connecting MQTT')
         self.mqtt_client = mqtt.Client()        
         self.mqtt_client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
+        self.mqtt_client.tls_set(cert_reqs=ssl.CERT_NONE)
         self.mqtt_client.on_connect = on_connect
         self.mqtt_client.connect(MQTT_BROKER, MQTT_PORT)
         print('Connected MQTT')
@@ -87,6 +88,7 @@ def create_app():
 
     db = Mongo()
     mqtt = Mqtt()
+
     db.connect()
 
     # ensure the instance folder exists
