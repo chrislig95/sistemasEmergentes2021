@@ -78,6 +78,7 @@ class Mqtt(object):
         self.mqtt_client.tls_set(cert_reqs=ssl.CERT_NONE)
         self.mqtt_client.on_connect = on_connect
         self.mqtt_client.connect(MQTT_BROKER, MQTT_PORT)
+        self.mqtt_client.loop_start()
         print('Connected MQTT')
 
 
