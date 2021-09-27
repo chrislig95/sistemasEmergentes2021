@@ -16,7 +16,9 @@ const char* mqtt_pass= "USAL2021";
 const int mqtt_port = 2096;
 
 DHT dht(D1,DHT22);
-DHT dht2(D2,DHT22); 
+DHT dht2(D2,DHT22);
+
+
 
 float temp, hume;
 float temp2, hume2;
@@ -93,10 +95,13 @@ void setup() {
   dht.begin();
   dht2.begin();
 
-  
+  pinMode(D6,OUTPUT);
 }
 
 void loop() {
+
+  digitalWrite(D6,HIGH);
+  delay(5000);
 
   if (!client.connected()) {
     reconnect();
@@ -130,8 +135,10 @@ void loop() {
   json2.toCharArray(Buf2, 60);
   
   client.publish("casa/interior/ambiente2/temperatura", Buf2);
-  
-  delay(30000);
+
+  digitalWrite(D6,LOW);
+  delay(5000);
+  //delay(30000);
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
