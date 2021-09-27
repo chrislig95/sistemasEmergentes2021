@@ -18,12 +18,16 @@ const int mqtt_port = 2096;
 DHT dht(D1,DHT22);
 DHT dht2(D2,DHT22);
 
-
+int countertemp;
 
 float temp, hume;
 float temp2, hume2;
 
 bool conectadoluz;
+
+bool luzAmb1;
+bool luzAmb2;
+
 
 float ip;
 
@@ -66,7 +70,7 @@ void reconnect() {
    
     if (client.connect("Arduino_Thomas","emergentes","USAL2021")) {
       Serial.println("connected");
-      conectadoluz = client.subscribe("casa/interior/ambiente1/luz",0);
+      conectadoluz = client.subscribe("casa/interior/ambiente1/luz");
       Serial.println("se conecto al topico: ");
       Serial.println(conectadoluz);
       //client.subscribe("actuador_1");
@@ -99,46 +103,47 @@ void setup() {
 }
 
 void loop() {
-
-  digitalWrite(D6,HIGH);
-  delay(5000);
-
   if (!client.connected()) {
     reconnect();
   }
 
   client.loop();
-  
+
+  //Tomo datos de temperatura y humedad de cada sensor
   temp = dht.readTemperature();
   hume = dht.readHumidity();
-
   temp2 = dht2.readTemperature();
   hume2 = dht2.readHumidity();
+
+  countertemp = countertemp + 1;
+
+  if(countertemp == 10) {
+
+      //Imprimo por consola datos de cada sensor
+      Serial.println("");
+      Serial.println("La temperatura es " + String(temp) + "° y la humedad es " + String(hume)+ "%");
+
+      Serial.println("");
+      Serial.println("La temperatura del sensor secundario es " + String(temp2) + "° y la humedad es " + String(hume2)+ "%");
+
+
+      //Convierto temperatura a char y publico
+      String json = "{\"ambiente\":1, \"tipo\":\"TEMPERATURA\", \"value\":"+String(temp)+"}";
+      char Buf[60];
+      json.toCharArray(Buf, 60);
+      client.publish("casa/interior/ambiente1/temperatura", Buf);
+
+      String json2 = "{\"ambiente\":2, \"tipo\":\"TEMPERATURA\", \"value\":"+String(temp2)+"}";
+      char Buf2[60];
+      json2.toCharArray(Buf2, 60);  
+      client.publish("casa/interior/ambiente2/temperatura", Buf2);
+
+      //Reseteo counter a cero
+      countertemp = 0;
+  }
   
-  Serial.println("");
-  Serial.println("La temperatura es " + String(temp) + "° y la humedad es " + String(hume)+ "%");
-
-  Serial.println("");
-  Serial.println("La temperatura del sensor secundario es " + String(temp2) + "° y la humedad es " + String(hume2)+ "%");
-
-
-  String json = "{\"ambiente\":1, \"tipo\":\"TEMPERATURA\", \"value\":"+String(temp)+"}";
-  char Buf[60];
-  json.toCharArray(Buf, 60);
-
-  //dtostrf(json, 6, 2, temperature);
-  
-  client.publish("casa/interior/ambiente1/temperatura", Buf);
-
-  String json2 = "{\"ambiente\":2, \"tipo\":\"TEMPERATURA\", \"value\":"+String(temp2)+"}";
-  char Buf2[60];
-  json2.toCharArray(Buf2, 60);
-  
-  client.publish("casa/interior/ambiente2/temperatura", Buf2);
-
-  digitalWrite(D6,LOW);
-  delay(5000);
-  //delay(30000);
+  //digitalWrite(D6,LOW);
+  delay(1000);
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -154,19 +159,18 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   Serial.println();
 
-  // Feel free to add more if statements to control more GPIOs with MQTT
-
-  // If a message is received on the topic actuador, you check if the message is either "on" or "off". 
-  // Changes the output state according to the message
-  if (String(topic) == "actuador_1") {
+  if (String(topic) == "casa/interior/ambiente1/luz") {
     Serial.print("\n Changing output to ");
-    if(messageTemp == "1"){
-      //Serial.println("on");
-      //digitalWrite(LED_BUILTIN, HIGH);
+    //if(messageTemp == "0"){
+    if(messageTemp == "{\"ambiente\": 1, \"tipo\": \"LUZ\", \"value\": 0}"){
+      //Apago luz ambiente 1
+      Serial.println("Entro al if = 0");
+      digitalWrite(D6,LOW);
     }
-    else if(messageTemp == "0"){
-      //Serial.println("off");
-      //digitalWrite(LED_BUILTIN, LOW);
+    else if(messageTemp == "{\"ambiente\": 1, \"tipo\": \"LUZ\", \"value\": 1}"){
+      //Enciendo luz ambiente 1
+      Serial.println("Entro al if = 1");
+      digitalWrite(D6,HIGH);
     }
   }
 }
