@@ -134,7 +134,7 @@ def create_app():
             topic = f'casa/interior/ambiente{ambiente}/luz'
             message = buildJsonMessage(ambiente, 'LUZ', value)
             mqtt.mqtt_client.publish(topic, message)
-            return jsonify(request.json)
+            return jsonify(message)
         else:
             return jsonify({'error': 'invalid request'})
 
@@ -144,7 +144,7 @@ def buildJsonMessage(numAmbiente: int, tipo: string, value: None):
     msg = {}
     msg["ambiente"] = numAmbiente
     msg["tipo"] = tipo
-    msg["value"] = value if value else random.randint(0, 1)
+    msg["value"] = 1 if value else 0
     
     return json.dumps(msg)
 
