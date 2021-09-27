@@ -14,7 +14,8 @@
   </ion-row>
   <ion-card>
     <ion-card-header>
-      Status luces interiores 
+      
+      Censado luz ambiente 1 
        <!-- <ion-badge color="success">Prueba</ion-badge> -->
       
     </ion-card-header>
@@ -24,10 +25,16 @@
       <ion-label>Censado luz interior</ion-label>
   
          <ng-container  *ngIf="luz.value == '1' "> 
-          <ion-badge color="success" >Luces encendida</ion-badge> 
+          <ion-item>
+            <ion-label>Luces encendida</ion-label>
+            <ion-toggle  (ionChange)="toggleLight(luz)" checked="true"></ion-toggle>
+          </ion-item>
          </ng-container>
          <ng-container  *ngIf="luz.value == '0' "> 
-          <ion-badge color="danger" >Luces apagada</ion-badge> 
+          <ion-item>
+            <ion-label>Luces apagada</ion-label>
+            <ion-toggle   (ionChange)="toggleLight(luz)"checked="false"></ion-toggle>
+          </ion-item>
          </ng-container>
          <ion-badge color="secondary" >{{luz.datetime}}</ion-badge> 
 
@@ -36,7 +43,7 @@
 
   <ion-card>
     <ion-card-header>
-      Status luces exteriores
+      Censado luz ambiente 2
        <!-- <ion-badge color="success">Prueba</ion-badge> -->
       
     </ion-card-header>
