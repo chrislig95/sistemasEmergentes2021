@@ -6,6 +6,19 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import paho.mqtt.client as mqtt
 import json
+import logging
+from logging.handlers import TimedRotatingFileHandler
+
+logname = "sist_emergentes_api.log"
+log_format = '%(asctime)s -%(levelname)s - %(message)s'
+
+logger = logging.getLogger('simple')
+logger.setLevel(logging.INFO)
+handler = TimedRotatingFileHandler(logname, when="midnight", interval=1)
+handler.suffix = "%Y%m%d"
+formatter = logging.Formatter(log_format)
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 import pymongo
 import pymongo.database
@@ -62,6 +75,18 @@ MQTT_TOPICS = os.getenv("MQTT_TOPICS", MQTT_TOPICS)  # As ENV, comma separated
 if isinstance(MQTT_TOPICS, str):
     MQTT_TOPICS = [e.strip() for e in MQTT_TOPICS.split(",")]
 
+TIPO_TEMPERATURA = 'TEMPERATURA'
+TIPO_LUZ = 'LUZ'
+TIPO_VENTILADOR = 'VENTILADOR'
+TIPO_HUMEDAD = 'HUMEDAD'
+TIPO_MONOXIDO = 'MONOXIDO'
+TIPO_HUMO = 'HUMO'
+TIPO_REGADOR = 'REGADOR'
+
+TIPOS_VALIDOS = [TIPO_TEMPERATURA, TIPO_LUZ, TIPO_VENTILADOR, TIPO_HUMEDAD, TIPO_MONOXIDO, TIPO_HUMO, TIPO_REGADOR]
+
+TIPOS_COCINA = [TIPO_LUZ,TIPO_HUMO, TIPO_MONOXIDO]
+TIPOS_EXTERIOR = [TIPO_HUMEDAD, TIPO_REGADOR]
 
 class Mqtt(object):
     
@@ -128,16 +153,64 @@ def create_app():
 
     @app.route('/luz', methods=['post'])
     def postTopicLuz():
-        ambiente = request.json['ambiente']
-        value = request.json['value']
+        try:
+            ambiente = request.json['ambiente']
+            value = request.json['value']
 
-        if(ambiente >= 1 and ambiente <= 4 and (value == 0 or value == 1)):
-            topic = f'casa/interior/ambiente{ambiente}/luz'
-            message = buildJsonMessage(ambiente, 'LUZ', value)
-            mqtt.mqtt_client.publish(topic, message)
-            return jsonify(message)
-        else:
-            return jsonify({'error': 'invalid request'})
+            if(ambiente >= 1 and ambiente <= 4 and (value == 0 or value == 1)):
+                topic = f'casa/interior/ambiente{ambiente}/luz'
+                message = buildJsonMessage(ambiente, 'LUZ', value)
+                mqtt.mqtt_client.publish(topic, message)
+                logger.info(f'published {message} on {topic}')
+                return jsonify(message)
+            else:
+                logger.error(f'error en {request.json} - invalid request')
+                return jsonify({'error': 'invalid request'})
+        except Exception:
+            logger.exception(f'error en {request.json}')
+            return jsonify({'error': 'error no manejado'})
+
+    @app.route('/cocina', methods=['post'])
+    def postTopicCocina():
+        try:
+            tipo = request.json['tipo']
+            value = request.json['value']
+
+            if(validarJsonCocina(tipo, value)):                
+                message = buildJsonMessage(0, tipo, value)
+                topic = f'casa/interior/cocina/{tipo.lower()}'
+                mqtt.mqtt_client.publish(topic, message)
+                logger.info(f'published {message} on {topic}')
+                return jsonify(message)
+            else:
+                return jsonify({'error': 'invalid request'})
+        except ValueError as err:
+            logger.error(f'error en {request.json} - {err.args[0]}')
+            return jsonify({'error': err.args[0]})
+        except Exception:
+            logger.exception(f'error en {request.json}')
+            return jsonify({'error': 'error no manejado'})
+
+    @app.route('/exterior', methods=['post'])
+    def postTopicExterior():
+        try:
+            tipo = request.json['tipo']
+            value = request.json['value']
+            
+            if(validarJsonExterior(tipo, value)):                
+                message = buildJsonMessage(0, tipo, value)
+                topic = f'casa/exterior/{tipo.lower()}'
+                mqtt.mqtt_client.publish(topic, message)
+                logger.info(f'published {message} on {topic}')
+                return jsonify(message)
+            else:
+                return jsonify({'error': 'invalid request'})
+        except ValueError as err:
+            logger.error(f'error en {request.json} - {err.args[0]}')
+            return jsonify({'error': err.args[0]})
+        except Exception:
+            logger.exception(f'error en {request.json}')
+            return jsonify({'error': 'error no manejado'})
 
     return app
 
@@ -145,8 +218,30 @@ def buildJsonMessage(numAmbiente: int, tipo: string, value: None):
     msg = {}
     msg["ambiente"] = numAmbiente
     msg["tipo"] = tipo
-    msg["value"] = 1 if value else 0
-    
-    return json.dumps(msg)
+    msg["value"] = value if value else 0    
 
+    return json.dumps(msg)
    
+def validarJsonExterior(tipo: string, value: None):
+    if(tipo in TIPOS_EXTERIOR):
+        if(tipo == TIPO_REGADOR):
+            if(value == 0 or value == 1):
+                return True;  
+            else:
+                raise ValueError('El valor enviado es inválido.')    
+        else:
+            return True
+    else:
+        raise ValueError('El tipo de mensaje enviado es inválido.')
+
+def validarJsonCocina(tipo: string, value: None):
+    if(tipo in TIPOS_COCINA):
+        if(tipo == TIPO_LUZ):
+            if(value == 0 or value == 1):
+                return True
+            else:
+                raise ValueError('El valor enviado es inválido.')
+        else:
+            return True
+    else:
+        raise ValueError('El tipo de mensaje enviado es inválido.')
