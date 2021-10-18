@@ -390,6 +390,14 @@ __webpack_require__.r(__webpack_exports__);
 
 const routes = [
     {
+        path: 'home',
+        loadChildren: () => __webpack_require__.e(/*! import() | tabs-tabs-module */ "tabs-tabs-module").then(__webpack_require__.bind(null, /*! ./tabs/tabs.module */ "hO9l")).then(m => m.TabsPageModule)
+    },
+    {
+        path: 'tabs',
+        loadChildren: () => Promise.all(/*! import() | tab1-tab1-module */[__webpack_require__.e("common"), __webpack_require__.e("tab1-tab1-module")]).then(__webpack_require__.bind(null, /*! ./tab1/tab1.module */ "tmrb")).then(m => m.Tab1PageModule)
+    },
+    {
         path: '',
         loadChildren: () => __webpack_require__.e(/*! import() | tabs-tabs-module */ "tabs-tabs-module").then(__webpack_require__.bind(null, /*! ./tabs/tabs.module */ "hO9l")).then(m => m.TabsPageModule)
     },
@@ -400,6 +408,10 @@ const routes = [
     {
         path: 'tab5',
         loadChildren: () => Promise.all(/*! import() | tab5-tab5-module */[__webpack_require__.e("common"), __webpack_require__.e("tab5-tab5-module")]).then(__webpack_require__.bind(null, /*! ./tab5/tab5.module */ "Sa0/")).then(m => m.Tab5PageModule)
+    },
+    {
+        path: 'dashboard',
+        loadChildren: () => __webpack_require__.e(/*! import() | dashboard-dashboard-module */ "dashboard-dashboard-module").then(__webpack_require__.bind(null, /*! ./dashboard/dashboard.module */ "TDBs")).then(m => m.DashboardPageModule)
     }
 ];
 let AppRoutingModule = class AppRoutingModule {

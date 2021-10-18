@@ -30,7 +30,8 @@ let Tab3Page = class Tab3Page {
         this.getData();
     }
     getData() {
-        this.testService.interiorHumo().subscribe(res => {
+        this.ambiente = localStorage.getItem('ambienteseleccionado');
+        this.testService.interiorHumo(this.ambiente).subscribe(res => {
             console.log(res);
             this.ultimasdiez = res;
         }, error => {

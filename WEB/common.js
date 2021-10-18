@@ -88,8 +88,8 @@ let TestService = class TestService {
     interiorMonoxido() {
         return this.http.get('https://ws.nerdingland.com/?collectionName=interiorMonoxido');
     }
-    exteriorTemperatura() {
-        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/ambiente1/temperatura');
+    exteriorTemperatura(ambiente) {
+        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/' + ambiente + '/temperatura');
     }
     exteriorTemperatura2() {
         return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/ambiente2/temperatura');
@@ -106,8 +106,9 @@ let TestService = class TestService {
     exteriorRiego() {
         return this.http.get('https://ws.nerdingland.com/?collectionName=exteriorRiego');
     }
-    interiorHumo() {
-        return this.http.get('https://ws.nerdingland.com/?collectionName=interiorHumo');
+    interiorHumo(ambiente) {
+        console.log('https://ws.nerdingland.com/?collectionName=casa/interior/' + ambiente + '/humo');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/' + ambiente + '/humo');
     }
 };
 TestService.ctorParameters = () => [

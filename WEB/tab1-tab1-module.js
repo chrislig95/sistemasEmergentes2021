@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Luces\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <ion-row>\n    <ion-col>\n      <button class=\"btn btn-primary\" (click)=\"getData()\">Actualizar  </button>\n    </ion-col>\n  </ion-row>\n  <ion-card>\n    <ion-card-header>\n      \n      Censado luz ambiente 1 \n       <!-- <ion-badge color=\"success\">Prueba</ion-badge> -->\n      \n    </ion-card-header>\n\n \n    <ion-item *ngFor=\"let luz of ultimasdiez\">\n      <ion-label>Censado luz interior</ion-label>\n  \n         <ng-container  *ngIf=\"luz.value == '1' \"> \n          <ion-item>\n            <ion-label>Luces encendida</ion-label>\n            <ion-toggle  (ionChange)=\"toggleLight(luz)\" checked=\"true\"></ion-toggle>\n          </ion-item>\n         </ng-container>\n         <ng-container  *ngIf=\"luz.value == '0' \"> \n          <ion-item>\n            <ion-label>Luces apagada</ion-label>\n            <ion-toggle   (ionChange)=\"toggleLight(luz)\"checked=\"false\"></ion-toggle>\n          </ion-item>\n         </ng-container>\n         <ion-badge color=\"secondary\" >{{luz.datetime}}</ion-badge> \n\n    </ion-item>\n  </ion-card>\n\n  <ion-card>\n    <ion-card-header>\n      Censado luz ambiente 2\n       <!-- <ion-badge color=\"success\">Prueba</ion-badge> -->\n      \n    </ion-card-header>\n\n    <ion-list>\n\n      <ion-item *ngFor=\"let luz of ultimasdiez\">\n        <ion-label>Censado luz exterior</ion-label>\n    \n           <ng-container  *ngIf=\"luz.value == '1' \"> \n            <ion-badge color=\"success\" >Luz encendida</ion-badge> \n           </ng-container>\n           <ng-container  *ngIf=\"luz.value == '0' \"> \n            <ion-badge color=\"danger\" >Luz apagada</ion-badge> \n           </ng-container>\n           <ion-badge color=\"secondary\" >{{luz.datetime}}</ion-badge> \n  \n      </ion-item>\n    </ion-list>\n  </ion-card>\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Luces\n    </ion-title>\n    <ion-button [routerLink]=\"['/dashboard']\">\n      Dashboard\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\" style=\"display: flex; justify-content: center;\">\n  <ion-row>\n    <ion-col>\n      <button class=\"btn btn-primary\" (click)=\"getData()\">Actualizar  </button>\n    </ion-col>\n  </ion-row>\n  <ion-card *ngIf=\"ultimasdiez?.length > 0\">\n    <ion-card-header>\n      \n      Censado luz {{ambiente}}\n      \n    </ion-card-header>\n\n \n    <ion-item *ngFor=\"let luz of ultimasdiez\">\n      <ion-label>Censado luz interior</ion-label>\n  \n         <ng-container  *ngIf=\"luz.value == '1' \"> \n          <ion-item>\n            <ion-label>Luces encendida</ion-label>\n            <ion-toggle  (ionChange)=\"toggleLight(luz)\" checked=\"true\"></ion-toggle>\n          </ion-item>\n         </ng-container>\n         <ng-container  *ngIf=\"luz.value == '0' \"> \n          <ion-item>\n            <ion-label>Luces apagada</ion-label>\n            <ion-toggle   (ionChange)=\"toggleLight(luz)\"checked=\"false\"></ion-toggle>\n          </ion-item>\n         </ng-container>\n         <ion-badge color=\"secondary\" >{{luz.datetime}}</ion-badge> \n\n    </ion-item>\n  </ion-card>\n \n  <ion-row>\n    <ion-col *ngIf=\"show == true\">\n      <ion-chip color=\"secondary\">\n        <ion-label color=\"warning\">No se encontraron datos!</ion-label>\n      </ion-chip>\n    </ion-col>\n  </ion-row>\n\n\n\n\n</ion-content>\n");
 
 /***/ }),
 
@@ -39,20 +39,27 @@ let Tab1Page = class Tab1Page {
     constructor(testService, lightService) {
         this.testService = testService;
         this.lightService = lightService;
-        this.ambientes = ["ambiente1"];
+        this.ambiente = "";
+        this.show = false;
+    }
+    ngOnChanges(changes) {
+        console.log("prueba change");
+        throw new Error('Method not implemented.');
     }
     ngOnInit() {
-        // this.ultimasdiez = JSON.parse(this.getData2())
+        this.ambiente = localStorage.getItem('ambienteseleccionado');
+        console.log("el ambiente seleccionado es : " + this.ambiente);
         this.getData();
     }
     getData() {
-        this.ambientes.forEach(ambiente => {
-            this.lightService.getLight(ambiente).subscribe(res => {
-                console.log(res);
-                this.ultimasdiez = res;
-            }, error => {
-                console.log(error);
-            });
+        this.ambiente = localStorage.getItem('ambienteseleccionado');
+        this.lightService.getLight(this.ambiente).subscribe(res => {
+            this.ultimasdiez = res;
+            this.show = false;
+            console.log(this.ultimasdiez);
+        }, error => {
+            this.show = true;
+            console.log(error);
         });
     }
     toggleLight(luz) {
