@@ -40,33 +40,77 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _raw_loader_dashboard_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./dashboard.page.html */ "KR73");
 /* harmony import */ var _dashboard_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard.page.scss */ "B3xu");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _ambiente__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ambiente */ "ecTq");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var _ambiente__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ambiente */ "ecTq");
+/* harmony import */ var _test_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../test.service */ "9UZm");
+
+
 
 
 
 
 
 let DashboardPage = class DashboardPage {
-    constructor() {
+    constructor(alertController, testService) {
+        this.alertController = alertController;
+        this.testService = testService;
         this.ambientes = [];
     }
     ngOnInit() {
+        this.checkValorMonoxido();
         for (let index = 0; index < 2; index++) {
             const indice = index + 1;
-            var ambiente = new _ambiente__WEBPACK_IMPORTED_MODULE_4__["Ambiente"]("ambiente" + indice);
+            var ambiente = new _ambiente__WEBPACK_IMPORTED_MODULE_5__["Ambiente"]("ambiente" + indice);
             this.ambientes[index] = ambiente;
         }
-        var ambiente = new _ambiente__WEBPACK_IMPORTED_MODULE_4__["Ambiente"]("cocina");
-        var ambiente2 = new _ambiente__WEBPACK_IMPORTED_MODULE_4__["Ambiente"]("exterior");
+        var ambiente = new _ambiente__WEBPACK_IMPORTED_MODULE_5__["Ambiente"]("cocina");
+        var ambiente2 = new _ambiente__WEBPACK_IMPORTED_MODULE_5__["Ambiente"]("exterior");
         this.ambientes.push(ambiente);
         this.ambientes.push(ambiente2);
+    }
+    presentAlert() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const alert = yield this.alertController.create({
+                cssClass: 'my-custom-class',
+                header: 'Alerta niveles altos de monoxido',
+                subHeader: 'Se registo un valor mayor a los 1200 ',
+                message: 'El valor de monoxidoregistrado fue de ' + this.ultimovalor.value + 'en el horario' + this.ultimovalor.datetime,
+                buttons: ['OK']
+            });
+            yield alert.present();
+            const { role } = yield alert.onDidDismiss();
+            console.log('onDidDismiss resolved with role', role);
+        });
     }
     cambiarAmbiente(ambiente) {
         localStorage.setItem('ambienteseleccionado', ambiente);
         console.log(ambiente);
     }
+    checkValorMonoxido() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            var response = false;
+            yield this.testService.checkValorMonoxido().subscribe(res => {
+                this.ultimovalor = res;
+                this.ultimovalor = res[9];
+                if (parseInt(this.ultimovalor.value) > 1200) {
+                    response = true;
+                    this.presentAlert();
+                }
+                else {
+                }
+                console.log(this.ultimovalor.value);
+            }, error => {
+                console.log(error);
+            });
+            console.log(response);
+            return response;
+        });
+    }
 };
-DashboardPage.ctorParameters = () => [];
+DashboardPage.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] },
+    { type: _test_service__WEBPACK_IMPORTED_MODULE_6__["TestService"] }
+];
 DashboardPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
         selector: 'app-dashboard',
