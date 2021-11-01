@@ -1,0 +1,15 @@
+{
+    "mongo": {
+        "db": "SistemasEmergentes",
+        "host": "sistemergentes.slhwd.mongodb.net",
+        "passwd": "O3ByoOtAKMH01ZrM",
+        "user": "admin"
+    },
+    "mqtt": {
+        "broker":"192.241.178.194",
+        "tcpPort": 2096,
+        "webSocketPort": 8083,
+        "username":"emergentes",
+        "password":"USAL2021"
+    }
+}

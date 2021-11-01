@@ -27,6 +27,7 @@ MONGO_DB = os.getenv("MONGO_DB", MONGO_DB)
 MONGO_TIMEOUT = float(os.getenv("MONGO_TIMEOUT", MONGO_TIMEOUT))
 MONGO_DATETIME_FORMAT = os.getenv("MONGO_DATETIME_FORMAT", MONGO_DATETIME_FORMAT)
 STATUS = 1 # 0 apagado/1 encendido/2 error
+DASHBOARD_URL = 'https://emergentes.nerdingland.com'
 
 def mandarMail(mensaje):
     # create message object instance
@@ -37,8 +38,10 @@ def mandarMail(mensaje):
     #mail['From'] = "sistemas.emergentes2021@gmail.com"
     #mail['To'] = "sistemas.emergentes2021@gmail.com"
     password = "Usal2021"
-    mail['From'] = "sistemasemergentes2@gmail.com"
-    mail['To'] = "sistemasemergentes2@gmail.com"
+    # mail['From'] = "sistemasemergentes2@gmail.com"
+    # mail['To'] = "sistemasemergentes2@gmail.com"
+    mail['From'] = "emergentes8@gmail.com"
+    mail['To'] = "emergentes8@gmail.com"
     mail['Subject'] = "SUPER SISTEMA ROBOT"
     # add in the message body
     mail.attach(MIMEText(message, 'plain'))
@@ -48,7 +51,8 @@ def mandarMail(mensaje):
     # Login Credentials for sending the mail
     server.login(mail['From'], password)
     #mensaje = ("Humo Detectado " + str(alerta))
-    mail.attach(MIMEText(mensaje, 'plain'))
+    mail.attach(MIMEText(mensaje, 'plain'))    
+    mail.attach(MIMEText(f'<a href="{DASHBOARD_URL}">Enlace al dashboard</a>','html'))
     # send the message via the server.
     server.sendmail(mail['From'], mail['To'], mail.as_string())
     server.quit()
@@ -56,7 +60,6 @@ def mandarMail(mensaje):
     del message
     del mail
     del server
-
 
 # username = mqtt_config["username"]
 # password = mqtt_config["password"]
@@ -184,24 +187,24 @@ class Mongo(object):
 
     def procesarHumedad(self, humedad: float):
         topic = f'casa/exterior/regador'
-        if(humedad <= LIMITE_HUMEDAD):
+        if(humedad == 0):
             vaALlover = willRainInNextHours(LIMITE_HORAS_LLUVIA)
             if(not vaALlover):
-                self.mqttClient.publish(topic, buildJsonMessage(0,'REGADOR', 1))
+                self.mqttClient.publish(topic, buildJsonMessage(0, 'REGADOR', 1))
                 return
 
-        self.mqttClient.publish(topic, buildJsonMessage(0,'REGADOR', 0))
+        self.mqttClient.publish(topic, buildJsonMessage(0, 'REGADOR', 0))
 
     def procesarHumo(self, value: float):
-        topic = f'casa/interior/cocina/luz'
+        topic = f'casa/interior/cocina/alarma'
         if(value >= LIMITE_HUMO):
-            self.mqttClient.publish(topic, buildJsonMessage(0,'LUZ', 1))
+            self.mqttClient.publish(topic, buildJsonMessage(0, 'ALARMA', 1))
             mandarMail("Humo Detectado "+ str(value))
 
     def procesarMonoxido(self, value: float):
-        topic = f'casa/interior/cocina/luz'
+        topic = f'casa/interior/cocina/alarma'
         if(value >= LIMITE_MONOXIDO):
-            self.mqttClient.publish(topic, buildJsonMessage(0,'LUZ', 1))
+            self.mqttClient.publish(topic, buildJsonMessage(0, 'ALARMA', 1))
             mandarMail("Monóxido Detectado "+ str(value))
 
     def publishVentilador(self, numAmbiente: int):
