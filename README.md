@@ -1,16 +1,18 @@
 # Sistemas Emergentes 2021
 
-# Introducción
-## Se realizó un sistema de Domótica donde para ciertos ambientes se realiza lo siguiente:
+## Introducción
+Se realizó un sistema de Domótica donde para ciertos ambientes se realiza lo siguiente:
 
 ### Ambientes 1, 2 y 3:
 * Sensado de temperatura ambiente
 * Encendido de Ventilación
 * Encendido de Luces
-* Ambiente Cocina:
+
+### Ambiente Cocina:
 * Detector de Humo
 * Detector de Monóxido de Carbono
-* Ambiente Exterior o Jardín:
+
+### Ambiente Exterior o Jardín:
 * Sensado de Humedad
 * Control de Regador
 
