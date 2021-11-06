@@ -1,20 +1,24 @@
 # Sistemas Emergentes 2021
 
-Pasos para ejecutar
-1) Instalar Python versión 3.9 localmente
-	#![image](https://user-images.githubusercontent.com/29106960/117543399-09b98900-aff3-11eb-9da7-61ae9051832f.png)
-	Tildar la opcion de agregar el Path
+# Introducción
+## Se realizó un sistema de Domótica donde para ciertos ambientes se realiza lo siguiente:
 
-2) Instalar la dependencia de mqtt con el comando
-    pip3 install paho-mqtt
-3) Para ejecutar cada archivo .py correr el comando 
-    py {nombreArchivo}.py
-4) Instalar la dependencia de flask con el comando
-	$ pip install -U Flask
-5) Instalar la dependencia de cors con el comando
-	$ pip install -U flask-cors
+### Ambientes 1, 2 y 3:
+* Sensado de temperatura ambiente
+* Encendido de Ventilación
+* Encendido de Luces
+* Ambiente Cocina:
+* Detector de Humo
+* Detector de Monóxido de Carbono
+* Ambiente Exterior o Jardín:
+* Sensado de Humedad
+* Control de Regador
 
-Infra:
-* IP pública: 192.241.178.194
-* Puerto de Mosquitto: 2096
-* Puerto de Mongo: 27017
+En este modelo se utilizaron dispositivos programados en la plataforma Arduino, que publican y reciben información mediante una cola de mensajería MQTT, que es a su vez administrada por un Server.
+El server contiene código en lenguaje python, para leer la cola MQTT y persistir la información obtenida a una base de datos no relacional Mongo DB.
+Para presentar la información al cliente se utiliza una aplicación diseñada en Javascript con el framework Ionic y Angular.
+
+### El modelo tiene ciertas características de funcionamiento:
+* Si la temperatura de los ambientes 1,2 y 3 supera cierto umbral se enciende la ventilación.
+* Si se detecta Humo o Monóxido en el ambiente Cocina se enciende una alarma y se envía un correo electrónico notificando lo sucedido.
+* Si la humedad del ambiente exterior es baja, se hace una consulta al servicio meteorológico del lugar para verificar si en las próximas horas se esperan precipitaciones, si no es así, se enciende el regador.
