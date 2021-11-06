@@ -14,11 +14,20 @@ mqtt_config = config["mqtt"]
 broker_address = mqtt_config["broker"]
 broker_tcp_port = mqtt_config["tcpPort"]
 broker_websocket_port = mqtt_config["webSocketPort"]
-topicMonoxido="casa/interior/cocina/monoxido"
-topicHumo="casa/interior/cocina/humo"
-client_id = f'python-mqtt-{random.randint(0, 1000)}'
 username = mqtt_config["username"]
 password = mqtt_config["password"]
+
+client_id = f'python-mqtt-{random.randint(0, 1000)}'
+
+humo_config = config["humo"]
+HUMO_MINIMO = humo_config["minimo"]
+HUMO_MAXIMO = humo_config["maximo"]
+HUMO_TOPIC = humo_config["topico"]
+
+monoxido_config = config["monoxido"]
+MONOXIDO_MINIMO = monoxido_config["minimo"]
+MONOXIDO_MAXIMO = monoxido_config["maximo"]
+MONOXIDO_TOPIC = monoxido_config["topico"]
 
 def connect_mqtt():
     def on_connect(client, userdata, flags, returnCode):
@@ -37,25 +46,25 @@ def connect_mqtt():
 
 def publish(client):            
     while True:
-        monoxidoValue = random.randint(1000, 1250)
+        monoxidoValue = random.randint(MONOXIDO_MINIMO, MONOXIDO_MAXIMO)
         jsonMonoxido = buildJsonMessage('cocina', 'MONOXIDO', monoxidoValue)
-        result = client.publish(topicMonoxido, jsonMonoxido)    
+        result = client.publish(MONOXIDO_TOPIC, jsonMonoxido)    
 
         status = result[0]
         if status == 0:
-            print(f"Sent `{jsonMonoxido}` to topic `{topicMonoxido}`")
+            print(f"Sent `{jsonMonoxido}` to topic `{MONOXIDO_TOPIC}`")
         else:
-            print(f"Failed to send message to topic {topicMonoxido}")
+            print(f"Failed to send message to topic {MONOXIDO_TOPIC}")
 
-        humoValue = random.randint(0, 70)
+        humoValue = random.randint(HUMO_MINIMO, HUMO_MAXIMO)
         jsonHumo = buildJsonMessage('cocina', 'HUMO', humoValue)
-        result = client.publish(topicHumo, jsonHumo)    
+        result = client.publish(HUMO_TOPIC, jsonHumo)    
 
         status = result[0]
         if status == 0:
-            print(f"Sent `{jsonHumo}` to topic `{topicHumo}`")
+            print(f"Sent `{jsonHumo}` to topic `{HUMO_TOPIC}`")
         else:
-            print(f"Failed to send message to topic {topicHumo}")
+            print(f"Failed to send message to topic {HUMO_TOPIC}")
         time.sleep(60)
 
 def run():

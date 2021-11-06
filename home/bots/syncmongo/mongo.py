@@ -27,30 +27,31 @@ MONGO_DB = os.getenv("MONGO_DB", MONGO_DB)
 MONGO_TIMEOUT = float(os.getenv("MONGO_TIMEOUT", MONGO_TIMEOUT))
 MONGO_DATETIME_FORMAT = os.getenv("MONGO_DATETIME_FORMAT", MONGO_DATETIME_FORMAT)
 STATUS = 1 # 0 apagado/1 encendido/2 error
-DASHBOARD_URL = 'https://emergentes.nerdingland.com'
+
+with open("config.json") as config_file:
+    config = json.load(config_file)
+
+DASHBOARD_URL = config["dashboardUrl"]
+mail_config = config["mail"]
+MAIL_USER = mail_config["user"]
+MAIL_PASSWORD = mail_config["password"]
+MAIL_SUBJECT = mail_config["mailSubject"]
 
 def mandarMail(mensaje):
     # create message object instance
     mail = MIMEMultipart()
-    message = "Sistema Robot le informa "
-    # setup the parameters of the message
-    #password = "3mer63ntes"
-    #mail['From'] = "sistemas.emergentes2021@gmail.com"
-    #mail['To'] = "sistemas.emergentes2021@gmail.com"
-    password = "Usal2021"
-    # mail['From'] = "sistemasemergentes2@gmail.com"
-    # mail['To'] = "sistemasemergentes2@gmail.com"
-    mail['From'] = "emergentes8@gmail.com"
-    mail['To'] = "emergentes8@gmail.com"
-    mail['Subject'] = "SUPER SISTEMA ROBOT"
+    message = "Sistema Robot le informa "    
+    password = MAIL_PASSWORD
+    mail['From'] = MAIL_USER
+    mail['To'] = MAIL_USER
+    mail['Subject'] = MAIL_SUBJECT
     # add in the message body
     mail.attach(MIMEText(message, 'plain'))
     #create server
     server = smtplib.SMTP('smtp.gmail.com: 587')
     server.starttls()
     # Login Credentials for sending the mail
-    server.login(mail['From'], password)
-    #mensaje = ("Humo Detectado " + str(alerta))
+    server.login(mail['From'], password)    
     mail.attach(MIMEText(mensaje, 'plain'))    
     mail.attach(MIMEText(f'<a href="{DASHBOARD_URL}">Enlace al dashboard</a>','html'))
     # send the message via the server.
@@ -61,23 +62,24 @@ def mandarMail(mensaje):
     del mail
     del server
 
-# username = mqtt_config["username"]
-# password = mqtt_config["password"]
+mqtt_config = config["mqtt"]
 
-MQTT_BROKER = "192.241.178.194"
+MQTT_BROKER = mqtt_config["broker"]
 #MQTT_BROKER = "test.mosquitto.org"
-MQTT_PORT = 2096
+MQTT_PORT = mqtt_config["tcpPort"]
 #MQTT_PORT = 1883
 MQTT_KEEPALIVE = 60
 MQTT_QOS = 2
-MQTT_USERNAME = ''
-MQTT_PASSWORD = 'public'
+MQTT_USERNAME = mqtt_config["username"]
+MQTT_PASSWORD = mqtt_config["password"]
 
-LIMITE_TEMPERATURA = 25
-LIMITE_HUMEDAD = 300
-LIMITE_HUMO = 50
-LIMITE_MONOXIDO = 1200
-LIMITE_HORAS_LLUVIA = 4
+limites_config = config["limites"]
+
+LIMITE_TEMPERATURA = limites_config["temperatura"]
+LIMITE_HUMEDAD = limites_config["humedad"]
+LIMITE_HUMO = limites_config["humo"]
+LIMITE_MONOXIDO = limites_config["monoxido"]
+LIMITE_HORAS_LLUVIA = limites_config["horasLluvia"]
 
 TIPO_TEMPERATURA = 'TEMPERATURA'
 TIPO_LUZ = 'LUZ'

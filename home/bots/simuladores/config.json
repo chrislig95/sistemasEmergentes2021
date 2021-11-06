@@ -11,5 +11,15 @@
         "webSocketPort": 8083,
         "username":"emergentes",
         "password":"USAL2021"
+    },
+    "humo":{
+        "minimo": 0,
+        "maximo": 70,
+        "topico": "casa/interior/cocina/humo"   
+    },
+    "monoxido":{
+        "minimo": 1000,
+        "maximo": 1250,
+        "topico":"casa/interior/cocina/monoxido"
     }
 }
