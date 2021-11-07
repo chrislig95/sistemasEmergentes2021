@@ -172,7 +172,7 @@ def create_app():
             return jsonify({'error': 'error no manejado'})
 
     @app.route('/alarma', methods=['post'])
-    def postTopicLuz():
+    def postTopicAlarma():
         try:            
             value = request.json['value']
 
