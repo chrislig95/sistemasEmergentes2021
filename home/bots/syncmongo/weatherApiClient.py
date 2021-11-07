@@ -19,8 +19,7 @@ def willRainInNextHours(hours) -> bool:
 
     weatherResponse=getWeatherForecast(lat, lon)
 
-    nextHoursForecast = weatherResponse.json()["hourly"][:hours]
-    print(nextHoursForecast)
+    nextHoursForecast = weatherResponse.json()["hourly"][:hours]    
     for forecast in nextHoursForecast:
         if 'rain' in forecast:
             return True

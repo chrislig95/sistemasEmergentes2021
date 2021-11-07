@@ -143,6 +143,7 @@ class Mongo(object):
         now = datetime.now()
 
         payloadJson = json.loads(msg.payload)
+        print(payloadJson)        
 
         self.collection = self.determineCollection(msg)
 
@@ -150,6 +151,8 @@ class Mongo(object):
         valueMensaje = payloadJson["value"]
 
         if(tipoMensaje == TIPO_TEMPERATURA):
+            ambiente = payloadJson["ambiente"]
+            self.procesarTemperatura(ambiente, valueMensaje)
             if(valueMensaje >= LIMITE_TEMPERATURA):
                 self.publishVentilador(valueMensaje)
         
@@ -176,6 +179,7 @@ class Mongo(object):
 
             result = self.collection.insert_one(document)
             print("Saved in Mongo document ID", result.inserted_id)
+            print(document)
         except Exception as ex:
             print(ex)
 
@@ -200,18 +204,26 @@ class Mongo(object):
     def procesarHumo(self, value: float):
         topic = f'casa/interior/cocina/alarma'
         if(value >= LIMITE_HUMO):
-            self.mqttClient.publish(topic, buildJsonMessage(0, 'ALARMA', 1))
+            self.mqttClient.publish(topic, 1)
             mandarMail("Humo Detectado "+ str(value))
+        else:
+            self.mqttClient.publish(topic, 0)
 
     def procesarMonoxido(self, value: float):
         topic = f'casa/interior/cocina/alarma'
         if(value >= LIMITE_MONOXIDO):
-            self.mqttClient.publish(topic, buildJsonMessage(0, 'ALARMA', 1))
+            self.mqttClient.publish(topic, 1)
             mandarMail("Monóxido Detectado "+ str(value))
+        else:
+            self.mqttClient.publish(topic, 0)
 
     def publishVentilador(self, numAmbiente: int):
         topic = f'casa/interior/ambiente{numAmbiente}/ventilador'
         self.mqttClient.publish(topic, buildJsonMessage(numAmbiente, 'VENTILADOR', 1))
+
+    def procesarTemperatura(self, numAmbiente: int, value: float):
+        topic = f'casa/interior/ambiente{numAmbiente}/temperatura'
+        self.mqttClient.publish(topic, buildJsonMessage(numAmbiente, 'TEMPERATURA', value))
 
     def save(self, msg: mqtt.MQTTMessage):
         print("Saving")
