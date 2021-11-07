@@ -130,11 +130,13 @@ def create_app():
 
     @app.route('/', methods=['GET'])
     def query_records():
-        collectionName = request.args.get('collectionName')
+        limit = request.args.get('limit')        
+        if not limit:
+            limit = 10
         
+        collectionName = request.args.get('collectionName')        
         collection = db.database.get_collection(collectionName)
-
-        queryset = collection.find({}).sort("datetime",-1).limit(10)
+        queryset = collection.find({}).sort("timestamp", -1).limit(int(limit))
         
         result = []
         for record in list(queryset):
