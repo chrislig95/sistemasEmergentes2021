@@ -17,14 +17,18 @@ def willRainInNextHours(hours) -> bool:
     lat = geoCoordinates.latlng[0]
     lon = geoCoordinates.latlng[1]
 
-    weatherResponse=getWeatherForecast(lat, lon)
+    try:
+        weatherResponse=getWeatherForecast(lat, lon)
 
-    nextHoursForecast = weatherResponse.json()["hourly"][:hours]    
-    for forecast in nextHoursForecast:
-        if 'rain' in forecast:
-            return True
+        nextHoursForecast = weatherResponse.json()["hourly"][:hours]    
+        for forecast in nextHoursForecast:
+            if 'rain' in forecast:
+                return True
 
-    return False
+        return False
+    except:
+        print('Error en consulta a api de clima')
+        return False
 
 if __name__ == '__main__':
     geoCoordinates = geocoder.ip('me')

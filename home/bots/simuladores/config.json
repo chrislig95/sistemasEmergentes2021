@@ -14,11 +14,11 @@
     },
     "humo":{
         "minimo": 0,
-        "maximo": 70,
+        "maximo": 55,
         "topico": "casa/interior/cocina/humo"   
     },
     "monoxido":{
-        "minimo": 1000,
+        "minimo": 300,
         "maximo": 1250,
         "topico":"casa/interior/cocina/monoxido"
     }

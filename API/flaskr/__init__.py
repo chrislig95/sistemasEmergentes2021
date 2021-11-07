@@ -160,11 +160,27 @@ def create_app():
             value = request.json['value']
 
             if(ambiente >= 1 and ambiente <= 4 and (value == 0 or value == 1)):
-                topic = f'casa/interior/ambiente{ambiente}/luz'
-                message = buildJsonMessage(ambiente, 'LUZ', value)
-                mqtt.mqtt_client.publish(topic, message)
-                logger.info(f'published {message} on {topic}')
-                return jsonify(message)
+                topic = f'casa/interior/ambiente{ambiente}/luz'                
+                mqtt.mqtt_client.publish(topic, int(value))
+                logger.info(f'published {value} on {topic}')
+                return jsonify(value)
+            else:
+                logger.error(f'error en {request.json} - invalid request')
+                return jsonify({'error': 'invalid request'})
+        except Exception:
+            logger.exception(f'error en {request.json}')
+            return jsonify({'error': 'error no manejado'})
+
+    @app.route('/alarma', methods=['post'])
+    def postTopicLuz():
+        try:            
+            value = request.json['value']
+
+            if((value == 0 or value == 1)):
+                topic = f'casa/interior/cocina/alarma'                
+                mqtt.mqtt_client.publish(topic, int(value))
+                logger.info(f'published {value} on {topic}')
+                return jsonify(value)
             else:
                 logger.error(f'error en {request.json} - invalid request')
                 return jsonify({'error': 'invalid request'})

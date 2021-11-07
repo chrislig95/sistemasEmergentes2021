@@ -1,5 +1,6 @@
 import json
 import random
+import ssl
 import string
 from typing import List
 from datetime import datetime
@@ -100,6 +101,7 @@ def connect_mqtt():
     # Set Connecting Client ID
     client = mqtt.Client(client_id)
     client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
+    client.tls_set(cert_reqs=ssl.CERT_NONE)
     client.on_connect = on_connect
     client.connect(MQTT_BROKER, MQTT_PORT)
     return client
@@ -139,22 +141,23 @@ class Mongo(object):
         # TODO process queue
 
     def __store_thread_f(self, msg: mqtt.MQTTMessage):
-        print("Storing")
+        print("Storing")        
         now = datetime.now()
-
         payloadJson = json.loads(msg.payload)
         print(payloadJson)        
 
         self.collection = self.determineCollection(msg)
 
-        tipoMensaje = payloadJson["tipo"]
-        valueMensaje = payloadJson["value"]
+        try:
+            tipoMensaje = payloadJson["tipo"]
+            valueMensaje = payloadJson["value"]
+        except:            
+            tipoMensaje = ''
+            valueMensaje = payloadJson
 
-        if(tipoMensaje == TIPO_TEMPERATURA):
+        if(tipoMensaje == TIPO_TEMPERATURA):                        
             ambiente = payloadJson["ambiente"]
-            self.procesarTemperatura(ambiente, valueMensaje)
-            if(valueMensaje >= LIMITE_TEMPERATURA):
-                self.publishVentilador(valueMensaje)
+            self.procesarTemperatura(int(ambiente), valueMensaje)
         
         if(tipoMensaje == TIPO_HUMEDAD):
             self.procesarHumedad(valueMensaje)
@@ -170,16 +173,15 @@ class Mongo(object):
         try:
             document = {
                 "topic": msg.topic,
-                "value": payloadJson["value"],
+                "value": valueMensaje,
                 "qos": msg.qos,
                 "status": status,
                 "timestamp": int(now.timestamp()),
-                "datetime": now.strftime(MONGO_DATETIME_FORMAT)
+                "datetime": now.strftime(MONGO_DATETIME_FORMAT)                
             }
 
             result = self.collection.insert_one(document)
-            print("Saved in Mongo document ID", result.inserted_id)
-            print(document)
+            print("Saved in Mongo document ID", result.inserted_id)            
         except Exception as ex:
             print(ex)
 
@@ -206,24 +208,23 @@ class Mongo(object):
         if(value >= LIMITE_HUMO):
             self.mqttClient.publish(topic, 1)
             mandarMail("Humo Detectado "+ str(value))
-        else:
-            self.mqttClient.publish(topic, 0)
+        ##else:
+        ##    self.mqttClient.publish(topic, 0)
 
-    def procesarMonoxido(self, value: float):
+    def procesarMonoxido(self, value: float):        
         topic = f'casa/interior/cocina/alarma'
         if(value >= LIMITE_MONOXIDO):
-            self.mqttClient.publish(topic, 1)
+            self.mqttClient.publish(topic, 1)            
             mandarMail("Monóxido Detectado "+ str(value))
+        ##else:
+        ##    self.mqttClient.publish(topic, 0)
+
+    def procesarTemperatura(self, numAmbiente: int, value: float):        
+        topic = f'casa/interior/ambiente{numAmbiente}/ventilador'
+        if(value >= LIMITE_TEMPERATURA):            
+            self.mqttClient.publish(topic, 1)
         else:
             self.mqttClient.publish(topic, 0)
-
-    def publishVentilador(self, numAmbiente: int):
-        topic = f'casa/interior/ambiente{numAmbiente}/ventilador'
-        self.mqttClient.publish(topic, buildJsonMessage(numAmbiente, 'VENTILADOR', 1))
-
-    def procesarTemperatura(self, numAmbiente: int, value: float):
-        topic = f'casa/interior/ambiente{numAmbiente}/temperatura'
-        self.mqttClient.publish(topic, buildJsonMessage(numAmbiente, 'TEMPERATURA', value))
 
     def save(self, msg: mqtt.MQTTMessage):
         print("Saving")
