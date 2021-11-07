@@ -1,0 +1,22 @@
+{
+    "limites": {
+        "temperatura": 25,
+        "humedad": 300,
+        "humo": 50,
+        "monoxido": 1200,
+        "horasLluvia": 4
+    },
+    "mail":{
+        "user": "emergentes8@gmail.com",
+        "password": "Usal2021",
+        "mailSubject": "SUPER SISTEMA ROBOT"
+    },
+    "mqtt": {
+        "broker":"192.241.178.194",        
+        "tcpPort": 2096,
+        "webSocketPort": 8083,
+        "username":"emergentes",
+        "password":"USAL2021"
+    },
+    "dashboardUrl": "https://emergentes.nerdingland.com"
+}
