@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title slot=\"start\" style=\"font-size: 30px;\">\n      Luces | {{ambiente}}\n    </ion-title>\n    <ion-button slot=\"end\" [routerLink]=\"['/dashboard']\">\n      <ion-icon name=\"grid-outline\"></ion-icon>\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\" style=\"display: flex; justify-content: center;\" >\n  <ion-row > \n    <ion-col>\n      <ion-button  (click)=\"getData()\">Actualizar <ion-icon name=\"refresh-outline\"></ion-icon></ion-button>\n    </ion-col>\n  </ion-row>\n  <ion-row *ngIf=\"!show\">\n    <ion-col>\n      <ion-card>\n        <ion-card-header>\n          Interruptor de luz ambiente {{ambiente}}\n        </ion-card-header>\n             <ng-container  *ngIf=\"luzparaprenderyapagar?.value == '1' \"> \n          <ion-item>\n            <ion-label>Luces encendida</ion-label>\n            <ion-toggle  (ionChange)=\"toggleLight(luzparaprenderyapagar)\" checked=\"true\"></ion-toggle>\n          </ion-item>\n         </ng-container>\n         <ng-container  *ngIf=\"luzparaprenderyapagar?.value == '0' \"> \n          <ion-item>\n            <ion-label>Luces apagada</ion-label>\n            <ion-toggle   (ionChange)=\"toggleLight(luzparaprenderyapagar)\"checked=\"false\"></ion-toggle>\n          </ion-item>\n         </ng-container>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n\n <ion-row *ngIf=\"!how\">\n  <ion-col>\n\n    <ion-card  *ngIf=\"ultimasdiez?.length > 0\">\n      <ion-card-header>\n        \n        Censado luz {{ambiente}}\n        \n      </ion-card-header>\n  \n   \n      <ion-item *ngFor=\"let luz of ultimasdiez\">\n        <ion-label>Censado luz interior</ion-label>\n    \n           <!-- <ng-container  *ngIf=\"luz.value == '1' \"> \n            <ion-item>\n              <ion-label>Luces encendida</ion-label>\n              <ion-toggle  (ionChange)=\"toggleLight(luz)\" checked=\"true\"></ion-toggle>\n            </ion-item>\n           </ng-container>\n           <ng-container  *ngIf=\"luz.value == '0' \"> \n            <ion-item>\n              <ion-label>Luces apagada</ion-label>\n              <ion-toggle   (ionChange)=\"toggleLight(luz)\"checked=\"false\"></ion-toggle>\n            </ion-item>\n           </ng-container> -->\n           <ion-badge color=\"secondary\" >{{luz.datetime}}</ion-badge> \n  \n      </ion-item>\n    </ion-card>\n   \n  </ion-col>\n </ion-row>\n\n  <ion-row *ngIf=\"show\"  style=\"display: flex; justify-content: center;\">\n    <ion-col size=\"6\">\n\n      <ion-card>\n        <ion-card-header>\n         No data\n        </ion-card-header>\n        <ion-card-content>\n          No se encontro informacion de temperatura en el ambiente {{ambiente}}\n          <ion-icon name=\"alert-circle-outline\" style=\"font-size: 40px;\"></ion-icon>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n\n\n\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title slot=\"start\" style=\"font-size: 30px; text-transform: uppercase;\">\n      Luces | {{ambiente  | uppercase }}\n    </ion-title>\n    <ion-button slot=\"end\" [routerLink]=\"['/dashboard']\">\n      <ion-icon name=\"grid-outline\"></ion-icon>\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\" style=\"display: flex; justify-content: center;\" >\n  <ion-row > \n    <ion-col>\n      <ion-button  (click)=\"getData()\">Actualizar <ion-icon name=\"refresh-outline\"></ion-icon></ion-button>\n    </ion-col>\n  </ion-row>\n  <ion-row *ngIf=\"!show\">\n    <ion-col>\n      <ion-card>\n        <ion-card-header>\n          Interruptor de luz ambiente {{ambiente}}\n        </ion-card-header>\n             <ng-container  *ngIf=\"luzparaprenderyapagar?.value == '1' \"> \n          <ion-item>\n            <ion-label>Luces encendida</ion-label>\n            <ion-toggle  (ionChange)=\"toggleLight(luzparaprenderyapagar)\" checked=\"true\"></ion-toggle>\n          </ion-item>\n         </ng-container>\n         <ng-container  *ngIf=\"luzparaprenderyapagar?.value == '0' \"> \n          <ion-item>\n            <ion-label>Luces apagada</ion-label>\n            <ion-toggle   (ionChange)=\"toggleLight(luzparaprenderyapagar)\"checked=\"false\"></ion-toggle>\n          </ion-item>\n         </ng-container>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n\n <ion-row *ngIf=\"!show\">\n  <ion-col>\n\n    <ion-card  *ngIf=\"ultimasdiez?.length > 0\">\n      <ion-card-header>\n        \n        Censado luz {{ambiente}}\n        \n      </ion-card-header>\n  \n   \n      <ion-item *ngFor=\"let luz of ultimasdiez\">\n        <ion-label>Censado luz interior</ion-label>\n    \n           <!-- <ng-container  *ngIf=\"luz.value == '1' \"> \n            <ion-item>\n              <ion-label>Luces encendida</ion-label>\n              <ion-toggle  (ionChange)=\"toggleLight(luz)\" checked=\"true\"></ion-toggle>\n            </ion-item>\n           </ng-container>\n           <ng-container  *ngIf=\"luz.value == '0' \"> \n            <ion-item>\n              <ion-label>Luces apagada</ion-label>\n              <ion-toggle   (ionChange)=\"toggleLight(luz)\"checked=\"false\"></ion-toggle>\n            </ion-item>\n           </ng-container> -->\n           <ion-badge color=\"secondary\" >{{luz.datetime}}</ion-badge> \n  \n      </ion-item>\n    </ion-card>\n   \n  </ion-col>\n </ion-row>\n\n  <ion-row *ngIf=\"show\"  style=\"display: flex; justify-content: center;\">\n    <ion-col size=\"6\">\n\n      <ion-card style=\"background-color: rgb(179, 179, 179); color:black\">\n        <ion-card-header style=\"font-size: 40px; color: black;\">\n         No data\n        </ion-card-header>\n        <ion-card-content style=\"font-size: 35px;\">\n          <span></span>\n          No se encontro informacion de luces en el ambiente {{ambiente}}\n          <ion-icon name=\"alert-circle-outline\" style=\"font-size: 45px; color: red;\"></ion-icon>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n\n\n\n\n</ion-content>\n");
 
 /***/ }),
 
@@ -45,6 +45,7 @@ let Tab1Page = class Tab1Page {
         this.ambiente = "";
         this.show = false;
         router.events.subscribe((val) => {
+            this.ambiente = localStorage.getItem('ambienteseleccionado');
             if (val instanceof _angular_router__WEBPACK_IMPORTED_MODULE_4__["NavigationEnd"]) {
                 this.getData();
             }
@@ -67,10 +68,10 @@ let Tab1Page = class Tab1Page {
         this.lightService.getLight(this.ambiente).subscribe(res => {
             this.ultimasdiez = res;
             this.show = false;
-            this.luzparaprenderyapagar = this.ultimasdiez[9];
+            this.luzparaprenderyapagar = this.ultimasdiez[0];
             console.log(this.luzparaprenderyapagar);
             console.log(this.ultimasdiez);
-            if (res.hasOwnProperty('error')) {
+            if (res.hasOwnProperty('error') || this.ambiente === 'cocina') {
                 this.show = true;
             }
         }, error => {
@@ -79,7 +80,8 @@ let Tab1Page = class Tab1Page {
         });
     }
     toggleLight(luz) {
-        this.lightService.toggleLight(!luz.status, 1).subscribe(res => {
+        this.ambiente = localStorage.getItem('ambienteseleccionado');
+        this.lightService.toggleLight(!luz.status, this.ambiente).subscribe(res => {
             luz.status = !luz.status;
             console.log(res);
         }, error => {
@@ -165,8 +167,15 @@ let LightsService = class LightsService {
         this.http = http;
     }
     toggleLight(value, ambiente) {
-        console.log('https://ws.nerdingland.com/luz', { "ambiente": ambiente, "value": value });
-        return this.http.post('https://ws.nerdingland.com/luz', { "ambiente": ambiente, "value": value });
+        let valorAmbiente = 0;
+        if (ambiente === "ambiente1") {
+            valorAmbiente = 1;
+        }
+        if (ambiente === "ambiente2") {
+            valorAmbiente = 2;
+        }
+        console.log('https://ws.nerdingland.com/luz', { "ambiente": valorAmbiente, "value": value });
+        return this.http.post('https://ws.nerdingland.com/luz', { "ambiente": valorAmbiente, "value": value });
     }
     getLight(ambiente) {
         return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/' + ambiente + '/luz');

@@ -118,21 +118,57 @@ let Tab5Page = class Tab5Page {
     constructor(testService, router) {
         this.testService = testService;
         this.router = router;
+        this.showMessage = false;
         router.events.subscribe((val) => {
             if (val instanceof _angular_router__WEBPACK_IMPORTED_MODULE_4__["NavigationEnd"]) {
-                this.getData();
+                this.ambiente = localStorage.getItem('ambienteseleccionado');
+                if (this.ambiente == 'cocina') {
+                    this.getData();
+                    this.showMessage = false;
+                }
+                else {
+                    this.showMessage = true;
+                }
             }
         });
     }
     ngOnInit() {
         // this.ultimasdiez = JSON.parse(this.getData2())
         // console.log(this.ultimasdiez)
-        this.getData();
+        this.ambiente = localStorage.getItem('ambienteseleccionado');
+        if (this.ambiente == 'cocina') {
+            console.log("es cocina");
+            this.getData();
+        }
+        else {
+            this.showMessage = true;
+        }
     }
     getData() {
         this.testService.interiorAlarma().subscribe(res => {
             console.log(res);
             this.ultimasdiez = res;
+        }, error => {
+            console.log(error);
+        });
+    }
+    getHumo() {
+        this.testService.humoCocina().subscribe(res => {
+            this.ultimasdiezHumo = res;
+            this.ultimamedicionHumo = this.ultimasdiezHumo[0];
+            console.log(this.ultimamedicionHumo.value);
+            // this.drawGaugeHumo(this.ultimamedicionHumo.value)
+        }, error => {
+            console.log(error);
+        });
+    }
+    getMonoxido() {
+        this.testService.monoxidoCocina().subscribe(res => {
+            console.log(res);
+            this.ultimasdiez = res;
+            this.ultimamedicion = this.ultimasdiez[8];
+            console.log(this.ultimamedicion.value);
+            // this.drawGauge(this.ultimamedicion.value)
         }, error => {
             console.log(error);
         });
@@ -163,7 +199,7 @@ Tab5Page = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title slot=\"start\" style=\"font-size: 30px;\">\n      Alarma | {{ambiente}}\n    </ion-title>\n    <ion-button slot=\"end\" [routerLink]=\"['/dashboard']\">\n      <ion-icon name=\"grid-outline\"></ion-icon>\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <div class=\"container-fluid\">\n    <ion-row>\n      <ion-col>\n        <button class=\"btn btn-primary\" (click)=\"getData()\">Actualizar  </button>\n      </ion-col>\n    </ion-row>\n\n    <div class=\"row my-5 justify-content-center \">\n        <div class=\"col-12  my-5 d-flex justify-content-center\">\n          \n            <ion-card *ngFor=\"let alarma of ultimasdiez\" style=\"text-align: center;\"> \n              <ion-card-header style=\"text-align: center;\"> \n                <span style=\"font-size: 30px; color: red;\" *ngIf=\"alarma.value == 1\">\n                  Alarma encendida!!!\n                </span>\n                <span style=\"font-size: 30px;\" *ngIf=\"alarma.value == 0\">\n                  Ok!\n                </span>\n          \n              </ion-card-header>\n              <ion-badge color=\"secondary\" >{{alarma.datetime}}</ion-badge> \n\n              <!-- <ion-input type=\"number\"  [(ngModel)]=\"temperatura.value\" ></ion-input> -->\n              <!-- <ion-badge color=\"secondary\">\n\n                <ion-icon name=\"snow-outline\" style=\"font-size: 30px;\" *ngIf=\"alarma.value < 0\"></ion-icon>\n              </ion-badge>\n              <ion-badge color=\"warning\">\n\n                <ion-icon name=\"sunny-outline\" style=\"font-size: 30px;\" *ngIf=\"alarma.value > 0\"></ion-icon>\n              </ion-badge> -->\n            \n            </ion-card>\n          \n        \n        </div>\n    </div>\n\n</div>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title slot=\"start\" style=\"font-size: 30px; text-transform: uppercase;\">\n      Alarma | {{ambiente}}\n    </ion-title>\n    <ion-button slot=\"end\" [routerLink]=\"['/dashboard']\">\n      <ion-icon name=\"grid-outline\"></ion-icon>\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <div class=\"container-fluid\" *ngIf=\"!showMessage\">\n    <ion-row>\n      <ion-col>\n        <ion-button  (click)=\"getData()\">Actualizar <ion-icon name=\"refresh-outline\"></ion-icon></ion-button>\n\n      </ion-col>\n    </ion-row>\n\n    <div class=\"row my-5 justify-content-center \">\n        <div class=\"col-12  my-5 d-flex justify-content-center\">\n          \n            <ion-card *ngFor=\"let alarma of ultimasdiez\" style=\"text-align: center;\"> \n              <ion-card-header style=\"text-align: center;\"> \n                <span style=\"font-size: 30px; color: red;\" *ngIf=\"alarma.value > 1\">\n                  Alarma encendida!!!\n                </span>\n                <span style=\"font-size: 30px;\" *ngIf=\"alarma.value == 0 ||  alarma.value == 1\" >\n                  Ok!\n                </span>\n          \n              </ion-card-header>\n              <ion-badge color=\"secondary\" >{{alarma.datetime}}</ion-badge> \n\n              <!-- <ion-input type=\"number\"  [(ngModel)]=\"temperatura.value\" ></ion-input> -->\n              <!-- <ion-badge color=\"secondary\">\n\n                <ion-icon name=\"snow-outline\" style=\"font-size: 30px;\" *ngIf=\"alarma.value < 0\"></ion-icon>\n              </ion-badge>\n              <ion-badge color=\"warning\">\n\n                <ion-icon name=\"sunny-outline\" style=\"font-size: 30px;\" *ngIf=\"alarma.value > 0\"></ion-icon>\n              </ion-badge> -->\n            \n            </ion-card>\n          \n        \n        </div>\n    </div>\n\n</div>\n<ion-row *ngIf=\"showMessage\"  style=\"display: flex; justify-content: center;\">\n  <ion-col size=\"6\">\n\n    <ion-card style=\"background-color: rgb(179, 179, 179); color:black\">\n      <ion-card-header style=\"font-size: 40px; color: black;\">\n       No data\n      </ion-card-header>\n      <ion-card-content style=\"font-size: 35px;\">\n        <span></span>\n        No se encontro informacion de Alarmas en el ambiente {{ambiente}}\n        <ion-icon name=\"alert-circle-outline\" style=\"font-size: 45px; color: red;\"></ion-icon>\n      </ion-card-content>\n    </ion-card>\n  </ion-col>\n</ion-row>\n</ion-content>\n");
 
 /***/ })
 

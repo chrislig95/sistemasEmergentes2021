@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"bg-domotica\">\n  <ion-row>\n    <ion-col *ngFor=\" let ambiente of ambientes\" size=\"6\">\n      <ion-button [routerLink]=\"['/tabs/tab1']\" class=\"custombutton\" style=\"width: 100%; height: 300px;\" (click)=\"cambiarAmbiente(ambiente.nombre)\">\n        {{ambiente.nombre}}\n        <i class=\"fas fa-temperature-high\" *ngIf=\"ambiente.nombre == 'exterior'\"></i>\n        <i _ngcontent-hjf-c2=\"\" class=\"fas fa-temperature-high\" style=\"font-size: 30vh;\"></i>\n      </ion-button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"bg-domotica\">\n  <ion-row>\n    <ion-col *ngFor=\" let ambiente of ambientes\" size=\"6\">\n      <ion-button [routerLink]=\"['/tabs/tab1']\" class=\"custombutton\" style=\"width: 100%; height: 300px;\" (click)=\"cambiarAmbiente(ambiente.nombre)\">\n        {{ambiente.nombre}}\n        <!-- <i class=\"fas fa-temperature-high\" *ngIf=\"ambiente.nombre == 'exterior'\"></i> -->\n        <!-- <i _ngcontent-hjf-c2=\"\" class=\"fas fa-temperature-high\" style=\"font-size: 30vh;\"></i> -->\n      </ion-button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
 
 /***/ }),
 
@@ -74,7 +74,7 @@ let DashboardPage = class DashboardPage {
                 cssClass: 'my-custom-class',
                 header: 'Alerta niveles altos de monoxido',
                 subHeader: 'Se registo un valor mayor a los 1200 ',
-                message: 'El valor de monoxidoregistrado fue de ' + this.ultimovalor.value + 'en el horario' + this.ultimovalor.datetime,
+                message: 'El valor de monoxido registrado fue de ' + this.ultimovalor.value + ' en el horario ' + this.ultimovalor.datetime,
                 buttons: ['OK']
             });
             yield alert.present();
@@ -91,7 +91,7 @@ let DashboardPage = class DashboardPage {
             var response = false;
             yield this.testService.checkValorMonoxido().subscribe(res => {
                 this.ultimovalor = res;
-                this.ultimovalor = res[9];
+                this.ultimovalor = res[0];
                 if (parseInt(this.ultimovalor.value) > 1200) {
                     response = true;
                     this.presentAlert();

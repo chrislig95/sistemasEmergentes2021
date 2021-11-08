@@ -85,9 +85,9 @@ let TestService = class TestService {
     exteriorLuces() {
         return this.http.get('http://localhost:1000/?collectionName=exteriorLuces');
     }
-    interiorMonoxido() {
-        return this.http.get('https://ws.nerdingland.com/?collectionName=interiorMonoxido');
-    }
+    //  interiorMonoxido(){
+    //   return this.http.get('https://ws.nerdingland.com/?collectionName=interiorMonoxido');
+    //  }
     monoxidoCocina() {
         return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/cocina/monoxido');
     }
@@ -101,7 +101,7 @@ let TestService = class TestService {
         return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/ambiente2/temperatura');
     }
     interiorAlarma() {
-        return this.http.get('https://ws.nerdingland.com/?collectionName=interiorAlarma');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/cocina/alarma');
     }
     exteriorAlarma() {
         return this.http.get('https://ws.nerdingland.com/?collectionName=exteriorAlarma');
@@ -117,7 +117,7 @@ let TestService = class TestService {
         return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/' + ambiente + '/humo');
     }
     checkValorMonoxido() {
-        return this.http.get('https://ws.nerdingland.com/?collectionName=interiorMonoxido');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/cocina/monoxido');
     }
     getRegadores(ambiente) {
         return this.http.get('https://ws.nerdingland.com/?collectionName=casa/' + ambiente + '/regador');
