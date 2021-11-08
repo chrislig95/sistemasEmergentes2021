@@ -128,6 +128,9 @@ let TestService = class TestService {
     getWeatherBuenosAires() {
         return this.http.get('https://api.openweathermap.org/data/2.5/weather?q=Buenos%20Aires&APPID=f092256c9815b73aab7fbecc8f493759');
     }
+    apagarAlarma() {
+        return this.http.post('https://ws.nerdingland.com/alarma', { "value": 0 });
+    }
 };
 TestService.ctorParameters = () => [
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }
