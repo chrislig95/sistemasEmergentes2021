@@ -55950,6 +55950,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @amcharts/amcharts4/charts */ "xJfa");
 /* harmony import */ var _amcharts_amcharts4_themes_animated__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @amcharts/amcharts4/themes/animated */ "WlQZ");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ "tyNb");
 
 
 
@@ -55960,11 +55961,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 let Tab4Page = class Tab4Page {
-    constructor(platformId, zone, testService) {
+    constructor(platformId, zone, testService, router) {
         this.platformId = platformId;
         this.zone = zone;
         this.testService = testService;
+        this.router = router;
+        router.events.subscribe((val) => {
+            if (val instanceof _angular_router__WEBPACK_IMPORTED_MODULE_9__["NavigationEnd"]) {
+                this.getData();
+            }
+        });
     }
     ngOnInit() {
         // this.ultimasdiez = JSON.parse(this.getData2())
@@ -56142,7 +56150,8 @@ let Tab4Page = class Tab4Page {
 Tab4Page.ctorParameters = () => [
     { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"], args: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["PLATFORM_ID"],] }] },
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["NgZone"] },
-    { type: _test_service__WEBPACK_IMPORTED_MODULE_4__["TestService"] }
+    { type: _test_service__WEBPACK_IMPORTED_MODULE_4__["TestService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_9__["Router"] }
 ];
 Tab4Page = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
@@ -85211,7 +85220,7 @@ function isArray(value) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Monoxido\n    </ion-title>\n    <ion-button [routerLink]=\"['/dashboard']\">\n      Dashboard\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <div class=\"container-fluid\" style=\"background-color: white;\">\n    <ion-row>\n      <ion-col>\n        <button class=\"btn btn-primary\" (click)=\"getData()\">Actualizar  </button>\n      </ion-col>\n    </ion-row>\n\n    <div class=\"row my-5 p-3 justify-content-center \" style=\"background-color: white;\">\n\n        <div class=\"col-12 text-center\" style=\"text-align: center;\">\n        <h4 style=\"color: black; margin-top: 15px;\">Detector de Monoxido</h4>\n        </div>\n        <div class=\"col-12  my-5 d-flex justify-content-center\">\n         <div id=\"chartdiv\"></div>\n        </div>\n    </div>\n    <div class=\"row my-5 p-3 justify-content-center \" style=\"background-color: white;\">\n      <div class=\"col-12 text-center\" style=\"text-align: center;\">\n        <h4 style=\"color: black; margin-top: 15px;\">Detector de Humo</h4>\n      </div>\n      <div class=\"col-12  my-5 d-flex justify-content-center\">\n   \n\n        \n         <div id=\"chartdiv2\"></div>\n      </div>\n  </div>\n\n</div>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title slot=\"start\" style=\"font-size: 30px;\">\n      Monoxido y Humo | {{ambiente}}\n    </ion-title>\n    <ion-button slot=\"end\" [routerLink]=\"['/dashboard']\">\n      <ion-icon name=\"grid-outline\"></ion-icon>\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n<ion-content [fullscreen]=\"true\">\n  <div class=\"container-fluid\" style=\"background-color: white;\">\n    <ion-row>\n      <ion-col>\n        <ion-button  (click)=\"getData(); getHumo(); getMonoxido();\">Actualizar <ion-icon name=\"refresh-outline\"></ion-icon></ion-button>\n      </ion-col>\n    </ion-row>\n\n    <div class=\"row my-5 p-3 justify-content-center \" style=\"background-color: white;\">\n\n        <div class=\"col-12 text-center\" style=\"text-align: center;\">\n        <h4 style=\"color: black; margin-top: 15px;\">Detector de Monoxido</h4>\n        </div>\n        <div class=\"col-12  my-5 d-flex justify-content-center\">\n         <div id=\"chartdiv\"></div>\n        </div>\n    </div>\n    <div class=\"row my-5 p-3 justify-content-center \" style=\"background-color: white;\">\n      <div class=\"col-12 text-center\" style=\"text-align: center;\">\n        <h4 style=\"color: black; margin-top: 15px;\">Detector de Humo</h4>\n      </div>\n      <div class=\"col-12  my-5 d-flex justify-content-center\">\n   \n\n        \n         <div id=\"chartdiv2\"></div>\n      </div>\n  </div>\n\n</div>\n</ion-content>\n");
 
 /***/ }),
 

@@ -2613,7 +2613,7 @@ function styleChanged(style, prevStyle) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ0YWIyLnBhZ2Uuc2NzcyJ9 */");
+/* harmony default export */ __webpack_exports__["default"] = ("#divWeatherMain {\n  display: block;\n  border-radius: 10px;\n  width: 200px;\n  height: 220px;\n  background: black;\n  background: linear-gradient(180deg, black 0%, #08072a 75%, #080a3f 100%);\n  color: white;\n  font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n}\n\n.weatherWidgetRow {\n  display: block;\n  margin: 0 auto;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n}\n\n.sun {\n  margin-top: 10px;\n  color: yellow;\n  filter: drop-shadow(1px 1px 10px yellow);\n}\n\n.moon {\n  margin-top: 10px;\n  color: white;\n  filter: drop-shadow(1px 1px 10px white);\n}\n\n.cloudDiv {\n  margin-top: -40px;\n}\n\n.cloud {\n  color: #68afc5;\n  filter: drop-shadow(1px 1px 5px #68afc5);\n  animation-name: cloudMovement;\n  animation-iteration-count: infinite;\n  animation-duration: 10s;\n  animation-timing-function: ease-in-out;\n  animation-direction: alternate;\n}\n\n@keyframes cloudMovement {\n  from {\n    margin-left: -55px;\n  }\n  to {\n    margin-left: 65px;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXHRhYjIucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksY0FBQTtFQUNBLG1CQUFBO0VBQ0EsWUFBQTtFQUNBLGFBQUE7RUFDQSxpQkFBQTtFQUNBLHdFQUFBO0VBQ0EsWUFBQTtFQUNBLDREQUFBO0FBQ0o7O0FBRUE7RUFDSSxjQUFBO0VBQ0EsY0FBQTtFQUNBLDBCQUFBO0VBQUEsdUJBQUE7RUFBQSxrQkFBQTtBQUNKOztBQUVBO0VBQ0ksZ0JBQUE7RUFDQSxhQUFBO0VBQ0Esd0NBQUE7QUFDSjs7QUFFQTtFQUNJLGdCQUFBO0VBQ0EsWUFBQTtFQUNBLHVDQUFBO0FBQ0o7O0FBRUE7RUFDSSxpQkFBQTtBQUNKOztBQUVBO0VBQ0ksY0FBQTtFQUNBLHdDQUFBO0VBQ0EsNkJBQUE7RUFDQSxtQ0FBQTtFQUNBLHVCQUFBO0VBQ0Esc0NBQUE7RUFDQSw4QkFBQTtBQUNKOztBQUVBO0VBQ0k7SUFBSyxrQkFBQTtFQUVQO0VBREU7SUFBRyxpQkFBQTtFQUlMO0FBQ0YiLCJmaWxlIjoidGFiMi5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIjZGl2V2VhdGhlck1haW57XHJcbiAgICBkaXNwbGF5OiBibG9jaztcclxuICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XHJcbiAgICB3aWR0aDogMjAwcHg7XHJcbiAgICBoZWlnaHQ6IDIyMHB4O1xyXG4gICAgYmFja2dyb3VuZDogcmdiKDAsMCwwKTtcclxuICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxODBkZWcsIHJnYmEoMCwwLDAsMSkgMCUsIHJnYmEoOCw3LDQyLDEpIDc1JSwgcmdiKDgsIDEwLCA2MykgMTAwJSk7XHJcbiAgICBjb2xvcjogd2hpdGU7O1xyXG4gICAgZm9udC1mYW1pbHk6ICdTZWdvZSBVSScsIFRhaG9tYSwgR2VuZXZhLCBWZXJkYW5hLCBzYW5zLXNlcmlmO1xyXG59XHJcblxyXG4ud2VhdGhlcldpZGdldFJvd3tcclxuICAgIGRpc3BsYXk6YmxvY2s7XHJcbiAgICBtYXJnaW46MCBhdXRvO1xyXG4gICAgd2lkdGg6IGZpdC1jb250ZW50O1xyXG59XHJcblxyXG4uc3Vue1xyXG4gICAgbWFyZ2luLXRvcDogMTBweDtcclxuICAgIGNvbG9yOiB5ZWxsb3c7XHJcbiAgICBmaWx0ZXI6IGRyb3Atc2hhZG93KCAxcHggMXB4IDEwcHggeWVsbG93KTtcclxufVxyXG5cclxuLm1vb257XHJcbiAgICBtYXJnaW4tdG9wOiAxMHB4O1xyXG4gICAgY29sb3I6IHdoaXRlO1xyXG4gICAgZmlsdGVyOiBkcm9wLXNoYWRvdyggMXB4IDFweCAxMHB4IHdoaXRlKTtcclxufVxyXG5cclxuLmNsb3VkRGl2e1xyXG4gICAgbWFyZ2luLXRvcDogLTQwcHg7XHJcbn1cclxuXHJcbi5jbG91ZHtcclxuICAgIGNvbG9yOiByZ2IoMTA0LCAxNzUsIDE5Nyk7XHJcbiAgICBmaWx0ZXI6IGRyb3Atc2hhZG93KCAxcHggMXB4IDVweCByZ2IoMTA0LCAxNzUsIDE5NykpO1xyXG4gICAgYW5pbWF0aW9uLW5hbWU6IGNsb3VkTW92ZW1lbnQ7XHJcbiAgICBhbmltYXRpb24taXRlcmF0aW9uLWNvdW50OiBpbmZpbml0ZTtcclxuICAgIGFuaW1hdGlvbi1kdXJhdGlvbjogMTBzO1xyXG4gICAgYW5pbWF0aW9uLXRpbWluZy1mdW5jdGlvbjogZWFzZS1pbi1vdXQ7XHJcbiAgICBhbmltYXRpb24tZGlyZWN0aW9uOiBhbHRlcm5hdGU7XHJcbn1cclxuXHJcbkBrZXlmcmFtZXMgY2xvdWRNb3ZlbWVudHtcclxuICAgIGZyb217bWFyZ2luLWxlZnQ6IC01NXB4O31cclxuICAgIHRve21hcmdpbi1sZWZ0OiA2NXB4O31cclxufSJdfQ== */");
 
 /***/ }),
 
@@ -2633,6 +2633,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _test_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../test.service */ "9UZm");
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! chart.js */ "m0r1");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "tyNb");
+
 
 
 
@@ -2641,14 +2643,21 @@ __webpack_require__.r(__webpack_exports__);
 
 chart_js__WEBPACK_IMPORTED_MODULE_5__["Chart"].register(...chart_js__WEBPACK_IMPORTED_MODULE_5__["registerables"]);
 let Tab2Page = class Tab2Page {
-    constructor(testService) {
+    constructor(testService, router) {
         this.testService = testService;
+        this.router = router;
         this.temperature = 24;
         this.currentTemparature = 19;
         this.ambiente = "ambiente1";
         this.historico = [];
         this.historicoFechas = [];
         this.colores = [];
+        router.events.subscribe((val) => {
+            if (val instanceof _angular_router__WEBPACK_IMPORTED_MODULE_6__["NavigationEnd"]) {
+                this.getData();
+                this.getWeatherBuenosAires();
+            }
+        });
     }
     // ngOnInit(): void {
     //   this.getData()
@@ -2661,8 +2670,19 @@ let Tab2Page = class Tab2Page {
         this.ambiente = localStorage.getItem('ambienteseleccionado');
         console.log("el ambiente seleccionado es : " + this.ambiente);
         this.getData();
+        // this.getWeatherBuenosAires()
+        this.WeatherData = {
+            main: {},
+            isDay: true
+        };
+        this.getWeatherData();
     }
     ngAfterViewInit() {
+    }
+    getWeatherBuenosAires() {
+        this.testService.getWeatherBuenosAires().subscribe(res => {
+            console.log(res);
+        });
     }
     crearGrafuciBarras() {
         this.barChart = new chart_js__WEBPACK_IMPORTED_MODULE_5__["Chart"](this.barCanvas.nativeElement, {
@@ -2688,15 +2708,28 @@ let Tab2Page = class Tab2Page {
             }
         });
     }
+    getWeatherData() {
+        fetch('https://api.openweathermap.org/data/2.5/weather?q=Buenos%20Aires&APPID=f092256c9815b73aab7fbecc8f493759')
+            .then(response => response.json())
+            .then(data => { this.setWeatherData(data); });
+        // let data = JSON.parse('{"coord":{"lon":72.85,"lat":19.01},"weather":[{"id":721,"main":"Haze","description":"haze","icon":"50n"}],"base":"stations","main":{"temp":297.15,"feels_like":297.4,"temp_min":297.15,"temp_max":297.15,"pressure":1013,"humidity":69},"visibility":3500,"wind":{"speed":3.6,"deg":300},"clouds":{"all":20},"dt":1580141589,"sys":{"type":1,"id":9052,"country":"IN","sunrise":1580089441,"sunset":1580129884},"timezone":19800,"id":1275339,"name":"Mumbai","cod":200}');
+        // this.setWeatherData(data);
+    }
     getData() {
         this.ambiente = localStorage.getItem('ambienteseleccionado');
         this.testService.exteriorTemperatura(this.ambiente).subscribe(res => {
             console.log(res);
             this.ultimasdiez = res;
             this.ultimocensado = this.ultimasdiez[9];
+            let count = 0;
+            var valoresAceptados = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
             this.ultimasdiez.forEach(element => {
-                this.historico.push(element.value);
-                this.historicoFechas.push(element.datetime);
+                count++;
+                if (valoresAceptados.indexOf(count) > -1) {
+                    this.historico.push(element.value);
+                    this.historicoFechas.push(element.datetime);
+                    console.log(count);
+                }
                 if (element.value < 20)
                     this.colores.push("rgba(54, 162, 235, 0.2)");
                 else
@@ -2719,9 +2752,21 @@ let Tab2Page = class Tab2Page {
     getData2() {
         return '[{"datetime":"29/05/2021 23:26:49","status":1,"topic":"/casa/exterior/sensores/temperatura","value":"0"},{"datetime":"29/05/2021 23:25:49","status":1,"topic":"/casa/exterior/sensores/temperatura","value":"0"},{"datetime":"29/05/2021 23:24:49","status":1,"topic":"/casa/exterior/sensores/temperatura","value":"0"},{"datetime":"29/05/2021 23:23:49","status":1,"topic":"/casa/exterior/sensores/temperatura","value":"0"},{"datetime":"29/05/2021 23:22:49","status":1,"topic":"/casa/exterior/sensores/temperatura","value":"0"},{"datetime":"29/05/2021 23:21:49","status":1,"topic":"/casa/exterior/sensores/temperatura","value":"0"},{"datetime":"29/05/2021 23:20:49","status":1,"topic":"/casa/exterior/sensores/temperatura","value":"0"},{"datetime":"29/05/2021 23:19:49","status":1,"topic":"/casa/exterior/sensores/temperatura","value":"0"},{"datetime":"29/05/2021 23:18:49","status":1,"topic":"/casa/exterior/sensores/temperatura","value":"0"},{"datetime":"29/05/2021 23:17:49","status":1,"topic":"/casa/exterior/sensores/temperatura","value":"0"}]';
     }
+    setWeatherData(data) {
+        this.WeatherData = data;
+        let sunsetTime = new Date(this.WeatherData.sys.sunset * 1000);
+        this.WeatherData.sunset_time = sunsetTime.toLocaleTimeString();
+        let currentDate = new Date();
+        this.WeatherData.isDay = (currentDate.getTime() < sunsetTime.getTime());
+        this.WeatherData.temp_celcius = (this.WeatherData.main.temp - 273.15).toFixed(0);
+        this.WeatherData.temp_min = (this.WeatherData.main.temp_min - 273.15).toFixed(0);
+        this.WeatherData.temp_max = (this.WeatherData.main.temp_max - 273.15).toFixed(0);
+        this.WeatherData.temp_feels_like = (this.WeatherData.main.feels_like - 273.15).toFixed(0);
+    }
 };
 Tab2Page.ctorParameters = () => [
-    { type: _test_service__WEBPACK_IMPORTED_MODULE_4__["TestService"] }
+    { type: _test_service__WEBPACK_IMPORTED_MODULE_4__["TestService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"] }
 ];
 Tab2Page.propDecorators = {
     barCanvas: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"], args: ["barCanvas",] }]
@@ -2829,7 +2874,7 @@ Tab2PageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Temperatura\n    </ion-title>\n    <ion-button [routerLink]=\"['/dashboard']\">\n      Dashboard\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <div class=\"container-fluid\">\n    <ion-row>\n      <ion-col>\n        <button class=\"btn btn-primary\" (click)=\"getData();\">Actualizar  </button>\n      </ion-col>\n    </ion-row>\n\n    <div class=\"row my-5 justify-content-center \">\n      <div class=\"col-12\">\n        <h2>{{ambiente}}</h2>\n      </div>\n        <div class=\"col-12  my-5 d-flex justify-content-center \" style=\"display: flex ; justify-content: center;\">\n            <div class=\"card\" color=\"primary\" style=\"border:none;\">\n                <i _ngcontent-hjf-c2=\"\" class=\"fas fa-temperature-high\" style=\"font-size: 30vh;\"></i>\n              \n                <span *ngIf=\"temperature== null\" class=\"badge badge-pill badge-warning mt-3\" style=\"font-size: 4vh;\"> cargando...</span>\n            </div>\n     \n\n            <!-- <ion-slides pager=\"true\" [options]=\"slideOpts\" *ngIf=\"ultimasdiez?.length > 0\">\n              <ion-slide *ngFor=\"let temperatura of ultimasdiez\" style=\"height: 500px;\">\n                <ion-card  style=\"background-color : white; width: 300px; height: 300px;\"> \n                  <ion-card-header>\n                    <span style=\"font-size: 6vh;\"> {{temperatura.value | number }}\n    \n                     °C</span>\n                  </ion-card-header>\n                  <ion-badge color=\"secondary\">\n    \n                    <ion-icon name=\"snow-outline\" style=\"font-size: 50px;\" *ngIf=\"temperatura.value < 0\"></ion-icon>\n                  </ion-badge>\n                  <ion-badge color=\"warning\">\n    \n                    <ion-icon name=\"sunny-outline\" style=\"font-size: 50px;\" *ngIf=\"temperatura.value > 0\"></ion-icon>\n                  </ion-badge>\n                    <ion-badge color=\"secondary\"  style=\"font-size: 3vh;\" >{{temperatura.datetime}}</ion-badge> \n                \n      \n                \n                </ion-card>\n              </ion-slide>\n              \n            </ion-slides> -->\n            \n         \n            <ion-card  style=\"background-color : white; width: 300px; height: 300px;\"> \n              <ion-card-header>\n                <span style=\"font-size: 6vh;\"> {{ultimocensado?.value | number }}\n\n                 °C</span>\n              </ion-card-header>\n              <ion-badge color=\"secondary\">\n\n                <ion-icon name=\"snow-outline\" style=\"font-size: 50px;\" *ngIf=\"ultimocensado?.value < 0\"></ion-icon>\n              </ion-badge>\n              <ion-badge color=\"warning\">\n\n                <ion-icon name=\"sunny-outline\" style=\"font-size: 50px;\" *ngIf=\"ultimocensado?.value > 0\"></ion-icon>\n              </ion-badge>\n                <ion-badge color=\"secondary\"  style=\"font-size: 3vh;\" >{{ultimocensado?.datetime}}</ion-badge> \n            \n  \n            \n            </ion-card>\n          \n        \n        </div>\n    </div>\n\n</div>\n\n<div class=\"ion-padding\">\n  <ion-card>\n    <ion-card-header>\n      Bar Chart\n    </ion-card-header>\n    <ion-card-content>\n      <canvas #barCanvas style=\"position: relative; height:20vh; width:40vw\"></canvas>\n    </ion-card-content>\n  </ion-card>\n\n\n</div>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title slot=\"start\"  style=\"font-size: 30px;\">\n      Temperatura | {{ambiente}}\n    </ion-title>\n    <ion-button slot=\"end\" [routerLink]=\"['/dashboard']\">\n      <ion-icon name=\"grid-outline\"></ion-icon>\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n<ion-content [fullscreen]=\"true\">\n  <div class=\"container-fluid\">\n    <ion-row>\n      <ion-col>\n        <ion-button  (click)=\"getData()\">Actualizar <ion-icon name=\"refresh-outline\"></ion-icon></ion-button>\n      </ion-col>\n    </ion-row>\n\n    <div class=\"row my-5 justify-content-center \">\n      <div class=\"col-12\">\n        <h2>{{ambiente}}</h2>\n      </div>\n        <div class=\"col-12  my-5 d-flex justify-content-center \" style=\"display: flex ; justify-content: center;\">\n            <div class=\"card\" color=\"primary\" style=\"border:none;\">\n                <i _ngcontent-hjf-c2=\"\" class=\"fas fa-temperature-high\" style=\"font-size: 30vh;\"></i>\n              \n                <span *ngIf=\"temperature== null\" class=\"badge badge-pill badge-warning mt-3\" style=\"font-size: 4vh;\"> cargando...</span>\n            </div>\n     \n\n            <!-- <ion-slides pager=\"true\" [options]=\"slideOpts\" *ngIf=\"ultimasdiez?.length > 0\">\n              <ion-slide *ngFor=\"let temperatura of ultimasdiez\" style=\"height: 500px;\">\n                <ion-card  style=\"background-color : white; width: 300px; height: 300px;\"> \n                  <ion-card-header>\n                    <span style=\"font-size: 6vh;\"> {{temperatura.value | number }}\n    \n                     °C</span>\n                  </ion-card-header>\n                  <ion-badge color=\"secondary\">\n    \n                    <ion-icon name=\"snow-outline\" style=\"font-size: 50px;\" *ngIf=\"temperatura.value < 0\"></ion-icon>\n                  </ion-badge>\n                  <ion-badge color=\"warning\">\n    \n                    <ion-icon name=\"sunny-outline\" style=\"font-size: 50px;\" *ngIf=\"temperatura.value > 0\"></ion-icon>\n                  </ion-badge>\n                    <ion-badge color=\"secondary\"  style=\"font-size: 3vh;\" >{{temperatura.datetime}}</ion-badge> \n                \n      \n                \n                </ion-card>\n              </ion-slide>\n              \n            </ion-slides> -->\n            \n         \n            <ion-card  style=\"background-color : white; width: 300px; height: 300px;\"> \n              <ion-card-header>\n                <span style=\"font-size: 6vh;\"> {{ultimocensado?.value | number }}\n\n                 °C</span>\n              </ion-card-header>\n              <ion-badge color=\"secondary\">\n\n                <ion-icon name=\"snow-outline\" style=\"font-size: 50px;\" *ngIf=\"ultimocensado?.value < 0\"></ion-icon>\n              </ion-badge>\n              <ion-badge color=\"warning\">\n\n                <ion-icon name=\"sunny-outline\" style=\"font-size: 50px;\" *ngIf=\"ultimocensado?.value > 0\"></ion-icon>\n              </ion-badge>\n                <ion-badge color=\"secondary\"  style=\"font-size: 3vh;\" >{{ultimocensado?.datetime}}</ion-badge> \n            \n  \n            \n            </ion-card>\n          \n        \n        </div>\n    </div>\n\n</div>\n  <!-- <ion-row>\n    <ion-col>\n      <div id=\"divWeatherMain\"> \n        <div *ngIf=\"WeatherData.isDay\" class=\"weatherWidgetRow\">\n            <i class=\"fas fa-3x fa-sun sun\"></i>  \n        </div>   \n        <div *ngIf=\"!WeatherData.isDay\" class=\"weatherWidgetRow\">\n            <i class=\"fas fa-3x fa-moon moon\"></i>  \n        </div>   \n        <div class=\"weatherWidgetRow cloudDiv\">\n            <i class=\"fas fa-cloud fa-3x cloud\"></i>\n        </div>\n        <div class=\"weatherWidgetRow\" style=\"font-size: 32px;margin-top: 5px;\">{{WeatherData.temp_celcius}}°</div>\n        <div class=\"weatherWidgetRow\" style=\"font-size: 12px;\">{{WeatherData.temp_min}}° / {{WeatherData.temp_max}}°</div>\n        <div class=\"weatherWidgetRow\" style=\"font-size: 12px;\">Sensación termica: {{WeatherData.temp_feels_like}}°</div>\n        <div class=\"weatherWidgetRow\" style=\"font-size: 25px;margin-top: 10px;\">{{WeatherData.name}}</div>\n        <div class=\"weatherWidgetRow\" style=\"font-size: 12px;\">Humedad: {{WeatherData.main.humidity}}%</div>\n    </div>\n    </ion-col>\n  </ion-row> -->\n<div class=\"ion-padding\">\n  <ion-card>\n    <ion-card-header>\n      Bar Chart\n    </ion-card-header>\n    <ion-card-content>\n      <canvas #barCanvas style=\"position: relative; height:20vh; width:40vw\"></canvas>\n    </ion-card-content>\n  </ion-card>\n\n\n</div>\n</ion-content>\n");
 
 /***/ }),
 

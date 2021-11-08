@@ -95,7 +95,7 @@ let TestService = class TestService {
         return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/cocina/humo');
     }
     exteriorTemperatura(ambiente) {
-        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/' + ambiente + '/temperatura');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/' + ambiente + '/temperatura&limit=100');
     }
     exteriorTemperatura2() {
         return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/ambiente2/temperatura');
@@ -124,6 +124,9 @@ let TestService = class TestService {
     }
     getHumedad(ambiente) {
         return this.http.get('https://ws.nerdingland.com/?collectionName=casa/' + ambiente + '/humedad');
+    }
+    getWeatherBuenosAires() {
+        return this.http.get('https://api.openweathermap.org/data/2.5/weather?q=Buenos%20Aires&APPID=f092256c9815b73aab7fbecc8f493759');
     }
 };
 TestService.ctorParameters = () => [

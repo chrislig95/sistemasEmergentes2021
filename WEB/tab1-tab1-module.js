@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Luces\n    </ion-title>\n    <ion-button [routerLink]=\"['/dashboard']\">\n      Dashboard\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\" style=\"display: flex; justify-content: center;\" >\n  <ion-row>\n    <ion-col>\n      <ion-button  (click)=\"getData()\">Actualizar</ion-button>\n    </ion-col>\n  </ion-row>\n  <ion-row>\n    <ion-col>\n      <ion-card>\n        <ion-card-header>\n          Interruptor de luz ambiente {{ambiente}}\n        </ion-card-header>\n             <ng-container  *ngIf=\"luzparaprenderyapagar?.value == '1' \"> \n          <ion-item>\n            <ion-label>Luces encendida</ion-label>\n            <ion-toggle  (ionChange)=\"toggleLight(luzparaprenderyapagar)\" checked=\"true\"></ion-toggle>\n          </ion-item>\n         </ng-container>\n         <ng-container  *ngIf=\"luzparaprenderyapagar?.value == '0' \"> \n          <ion-item>\n            <ion-label>Luces apagada</ion-label>\n            <ion-toggle   (ionChange)=\"toggleLight(luzparaprenderyapagar)\"checked=\"false\"></ion-toggle>\n          </ion-item>\n         </ng-container>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n\n \n  <ion-card *ngIf=\"ultimasdiez?.length > 0\">\n    <ion-card-header>\n      \n      Censado luz {{ambiente}}\n      \n    </ion-card-header>\n\n \n    <ion-item *ngFor=\"let luz of ultimasdiez\">\n      <ion-label>Censado luz interior</ion-label>\n  \n         <!-- <ng-container  *ngIf=\"luz.value == '1' \"> \n          <ion-item>\n            <ion-label>Luces encendida</ion-label>\n            <ion-toggle  (ionChange)=\"toggleLight(luz)\" checked=\"true\"></ion-toggle>\n          </ion-item>\n         </ng-container>\n         <ng-container  *ngIf=\"luz.value == '0' \"> \n          <ion-item>\n            <ion-label>Luces apagada</ion-label>\n            <ion-toggle   (ionChange)=\"toggleLight(luz)\"checked=\"false\"></ion-toggle>\n          </ion-item>\n         </ng-container> -->\n         <ion-badge color=\"secondary\" >{{luz.datetime}}</ion-badge> \n\n    </ion-item>\n  </ion-card>\n \n  <ion-row>\n    <ion-col *ngIf=\"show == true\">\n      <ion-chip color=\"secondary\">\n        <ion-label color=\"warning\">No se encontraron datos!</ion-label>\n      </ion-chip>\n    </ion-col>\n  </ion-row>\n\n\n\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title slot=\"start\" style=\"font-size: 30px;\">\n      Luces | {{ambiente}}\n    </ion-title>\n    <ion-button slot=\"end\" [routerLink]=\"['/dashboard']\">\n      <ion-icon name=\"grid-outline\"></ion-icon>\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\" style=\"display: flex; justify-content: center;\" >\n  <ion-row > \n    <ion-col>\n      <ion-button  (click)=\"getData()\">Actualizar <ion-icon name=\"refresh-outline\"></ion-icon></ion-button>\n    </ion-col>\n  </ion-row>\n  <ion-row *ngIf=\"!show\">\n    <ion-col>\n      <ion-card>\n        <ion-card-header>\n          Interruptor de luz ambiente {{ambiente}}\n        </ion-card-header>\n             <ng-container  *ngIf=\"luzparaprenderyapagar?.value == '1' \"> \n          <ion-item>\n            <ion-label>Luces encendida</ion-label>\n            <ion-toggle  (ionChange)=\"toggleLight(luzparaprenderyapagar)\" checked=\"true\"></ion-toggle>\n          </ion-item>\n         </ng-container>\n         <ng-container  *ngIf=\"luzparaprenderyapagar?.value == '0' \"> \n          <ion-item>\n            <ion-label>Luces apagada</ion-label>\n            <ion-toggle   (ionChange)=\"toggleLight(luzparaprenderyapagar)\"checked=\"false\"></ion-toggle>\n          </ion-item>\n         </ng-container>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n\n <ion-row *ngIf=\"!how\">\n  <ion-col>\n\n    <ion-card  *ngIf=\"ultimasdiez?.length > 0\">\n      <ion-card-header>\n        \n        Censado luz {{ambiente}}\n        \n      </ion-card-header>\n  \n   \n      <ion-item *ngFor=\"let luz of ultimasdiez\">\n        <ion-label>Censado luz interior</ion-label>\n    \n           <!-- <ng-container  *ngIf=\"luz.value == '1' \"> \n            <ion-item>\n              <ion-label>Luces encendida</ion-label>\n              <ion-toggle  (ionChange)=\"toggleLight(luz)\" checked=\"true\"></ion-toggle>\n            </ion-item>\n           </ng-container>\n           <ng-container  *ngIf=\"luz.value == '0' \"> \n            <ion-item>\n              <ion-label>Luces apagada</ion-label>\n              <ion-toggle   (ionChange)=\"toggleLight(luz)\"checked=\"false\"></ion-toggle>\n            </ion-item>\n           </ng-container> -->\n           <ion-badge color=\"secondary\" >{{luz.datetime}}</ion-badge> \n  \n      </ion-item>\n    </ion-card>\n   \n  </ion-col>\n </ion-row>\n\n  <ion-row *ngIf=\"show\"  style=\"display: flex; justify-content: center;\">\n    <ion-col size=\"6\">\n\n      <ion-card>\n        <ion-card-header>\n         No data\n        </ion-card-header>\n        <ion-card-content>\n          No se encontro informacion de temperatura en el ambiente {{ambiente}}\n          <ion-icon name=\"alert-circle-outline\" style=\"font-size: 40px;\"></ion-icon>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n\n\n\n\n</ion-content>\n");
 
 /***/ }),
 
@@ -27,8 +27,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _raw_loader_tab1_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./tab1.page.html */ "8MT7");
 /* harmony import */ var _tab1_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tab1.page.scss */ "rWyk");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _test_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../test.service */ "9UZm");
-/* harmony import */ var _services_lights_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services/lights.service */ "kGps");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _test_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../test.service */ "9UZm");
+/* harmony import */ var _services_lights_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services/lights.service */ "kGps");
+
 
 
 
@@ -36,11 +38,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let Tab1Page = class Tab1Page {
-    constructor(testService, lightService) {
+    constructor(testService, lightService, router) {
         this.testService = testService;
         this.lightService = lightService;
+        this.router = router;
         this.ambiente = "";
         this.show = false;
+        router.events.subscribe((val) => {
+            if (val instanceof _angular_router__WEBPACK_IMPORTED_MODULE_4__["NavigationEnd"]) {
+                this.getData();
+            }
+        });
+    }
+    ionViewDidLeave() {
+        console.log("TabX is exited");
     }
     ngOnChanges(changes) {
         console.log("prueba change");
@@ -59,6 +70,9 @@ let Tab1Page = class Tab1Page {
             this.luzparaprenderyapagar = this.ultimasdiez[9];
             console.log(this.luzparaprenderyapagar);
             console.log(this.ultimasdiez);
+            if (res.hasOwnProperty('error')) {
+                this.show = true;
+            }
         }, error => {
             this.show = true;
             console.log(error);
@@ -77,8 +91,9 @@ let Tab1Page = class Tab1Page {
     }
 };
 Tab1Page.ctorParameters = () => [
-    { type: _test_service__WEBPACK_IMPORTED_MODULE_4__["TestService"] },
-    { type: _services_lights_service__WEBPACK_IMPORTED_MODULE_5__["LightsService"] }
+    { type: _test_service__WEBPACK_IMPORTED_MODULE_5__["TestService"] },
+    { type: _services_lights_service__WEBPACK_IMPORTED_MODULE_6__["LightsService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] }
 ];
 Tab1Page = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({

@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".custombutton {\n  --background: #7e5791 !important;\n  --color: var(--ion-color-primary-contrast, #fff);\n  font-size: 30px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXGRhc2hib2FyZC5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxnQ0FBQTtFQUNBLGdEQUFBO0VBQ0EsZUFBQTtBQUNKIiwiZmlsZSI6ImRhc2hib2FyZC5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY3VzdG9tYnV0dG9uIHtcclxuICAgIC0tYmFja2dyb3VuZDogIzdlNTc5MSAhaW1wb3J0YW50O1xyXG4gICAgLS1jb2xvcjogdmFyKC0taW9uLWNvbG9yLXByaW1hcnktY29udHJhc3QsICNmZmYpO1xyXG4gICAgZm9udC1zaXplOiAzMHB4O1xyXG59Il19 */");
+/* harmony default export */ __webpack_exports__["default"] = (".custombutton {\n  --background: #7e5791 !important;\n  --color: var(--ion-color-primary-contrast, #fff);\n  font-size: 30px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXGRhc2hib2FyZC5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxnQ0FBQTtFQUNBLGdEQUFBO0VBQ0EsZUFBQTtBQUNKIiwiZmlsZSI6ImRhc2hib2FyZC5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY3VzdG9tYnV0dG9uIHtcclxuICAgIC0tYmFja2dyb3VuZDogIzdlNTc5MSAhaW1wb3J0YW50O1xyXG4gICAgLS1jb2xvcjogdmFyKC0taW9uLWNvbG9yLXByaW1hcnktY29udHJhc3QsICNmZmYpO1xyXG4gICAgZm9udC1zaXplOiAzMHB4O1xyXG59XHJcbmlvbi1jb250ZW50LmJnLWRvbW90aWNhe1xyXG4gICAgLy8gLS1iYWNrZ3JvdW5kOiB1cmwoLi4vLi4vYXNzZXRzL2ltYWdlcy9kb21vdGljYS5qcGcpIDAgMC8xMDAlIDEwMCUgbm8tcmVwZWF0O1xyXG59Il19 */");
 
 /***/ }),
 
@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col *ngFor=\" let ambiente of ambientes\" size=\"6\">\n      <ion-button [routerLink]=\"['/tabs/tab1']\" class=\"custombutton\" style=\"width: 100%; height: 300px;\" (click)=\"cambiarAmbiente(ambiente.nombre)\">\n        {{ambiente.nombre}}\n        <i class=\"fas fa-temperature-high\" *ngIf=\"ambiente.nombre == 'exterior'\"></i>\n        <i _ngcontent-hjf-c2=\"\" class=\"fas fa-temperature-high\" style=\"font-size: 30vh;\"></i>\n      </ion-button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>dashboard</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"bg-domotica\">\n  <ion-row>\n    <ion-col *ngFor=\" let ambiente of ambientes\" size=\"6\">\n      <ion-button [routerLink]=\"['/tabs/tab1']\" class=\"custombutton\" style=\"width: 100%; height: 300px;\" (click)=\"cambiarAmbiente(ambiente.nombre)\">\n        {{ambiente.nombre}}\n        <i class=\"fas fa-temperature-high\" *ngIf=\"ambiente.nombre == 'exterior'\"></i>\n        <i _ngcontent-hjf-c2=\"\" class=\"fas fa-temperature-high\" style=\"font-size: 30vh;\"></i>\n      </ion-button>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
 
 /***/ }),
 
