@@ -161,7 +161,7 @@ def create_app():
 
             if(ambiente >= 1 and ambiente <= 4 and (value == 0 or value == 1)):
                 topic = f'casa/interior/ambiente{ambiente}/luz'                
-                mqtt.mqtt_client.publish(topic, int(value))
+                mqtt.mqtt_client.publish(topic, buildJsonMessage(ambiente, 'LUZ', value))
                 logger.info(f'published {value} on {topic}')
                 return jsonify(value)
             else:
