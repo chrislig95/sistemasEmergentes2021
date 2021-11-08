@@ -104,6 +104,7 @@ def connect_mqtt():
     client.tls_set(cert_reqs=ssl.CERT_NONE)
     client.on_connect = on_connect
     client.connect(MQTT_BROKER, MQTT_PORT)
+    client.loop_start()
     return client
 
 class Mongo(object):
