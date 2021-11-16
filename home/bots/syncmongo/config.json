@@ -1,6 +1,5 @@
 {
-    "limites": {
-        "temperatura": 25,
+    "limites": {        
         "humedad": 300,
         "humo": 50,
         "monoxido": 1200,

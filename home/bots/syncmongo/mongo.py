@@ -28,6 +28,7 @@ MONGO_DB = os.getenv("MONGO_DB", MONGO_DB)
 MONGO_TIMEOUT = float(os.getenv("MONGO_TIMEOUT", MONGO_TIMEOUT))
 MONGO_DATETIME_FORMAT = os.getenv("MONGO_DATETIME_FORMAT", MONGO_DATETIME_FORMAT)
 STATUS = 1 # 0 apagado/1 encendido/2 error
+CONFIG_COLLECTION = 'config'
 
 with open("config.json") as config_file:
     config = json.load(config_file)
@@ -76,7 +77,6 @@ MQTT_PASSWORD = mqtt_config["password"]
 
 limites_config = config["limites"]
 
-LIMITE_TEMPERATURA = limites_config["temperatura"]
 LIMITE_HUMEDAD = limites_config["humedad"]
 LIMITE_HUMO = limites_config["humo"]
 LIMITE_MONOXIDO = limites_config["monoxido"]
@@ -167,21 +167,18 @@ class Mongo(object):
             self.procesarHumo(valueMensaje)
             
         if(tipoMensaje == TIPO_MONOXIDO):
-            self.procesarMonoxido(valueMensaje)
-
-        status = determineStatus(tipoMensaje, valueMensaje)
+            self.procesarMonoxido(valueMensaje)   
 
         try:
             document = {
                 "topic": msg.topic,
                 "value": valueMensaje,
-                "qos": msg.qos,
-                "status": status,
+                "qos": msg.qos,                
                 "timestamp": int(now.timestamp()),
                 "datetime": now.strftime(MONGO_DATETIME_FORMAT)                
             }
 
-            result = self.collection.insert_one(document)
+            result = self.collection.insert_one(document)            
             print("Saved in Mongo document ID", result.inserted_id)            
         except Exception as ex:
             print(ex)
@@ -222,7 +219,7 @@ class Mongo(object):
 
     def procesarTemperatura(self, numAmbiente: int, value: float):        
         topic = f'casa/interior/ambiente{numAmbiente}/ventilador'
-        if(value >= LIMITE_TEMPERATURA):            
+        if(value >= self.getLimiteTemperatura()):            
             self.mqttClient.publish(topic, 1)
         else:
             self.mqttClient.publish(topic, 0)
@@ -237,14 +234,10 @@ class Mongo(object):
         else:
             self._enqueue(msg)
 
-def determineStatus(tipoMensaje: string, value: float):
-    if(tipoMensaje == TIPO_LUZ or tipoMensaje == TIPO_VENTILADOR):
-        return value
-    elif(tipoMensaje == TIPO_TEMPERATURA):
-        if(value > LIMITE_TEMPERATURA):
-            return 1
-        else:
-            return 0
+    def getLimiteTemperatura(self):                   
+        collection = self.database.get_collection(CONFIG_COLLECTION)
+        temperatura_config = collection.find_one({"key":"temperatura"})
+        return temperatura_config["limit"]
 
 def buildJsonMessage(numAmbiente: int, tipo: string, value: None):
     msg = {}

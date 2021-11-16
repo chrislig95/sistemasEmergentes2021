@@ -88,6 +88,8 @@ TIPOS_VALIDOS = [TIPO_TEMPERATURA, TIPO_LUZ, TIPO_VENTILADOR, TIPO_HUMEDAD, TIPO
 TIPOS_COCINA = [TIPO_LUZ,TIPO_HUMO, TIPO_MONOXIDO]
 TIPOS_EXTERIOR = [TIPO_HUMEDAD, TIPO_REGADOR]
 
+CONFIG_COLLECTION = 'config'
+
 class Mqtt(object):
     
     def __init__(self):
@@ -152,6 +154,40 @@ def create_app():
             return jsonify({'error': 'data not found'})
         else:
             return jsonify(result)
+
+    @app.route('/config/temperatura', methods=['GET'])
+    def getTemperaturaConfig():                   
+        collection = db.database.get_collection(CONFIG_COLLECTION)
+        temperatura_config = collection.find_one({"key":"temperatura"})
+        
+        if(not temperatura_config):
+            return jsonify({'error': 'data not found'})
+        else:
+            return jsonify(temperatura_config["limit"])
+
+    @app.route('/config/temperatura', methods=['PUT'])
+    def updateTemperaturaConfig(): 
+        try:
+            limit = request.json['limit']                  
+        
+            collection = db.database.get_collection(CONFIG_COLLECTION)
+            temperatura_config = collection.update_one({"key":"temperatura"}, {
+                                                        '$set': {
+                                                            'limit': float(limit)
+                                                            }
+                                                        })
+            
+            if(not temperatura_config):
+                return jsonify({'error': 'no se pudo actualizar'})
+            else:
+                return jsonify(limit)
+        except ValueError:
+            logger.error(f'error en {request.json} - invalid request')
+            return jsonify({'error': 'invalid request - limit debe ser un numero'})
+        except Exception:
+            logger.exception(f'error en {request.json}')
+            return jsonify({'error': 'error no manejado'})
+
 
     @app.route('/luz', methods=['post'])
     def postTopicLuz():
