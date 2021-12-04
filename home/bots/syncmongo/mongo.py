@@ -155,7 +155,7 @@ class Mongo(object):
             valueMensaje = payloadJson["value"]
         except:            
             tipoMensaje = ''
-            valueMensaje = msg.payload
+            valueMensaje = msg.payload.decode()            
 
         if(tipoMensaje == TIPO_TEMPERATURA):                        
             ambiente = payloadJson["ambiente"]
