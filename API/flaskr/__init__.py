@@ -145,8 +145,7 @@ def create_app():
             result.append(
                 {
                     'topic': record['topic'],
-                    'value':record['value'],
-                    'status':record['status'],
+                    'value':record['value'],                    
                     'datetime': record['datetime']
                 })
         
