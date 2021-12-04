@@ -195,6 +195,7 @@ class Mongo(object):
         topic = f'casa/exterior/regador'
         if(humedad == 0):
             vaALlover = willRainInNextHours(LIMITE_HORAS_LLUVIA)
+            print(f'Va a llover en las próximas {str(LIMITE_HORAS_LLUVIA)} horas: {str(vaALlover)}')
             if(not vaALlover):
                 self.mqttClient.publish(topic, buildJsonMessage(0, 'REGADOR', 1))
                 return
