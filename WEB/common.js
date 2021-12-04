@@ -131,6 +131,18 @@ let TestService = class TestService {
     apagarAlarma() {
         return this.http.post('https://ws.nerdingland.com/alarma', { "value": 0 });
     }
+    obtenerLimite() {
+        return this.http.get('https://ws.nerdingland.com/config/temperatura');
+    }
+    actualizarLimite(nuevolimite) {
+        return this.http.put('https://ws.nerdingland.com/config/temperatura', { "limit": nuevolimite });
+    }
+    simulacionCocina(tipo, value) {
+        return this.http.post('https://ws.nerdingland.com/cocina', { "tipo": tipo, "value": value });
+    }
+    ultimovalortemperatura(ambiente) {
+        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/' + ambiente + '/temperatura&limit=1');
+    }
 };
 TestService.ctorParameters = () => [
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }
