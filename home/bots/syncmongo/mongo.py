@@ -150,11 +150,12 @@ class Mongo(object):
         self.collection = self.determineCollection(msg)
 
         try:
+            payloadJson = json.loads(msg.payload)
             tipoMensaje = payloadJson["tipo"]
             valueMensaje = payloadJson["value"]
         except:            
             tipoMensaje = ''
-            valueMensaje = payloadJson
+            valueMensaje = msg.payload
 
         if(tipoMensaje == TIPO_TEMPERATURA):                        
             ambiente = payloadJson["ambiente"]
