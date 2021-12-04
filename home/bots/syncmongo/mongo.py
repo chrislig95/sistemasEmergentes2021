@@ -144,18 +144,16 @@ class Mongo(object):
     def __store_thread_f(self, msg: mqtt.MQTTMessage):
         print("Storing")        
         now = datetime.now()
-        payloadJson = json.loads(msg.payload)
-        print(payloadJson)        
-
-        self.collection = self.determineCollection(msg)
-
+        
+        ##print(payloadJson)        
         try:
             payloadJson = json.loads(msg.payload)
             tipoMensaje = payloadJson["tipo"]
             valueMensaje = payloadJson["value"]
         except:            
             tipoMensaje = ''
-            valueMensaje = msg.payload.decode()            
+            valueMensaje = msg.payload.decode() 
+            valueMensaje = int(valueMensaje) if (valueMensaje == "0" or valueMensaje == "1") else float(valueMensaje)            
 
         if(tipoMensaje == TIPO_TEMPERATURA):                        
             ambiente = payloadJson["ambiente"]
@@ -179,7 +177,8 @@ class Mongo(object):
                 "datetime": now.strftime(MONGO_DATETIME_FORMAT)                
             }
 
-            result = self.collection.insert_one(document)            
+            collection = self.determineCollection(msg)
+            result = collection.insert_one(document)            
             print("Saved in Mongo document ID", result.inserted_id)            
         except Exception as ex:
             print(ex)
