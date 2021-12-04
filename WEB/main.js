@@ -412,6 +412,10 @@ const routes = [
     {
         path: 'dashboard',
         loadChildren: () => Promise.all(/*! import() | dashboard-dashboard-module */[__webpack_require__.e("common"), __webpack_require__.e("dashboard-dashboard-module")]).then(__webpack_require__.bind(null, /*! ./dashboard/dashboard.module */ "TDBs")).then(m => m.DashboardPageModule)
+    },
+    {
+        path: 'settings',
+        loadChildren: () => Promise.all(/*! import() | settings-settings-module */[__webpack_require__.e("common"), __webpack_require__.e("settings-settings-module")]).then(__webpack_require__.bind(null, /*! ./settings/settings.module */ "7wo0")).then(m => m.SettingsPageModule)
     }
 ];
 let AppRoutingModule = class AppRoutingModule {
