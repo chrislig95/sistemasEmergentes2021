@@ -11,6 +11,8 @@ WEATHER_API_EXCLUDE = 'minutely,daily'
 
 lastApiCall = None
 apiCallResult = None
+latitude = None
+longitude = None
 
 def getWeatherForecast(lat, lon) -> Response:
     global lastApiCall
@@ -28,9 +30,19 @@ def getWeatherForecast(lat, lon) -> Response:
     
 
 def willRainInNextHours(hours) -> bool:
-    geoCoordinates = geocoder.ip('me')
-    lat = geoCoordinates.latlng[0]
-    lon = geoCoordinates.latlng[1]
+    global latitude
+    global longitude
+    if(latitude is None):
+        try:
+            geoCoordinates = geocoder.ip('me')
+            lat = geoCoordinates.latlng[0]
+            lon = geoCoordinates.latlng[1]
+        except:
+            lat = -34.5742
+            lon = -58.535
+    else:
+        lat = latitude
+        lon = latitude    
 
     try:
         weatherResponse=getWeatherForecast(lat, lon)      
