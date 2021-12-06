@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".custombutton {\n  --background: #7e5791 !important;\n  --color: var(--ion-color-primary-contrast, #fff);\n  font-size: 30px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXGRhc2hib2FyZC5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxnQ0FBQTtFQUNBLGdEQUFBO0VBQ0EsZUFBQTtBQUNKIiwiZmlsZSI6ImRhc2hib2FyZC5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY3VzdG9tYnV0dG9uIHtcclxuICAgIC0tYmFja2dyb3VuZDogIzdlNTc5MSAhaW1wb3J0YW50O1xyXG4gICAgLS1jb2xvcjogdmFyKC0taW9uLWNvbG9yLXByaW1hcnktY29udHJhc3QsICNmZmYpO1xyXG4gICAgZm9udC1zaXplOiAzMHB4O1xyXG59XHJcbmlvbi1jb250ZW50LmJnLWRvbW90aWNhe1xyXG4gICAgLy8gLS1iYWNrZ3JvdW5kOiB1cmwoLi4vLi4vYXNzZXRzL2ltYWdlcy9kb21vdGljYS5qcGcpIDAgMC8xMDAlIDEwMCUgbm8tcmVwZWF0O1xyXG59Il19 */");
+/* harmony default export */ __webpack_exports__["default"] = (".custombutton {\n  --background: #7e5791 !important;\n  --color: var(--ion-color-primary-contrast, #fff);\n  font-size: 30px;\n}\n\n@media (max-width: 900px) {\n  .fontmobile {\n    font-size: 20px !important;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXGRhc2hib2FyZC5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxnQ0FBQTtFQUNBLGdEQUFBO0VBQ0EsZUFBQTtBQUNKOztBQUlBO0VBQ0k7SUFDSSwwQkFBQTtFQUROO0FBQ0YiLCJmaWxlIjoiZGFzaGJvYXJkLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jdXN0b21idXR0b24ge1xyXG4gICAgLS1iYWNrZ3JvdW5kOiAjN2U1NzkxICFpbXBvcnRhbnQ7XHJcbiAgICAtLWNvbG9yOiB2YXIoLS1pb24tY29sb3ItcHJpbWFyeS1jb250cmFzdCwgI2ZmZik7XHJcbiAgICBmb250LXNpemU6IDMwcHg7XHJcbn1cclxuaW9uLWNvbnRlbnQuYmctZG9tb3RpY2F7XHJcbiAgICAvLyAtLWJhY2tncm91bmQ6IHVybCguLi8uLi9hc3NldHMvaW1hZ2VzL2RvbW90aWNhLmpwZykgMCAwLzEwMCUgMTAwJSBuby1yZXBlYXQ7XHJcbn1cclxuQG1lZGlhIChtYXgtd2lkdGg6IDkwMHB4KSB7XHJcbiAgICAuZm9udG1vYmlsZXtcclxuICAgICAgICBmb250LXNpemU6IDIwcHggIWltcG9ydGFudDtcclxuICAgIH1cclxuXHJcbiAgfSJdfQ== */");
 
 /***/ }),
 
@@ -40,9 +40,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _raw_loader_dashboard_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./dashboard.page.html */ "KR73");
 /* harmony import */ var _dashboard_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard.page.scss */ "B3xu");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
-/* harmony import */ var _ambiente__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ambiente */ "ecTq");
-/* harmony import */ var _test_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../test.service */ "9UZm");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var _ambiente__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../ambiente */ "ecTq");
+/* harmony import */ var _test_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../test.service */ "9UZm");
+
 
 
 
@@ -51,20 +53,29 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let DashboardPage = class DashboardPage {
-    constructor(alertController, testService) {
+    constructor(alertController, testService, router) {
         this.alertController = alertController;
         this.testService = testService;
+        this.router = router;
         this.ambientes = [];
+        router.events.subscribe((val) => {
+            if (val instanceof _angular_router__WEBPACK_IMPORTED_MODULE_4__["NavigationEnd"]) {
+                this.ambiente = localStorage.getItem('ambienteseleccionado');
+                if (this.ambiente == 'dashboard') {
+                    this.checkValorMonoxido();
+                }
+            }
+        });
     }
     ngOnInit() {
-        this.checkValorMonoxido();
+        localStorage.setItem('ambienteseleccionado', 'dashboard');
         for (let index = 0; index < 2; index++) {
             const indice = index + 1;
-            var ambiente = new _ambiente__WEBPACK_IMPORTED_MODULE_5__["Ambiente"]("ambiente" + indice);
+            var ambiente = new _ambiente__WEBPACK_IMPORTED_MODULE_6__["Ambiente"]("ambiente" + indice);
             this.ambientes[index] = ambiente;
         }
-        var ambiente = new _ambiente__WEBPACK_IMPORTED_MODULE_5__["Ambiente"]("cocina");
-        var ambiente2 = new _ambiente__WEBPACK_IMPORTED_MODULE_5__["Ambiente"]("exterior");
+        var ambiente = new _ambiente__WEBPACK_IMPORTED_MODULE_6__["Ambiente"]("cocina");
+        var ambiente2 = new _ambiente__WEBPACK_IMPORTED_MODULE_6__["Ambiente"]("exterior");
         this.ambientes.push(ambiente);
         this.ambientes.push(ambiente2);
     }
@@ -72,9 +83,9 @@ let DashboardPage = class DashboardPage {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const alert = yield this.alertController.create({
                 cssClass: 'my-custom-class',
-                header: 'Alerta niveles altos de monoxido',
-                subHeader: 'Se registo un valor mayor a los 1200 ',
-                message: 'El valor de monoxido registrado fue de ' + this.ultimovalor.value + ' en el horario ' + this.ultimovalor.datetime,
+                header: 'Alerta niveles altos de monoxido/humo',
+                subHeader: 'Se registo un valor mayor al deseado',
+                message: 'Fuga detectada en el horario ' + this.ultimovalor.datetime,
                 buttons: ['OK']
             });
             yield alert.present();
@@ -89,10 +100,11 @@ let DashboardPage = class DashboardPage {
     checkValorMonoxido() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             var response = false;
-            yield this.testService.checkValorMonoxido().subscribe(res => {
+            yield this.testService.interiorAlarma().subscribe(res => {
                 this.ultimovalor = res;
                 this.ultimovalor = res[0];
-                if (parseInt(this.ultimovalor.value) > 1200) {
+                console.log(res);
+                if (parseInt(this.ultimovalor.value) == 1) {
                     response = true;
                     this.presentAlert();
                 }
@@ -108,8 +120,9 @@ let DashboardPage = class DashboardPage {
     }
 };
 DashboardPage.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] },
-    { type: _test_service__WEBPACK_IMPORTED_MODULE_6__["TestService"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"] },
+    { type: _test_service__WEBPACK_IMPORTED_MODULE_7__["TestService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] }
 ];
 DashboardPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({

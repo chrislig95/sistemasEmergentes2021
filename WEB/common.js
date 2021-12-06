@@ -89,10 +89,10 @@ let TestService = class TestService {
     //   return this.http.get('https://ws.nerdingland.com/?collectionName=interiorMonoxido');
     //  }
     monoxidoCocina() {
-        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/cocina/monoxido');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/cocina/monoxido&limit=1');
     }
     humoCocina() {
-        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/cocina/humo');
+        return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/cocina/humo&limit=1');
     }
     exteriorTemperatura(ambiente) {
         return this.http.get('https://ws.nerdingland.com/?collectionName=casa/interior/' + ambiente + '/temperatura&limit=100');

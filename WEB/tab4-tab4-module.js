@@ -56034,7 +56034,7 @@ let Tab4Page = class Tab4Page {
         this.testService.monoxidoCocina().subscribe(res => {
             console.log(res);
             this.ultimasdiez = res;
-            this.ultimamedicion = this.ultimasdiez[8];
+            this.ultimamedicion = this.ultimasdiez[0];
             console.log(this.ultimamedicion.value);
             this.drawGauge(this.ultimamedicion.value);
         }, error => {
