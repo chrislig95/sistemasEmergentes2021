@@ -35,11 +35,11 @@ def willRainInNextHours(hours) -> bool:
     if(latitude is None):
         try:
             geoCoordinates = geocoder.ip('me')
-            lat = geoCoordinates.latlng[0]
-            lon = geoCoordinates.latlng[1]
+            latitude = geoCoordinates.latlng[0]
+            longitude = geoCoordinates.latlng[1]
         except:
-            lat = -34.5742
-            lon = -58.535
+            latitude = -34.5742
+            longitude = -58.535
     else:
         lat = latitude
         lon = latitude    
