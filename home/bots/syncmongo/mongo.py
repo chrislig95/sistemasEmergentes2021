@@ -244,6 +244,6 @@ def buildJsonMessage(numAmbiente: int, tipo: string, value: None):
     msg = {}
     msg["ambiente"] = numAmbiente
     msg["tipo"] = tipo
-    msg["value"] = value if value else random.randint(0, 1)
+    msg["value"] = value
     
     return json.dumps(msg)
