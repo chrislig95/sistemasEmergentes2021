@@ -65,7 +65,7 @@ def publish(client):
             print(f"Sent `{jsonHumo}` to topic `{HUMO_TOPIC}`")
         else:
             print(f"Failed to send message to topic {HUMO_TOPIC}")
-        time.sleep(60)
+        time.sleep(30)
 
 def run():
     client = connect_mqtt()
